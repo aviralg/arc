@@ -1,0 +1,502 @@
+#+TITLE: Aviral's Emacs Configuration
+#+AUTHOR: Aviral Goel
+#+STARTUP: showeverything
+#+OPTIONS: toc:2
+
+* Table of Contents :toc:
+- [[#general][General]]
+- [[#package-management][Package Management]]
+- [[#keybindings][Keybindings]]
+  - [[#evil-collection][evil-collection]]
+  - [[#evil-surround][evil-surround]]
+  - [[#general-1][general]]
+- [[#markdown-mode][Markdown Mode]]
+- [[#org-mode][Org Mode]]
+  - [[#toc-org][toc-org]]
+  - [[#org-bullets][org-bullets]]
+
+* General
+
+#+begin_src elisp
+       (defvar ag-leader-key "SPC"
+      "The leader prefix key")
+
+	(use-package emacs
+	  :config
+	  (menu-bar-mode -1)
+	  (tool-bar-mode -1)
+	  (scroll-bar-mode -1)
+
+    (setq-default display-line-numbers 'visual
+		  display-line-numbers-widen t
+		  ;; this is the default
+		  display-line-numbers-current-absolute t)
+
+	  ;;(modify-all-frames-parameters
+	  ;; '((right-divider-width . 20)
+          ;; (internal-border-width . 20)))
+	  ;; (dolist (face '(window-divider
+	  ;;                window-divider-first-pixel
+	  ;;                window-divider-last-pixel))
+	  ;;  (face-spec-reset-face face)
+	  ;;  (set-face-foreground face (face-attribute 'default :background)))
+
+	  (set-face-background 'fringe (face-attribute 'default :background)))
+#+end_src
+
+#+begin_src elisp
+  (set-face-attribute 'default nil
+	    :family "Iosevka"
+	    :height 120
+	    :width 'wide
+	    :weight 'regular)
+
+  (set-face-attribute 'fixed-pitch nil
+	    :family "Iosevka"
+	    :height 120
+	    :width 'wide
+	    :weight 'regular)
+
+  (set-face-attribute 'variable-pitch nil
+	    :family "Iosevka Etoile"
+	    :height 120
+	    :width 'normal
+	    :weight 'regular)
+
+  (setq-default line-spacing 0.20)
+#+end_src
+
+* Package Management
+
+#+begin_src elisp
+(setq package-archives
+      '(("melpa" . "https://melpa.org/packages/")
+        ("elpa" . "https://elpa.gnu.org/packages/")))
+
+(package-initialize)
+
+(unless package-archive-contents
+  (package-refresh-contents))
+#+end_src
+
+* Keybindings
+
+#+begin_src elisp
+    (use-package evil
+      :ensure t
+      :init
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+    (setq evil-want-keybinding nil)
+    :config
+      (evil-mode 1))
+ #+end_src
+
+** evil-collection
+
+#+begin_src elisp
+
+     (use-package evil-collection
+      :after evil
+    :ensure t
+  :init (evil-collection-init)
+  :custom
+  (evil-collection-setup-minibuffer t)
+  (evil-collection-calendar-want-org-bindings t)
+  (evil-collection-outline-bind-tab-p t))
+#+end_src
+
+
+** evil-surround
+
+https://github.com/emacs-evil/evil-surround
+This package surrounds text objects with delimiters.
+
+#+begin_src elisp
+
+  (use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode 1))
+ 
+#+end_src
+
+** general
+
+#+begin_src elisp
+  (use-package general
+  :ensure t
+  :config
+  (general-evil-setup)
+
+  ;; set up "SPC" as the global leader key
+  (general-create-definer ag/leader-keys
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :prefix "SPC"           ;; set leader
+    :global-prefix "M-SPC")) ;; access leader in insert mode
+  #+end_src
+
+
+  #+begin_src elisp
+  (use-package page-break-lines
+    :ensure t
+    :config
+    (global-page-break-lines-mode))
+
+  (use-package projectile
+    :ensure t
+    :config
+    (projectile-mode +1)
+    (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map))
+
+  (use-package nerd-icons
+    :ensure t
+    ;; :custom
+    ;; The Nerd Font you want to use in GUI
+    ;; "Symbols Nerd Font Mono" is the default and is recommended
+    ;; but you can use any other Nerd Font if you want
+    :config
+    (setq nerd-icons-font-family "Iosevka Extended")
+
+
+  (setq kind-icon-use-icons nil)
+  (setq kind-icon-mapping
+	`(
+	  (array ,(nerd-icons-codicon "nf-cod-symbol_array") :face font-lock-type-face)
+	  (boolean ,(nerd-icons-codicon "nf-cod-symbol_boolean") :face font-lock-builtin-face)
+	  (class ,(nerd-icons-codicon "nf-cod-symbol_class") :face font-lock-type-face)
+	  (color ,(nerd-icons-codicon "nf-cod-symbol_color") :face success)
+	  (command ,(nerd-icons-codicon "nf-cod-terminal") :face default)
+	  (constant ,(nerd-icons-codicon "nf-cod-symbol_constant") :face font-lock-constant-face)
+	  (constructor ,(nerd-icons-codicon "nf-cod-triangle_right") :face font-lock-function-name-face)
+	  (enummember ,(nerd-icons-codicon "nf-cod-symbol_enum_member") :face font-lock-builtin-face)
+	  (enum-member ,(nerd-icons-codicon "nf-cod-symbol_enum_member") :face font-lock-builtin-face)
+	  (enum ,(nerd-icons-codicon "nf-cod-symbol_enum") :face font-lock-builtin-face)
+	  (event ,(nerd-icons-codicon "nf-cod-symbol_event") :face font-lock-warning-face)
+	  (field ,(nerd-icons-codicon "nf-cod-symbol_field") :face font-lock-variable-name-face)
+	  (file ,(nerd-icons-codicon "nf-cod-symbol_file") :face font-lock-string-face)
+	  (folder ,(nerd-icons-codicon "nf-cod-folder") :face font-lock-doc-face)
+	  (interface ,(nerd-icons-codicon "nf-cod-symbol_interface") :face font-lock-type-face)
+	  (keyword ,(nerd-icons-codicon "nf-cod-symbol_keyword") :face font-lock-keyword-face)
+	  (macro ,(nerd-icons-codicon "nf-cod-symbol_misc") :face font-lock-keyword-face)
+	  (magic ,(nerd-icons-codicon "nf-cod-wand") :face font-lock-builtin-face)
+	  (method ,(nerd-icons-codicon "nf-cod-symbol_method") :face font-lock-function-name-face)
+	  (function ,(nerd-icons-codicon "nf-cod-symbol_method") :face font-lock-function-name-face)
+	  (module ,(nerd-icons-codicon "nf-cod-file_submodule") :face font-lock-preprocessor-face)
+	  (numeric ,(nerd-icons-codicon "nf-cod-symbol_numeric") :face font-lock-builtin-face)
+	  (operator ,(nerd-icons-codicon "nf-cod-symbol_operator") :face font-lock-comment-delimiter-face)
+	  (param ,(nerd-icons-codicon "nf-cod-symbol_parameter") :face default)
+	  (property ,(nerd-icons-codicon "nf-cod-symbol_property") :face font-lock-variable-name-face)
+	  (reference ,(nerd-icons-codicon "nf-cod-references") :face font-lock-variable-name-face)
+	  (snippet ,(nerd-icons-codicon "nf-cod-symbol_snippet") :face font-lock-string-face)
+	  (string ,(nerd-icons-codicon "nf-cod-symbol_string") :face font-lock-string-face)
+	  (struct ,(nerd-icons-codicon "nf-cod-symbol_structure") :face font-lock-variable-name-face)
+	  (text ,(nerd-icons-codicon "nf-cod-text_size") :face font-lock-doc-face)
+	  (typeparameter ,(nerd-icons-codicon "nf-cod-list_unordered") :face font-lock-type-face)
+	  (type-parameter ,(nerd-icons-codicon "nf-cod-list_unordered") :face font-lock-type-face)
+	  (unit ,(nerd-icons-codicon "nf-cod-symbol_ruler") :face font-lock-constant-face)
+	  (value ,(nerd-icons-codicon "nf-cod-symbol_field") :face font-lock-builtin-face)
+	  (variable ,(nerd-icons-codicon "nf-cod-symbol_variable") :face font-lock-variable-name-face)
+	  (t ,(nerd-icons-codicon "nf-cod-code") :face font-lock-warning-face))))
+
+  (use-package dashboard
+    :ensure t
+    :config
+    ;; Set the title
+    (setq dashboard-banner-logo-title "")
+    ;; Set the banner
+    (setq dashboard-startup-banner 'logo)
+
+    ;; Content is not centered by default. To center, set
+    (setq dashboard-center-content t)
+
+    (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
+
+    (setq dashboard-items '((recents  . 5)
+			    (bookmarks . 5)
+			    (projects . 5)
+			    (agenda . 5)
+			    (registers . 5)))
+
+
+    (setq dashboard-display-icons-p t) ;; display icons on both GUI and terminal
+    (setq dashboard-icon-type 'nerd-icons) ;; use `nerd-icons' package
+    ;; TODO: enable this after bug is fixed
+    ;; https://github.com/emacs-dashboard/emacs-dashboard/issues/459
+    ;; (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-file-icons t)
+
+    (setq dashboard-set-navigator t)
+    (setq dashboard-set-init-info t)
+    (setq dashboard-set-footer nil)
+    (setq dashboard-projects-switch-function 'projectile-persp-switch-project)
+    (add-to-list 'dashboard-items '(agenda) t)
+    (setq dashboard-week-agenda t)
+    (setq dashboard-filter-agenda-entry 'dashboard-no-filter-agenda)
+    (dashboard-setup-startup-hook))
+
+  (use-package modus-themes
+    :ensure t
+    :config
+    ;; Add all your customizations prior to loading the themes
+    (setq modus-themes-italic-constructs t
+	  modus-themes-bold-constructs t)
+
+    ;; Maybe define some palette overrides, such as by using our presets
+    (setq modus-themes-common-palette-overrides
+          modus-themes-preset-overrides-intense)
+
+    ;; Load the theme of your choice.
+    (load-theme 'modus-operandi t)
+
+    (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
+
+
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (set-frame-font "Iosevka Extended" nil t)
+
+  ;;(modify-all-frames-parameters
+  ;; '((right-divider-width . 10)
+  ;;   (internal-border-width . 10)))
+  ;;(dolist (face '(window-divider
+  ;;                window-divider-first-pixel
+  ;;                window-divider-last-pixel))
+  ;;  (face-spec-reset-face face)
+  ;;  (set-face-foreground face (face-attribute 'default :background)))
+  (set-face-background 'fringe (face-attribute 'default :background))
+
+  (use-package org-modern
+    :ensure t
+    :init
+    (setq org-auto-align-tags nil
+	  org-tags-column 0
+	  org-catch-invisible-edits 'show-and-error
+	  org-special-ctrl-a/e t
+	  org-insert-heading-respect-content t
+
+	  ;; Org styling, hide markup etc.
+	  org-hide-emphasis-markers t
+	  org-pretty-entities t
+	  org-ellipsis "…"
+
+	  ;; Agenda styling
+	  org-agenda-tags-column 0
+	  org-agenda-block-separator ?─
+	  org-agenda-time-grid '((daily today require-timed)
+				 (800 1000 1200 1400 1600 1800 2000)
+				 " ┄┄┄┄┄ "
+				 "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+	  org-agenda-current-time-string "⭠ now ─────────────────────────────────────────────────")
+    :config
+    (global-org-modern-mode))
+
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(custom-safe-themes
+     '("3e2039156049bd0661317137a3761d4c2ff43e8a2aa423f6db0c0e8df0197492" default))
+   '(package-selected-packages '(kind-icon dirvish orderless vertico marginalia dashboard)))
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   )
+
+  ;; Enable rich annotations using the Marginalia package
+  (use-package marginalia
+    :ensure t
+    ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+    ;; available in the *Completions* buffer, add it to the
+    ;; `completion-list-mode-map'.
+    :bind (:map minibuffer-local-map
+	   ("M-A" . marginalia-cycle))
+
+    ;; The :init section is always executed.
+    :init
+
+    ;; Marginalia must be activated in the :init section of use-package such that
+    ;; the mode gets enabled right away. Note that this forces loading the
+    ;; package.
+    (marginalia-mode))
+
+  ;; Enable vertico
+  (use-package vertico
+    :ensure t
+    :init
+    (vertico-mode)
+
+    ;; Different scroll margin
+    ;; (setq vertico-scroll-margin 0)
+
+    ;; Show more candidates
+    ;; (setq vertico-count 20)
+
+    ;; Grow and shrink the Vertico minibuffer
+    (setq vertico-resize t)
+
+    ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
+    (setq vertico-cycle t)
+    )
+
+  ;; Persist history over Emacs restarts. Vertico sorts by history position.
+  (use-package savehist
+    :ensure t
+    :init
+    (savehist-mode))
+
+  ;; A few more useful configurations...
+  (use-package emacs
+    :init
+    ;; Add prompt indicator to `completing-read-multiple'.
+    ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
+    (defun crm-indicator (args)
+      (cons (format "[CRM%s] %s"
+		    (replace-regexp-in-string
+		     "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+		     crm-separator)
+		    (car args))
+	    (cdr args)))
+    (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+    ;; Do not allow the cursor in the minibuffer prompt
+    (setq minibuffer-prompt-properties
+	  '(read-only t cursor-intangible t face minibuffer-prompt))
+    (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+    ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
+    ;; Vertico commands are hidden in normal buffers.
+    ;; (setq read-extended-command-predicate
+    ;;       #'command-completion-default-include-p)
+
+    ;; Enable recursive minibuffers
+    (setq enable-recursive-minibuffers t))
+
+  ;; Optionally use the `orderless' completion style.
+  (use-package orderless
+    :ensure t
+    :init
+    ;; Configure a custom style dispatcher (see the Consult wiki)
+    ;; (setq orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch)
+    ;;       orderless-component-separator #'orderless-escapable-split-on-space)
+    (setq completion-styles '(orderless basic)
+	  completion-category-defaults nil
+	  completion-category-overrides '((file (styles partial-completion)))))
+
+  (use-package dirvish
+    :ensure t
+    :init
+    (dirvish-override-dired-mode))
+
+  (use-package kind-icon
+    :ensure t
+    :after corfu
+    :custom
+    (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+    :config
+    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
+    (add-hook 'my-completion-ui-mode-hook
+	      (lambda ()
+		(setq completion-in-region-function
+		      (kind-icon-enhance-completion
+		       completion-in-region-function)))))
+#+end_src
+
+#+begin_src elisp
+		(use-package which-key
+  :ensure t
+		:init (which-key-mode 1)
+		:config
+		(setq which-key-side-window-location 'bottom)
+
+    ;; default
+  ;; same as default, except single characters are sorted alphabetically
+  ;; (setq which-key-sort-order 'which-key-key-order-alpha)
+  ;; same as default, except all prefix keys are grouped together at the end
+  ;; (setq which-key-sort-order 'which-key-prefix-then-key-order)
+  ;; same as default, except all keys from local maps shown first
+  ;; (setq which-key-sort-order 'which-key-local-then-key-order)
+  ;; sort based on the key description ignoring case
+  ;; (setq which-key-sort-order 'which-key-description-order)
+  (setq which-key-sort-order 'which-key-key-order-alpha)
+
+      ;; Set the time delay (in seconds) for the which-key popup to appear. A value of
+    ;; zero might cause issues so a non-zero value is recommended.
+    (setq which-key-idle-delay 1.0)
+
+    ;; Set the maximum length (in characters) for key descriptions (commands or
+    ;; prefixes). Descriptions that are longer are truncated and have ".." added.
+    ;; This can also be a float (fraction of available width) or a function.
+    (setq which-key-max-description-length 27)
+
+    ;; Use additional padding between columns of keys. This variable specifies the
+    ;; number of spaces to add to the left of each column.
+    (setq which-key-add-column-padding 0)
+
+    ;; The maximum number of columns to display in the which-key buffer. nil means
+    ;; don't impose a maximum.
+    (setq which-key-max-display-columns nil)
+
+    ;; Set the separator used between keys and descriptions. Change this setting to
+    ;; an ASCII character if your font does not show the default arrow. The second
+    ;; setting here allows for extra padding for Unicode characters. which-key uses
+    ;; characters as a means of width measurement, so wide Unicode characters can
+    ;; throw off the calculation.
+    (setq which-key-separator " → " )
+    (setq which-key-unicode-correction 3)
+
+    ;; Set the prefix string that will be inserted in front of prefix commands
+    ;; (i.e., commands that represent a sub-map).
+    (setq which-key-prefix-prefix "+" )
+
+    ;; Set the special keys. These are automatically truncated to one character and
+    ;; have which-key-special-key-face applied. Disabled by default. An example
+    ;; setting is
+    ;; (setq which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL"))
+    (setq which-key-special-keys nil)
+
+    ;; Show the key prefix on the left, top, or bottom (nil means hide the prefix).
+    ;; The prefix consists of the keys you have typed so far. which-key also shows
+    ;; the page information along with the prefix.
+    (setq which-key-show-prefix 'left)
+
+    ;; Set to t to show the count of keys shown vs. total keys in the mode line.
+    (setq which-key-show-remaining-keys nil))
+#+end_src
+
+* Markdown Mode
+
+#+begin_src elisp
+  (use-package markdown-mode
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown"))
+#+end_src
+
+* Org Mode
+
+** toc-org
+https://github.com/snosov1/toc-org
+#+begin_src elisp
+      (use-package toc-org
+      :ensure t
+  :config
+
+    (add-hook 'org-mode-hook 'toc-org-mode)
+
+    ;; enable in markdown, too
+    (add-hook 'markdown-mode-hook 'toc-org-mode))
+    ;; DEBUG THIS -> (define-key markdown-mode-map (kbd "\C-c\C-o") 'toc-org-markdown-follow-thing-at-point))
+#+end_src
+** org-bullets
+https://github.com/sabof/org-bullets
+#+begin_src elisp
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  (use-package org-bullets
+  :ensure t)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+end_src
