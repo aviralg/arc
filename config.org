@@ -5,7 +5,11 @@
 
 * Table of Contents :toc:
 - [[#general][General]]
-- [[#package-management][Package Management]]
+  - [[#font-settings][Font Settings]]
+  - [[#frame-settings][Frame Settings]]
+  - [[#line-and-column-numbers][Line and Column Numbers]]
+  - [[#auto-indentation][Auto Indentation]]
+  - [[#package-management][Package Management]]
 - [[#keybindings][Keybindings]]
   - [[#evil-collection][evil-collection]]
   - [[#evil-surround][evil-surround]]
@@ -17,21 +21,46 @@
 
 * General
 
+Customize builtin emacs facilities.
+
+** Font Settings
+
+Set [[https://github.com/be5invis/Iosevka][~Iosevka~]] font for ~default~, ~fixed~, and ~variable~ faces.
+
 #+begin_src elisp
-       (defvar ag-leader-key "SPC"
-      "The leader prefix key")
+  (set-face-attribute 'default
+                      nil
+                      :family "Iosevka"
+                      :height 120
+                      :width 'normal
+                      :weight 'regular)
 
-	(use-package emacs
-	  :config
-	  (menu-bar-mode -1)
-	  (tool-bar-mode -1)
-	  (scroll-bar-mode -1)
+  (set-face-attribute 'fixed-pitch
+                      nil
+                      :family "Iosevka"
+                      :height 120
+                      :width 'normal
+                      :weight 'regular)
 
-    (setq-default display-line-numbers 'visual
-		  display-line-numbers-widen t
-		  ;; this is the default
-		  display-line-numbers-current-absolute t)
+  (set-face-attribute 'variable-pitch
+                      nil
+                      :family "Iosevka"
+                      :height 120
+                      :width 'normal
+                      :weight 'regular)
+#+end_src
 
+** Frame Settings
+
+Disable all bars.
+
+#+begin_src elisp
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+#+end_src
+
+#+begin_src elisp
 	  ;;(modify-all-frames-parameters
 	  ;; '((right-divider-width . 20)
           ;; (internal-border-width . 20)))
@@ -41,32 +70,39 @@
 	  ;;  (face-spec-reset-face face)
 	  ;;  (set-face-foreground face (face-attribute 'default :background)))
 
-	  (set-face-background 'fringe (face-attribute 'default :background)))
+	  ;;(set-face-background 'fringe (face-attribute 'default :background)))
 #+end_src
+
+** Line and Column Numbers
+
+Enable line number mode. Display line number in the mode line.
+Show absolute line number for current line and relative line numbers for other lines in the left margin.
 
 #+begin_src elisp
-  (set-face-attribute 'default nil
-	    :family "Iosevka"
-	    :height 120
-	    :width 'wide
-	    :weight 'regular)
-
-  (set-face-attribute 'fixed-pitch nil
-	    :family "Iosevka"
-	    :height 120
-	    :width 'wide
-	    :weight 'regular)
-
-  (set-face-attribute 'variable-pitch nil
-	    :family "Iosevka Etoile"
-	    :height 120
-	    :width 'normal
-	    :weight 'regular)
-
-  (setq-default line-spacing 0.20)
+  (line-number-mode 1)
+  (setq-default display-line-numbers 'visual
+                display-line-numbers-widen t
+                ;; this is the default
+                display-line-numbers-current-absolute t)
 #+end_src
 
-* Package Management
+Display column number in the mode line.
+
+#+begin_src elisp
+  (column-number-mode 1)
+#+end_src
+
+** Auto Indentation
+
+Pressing ~RETURN~ should insert a newline and indent the following line.
+
+#+begin_src elisp
+  (define-key global-map (kbd "RET") 'newline-and-indent)
+#+end_src
+
+** Package Management
+
+Set package archives and refresh package database.
 
 #+begin_src elisp
 (setq package-archives
