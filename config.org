@@ -12,12 +12,30 @@
   - [[#package-management][Package Management]]
 - [[#keybindings][Keybindings]]
   - [[#evil-collection][evil-collection]]
+- [[#modeline][Modeline]]
+  - [[#moody][moody]]
+- [[#screencasting][Screencasting]]
+  - [[#screencast][Screencast]]
+  - [[#keycast][Keycast]]
   - [[#evil-surround][evil-surround]]
   - [[#general-1][general]]
 - [[#markdown-mode][Markdown Mode]]
 - [[#org-mode][Org Mode]]
   - [[#toc-org][toc-org]]
   - [[#org-bullets][org-bullets]]
+- [[#languages][Languages]]
+  - [[#emacs-lisp][Emacs Lisp]]
+  - [[#minions][Minions]]
+  - [[#emacs-gif-screencast][emacs-gif-screencast]]
+  - [[#volatile-highlights][volatile-highlights]]
+  - [[#evil-leader][evil-leader]]
+    - [[#hydra][hydra]]
+- [[#window-management][Window Management]]
+  - [[#packages][Packages]]
+    - [[#winner][winner]]
+    - [[#ace-window][ace-window]]
+  - [[#keybindings-1][Keybindings]]
+- [[#eshell][ESHELL]]
 
 * General
 
@@ -141,6 +159,27 @@ Set package archives and refresh package database.
   (evil-collection-outline-bind-tab-p t))
 #+end_src
 
+* Modeline
+
+** moody
+
+* Screencasting
+
+
+
+** Screencast
+
+** Keycast
+
+[[https://github.com/tarsius/keycast][Keycast]] shows the current command and its binding.
+#+begin_src elisp
+    (use-package keycast
+      :ensure t
+      :init
+      ;;(setq keycast-mode-line-remove-tail-elements nil)
+      ;;(keycast-mode-line-mode)
+      )
+#+end_src
 
 ** evil-surround
 
@@ -535,4 +574,300 @@ https://github.com/sabof/org-bullets
   (use-package org-bullets
   :ensure t)
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+end_src
+
+* Languages
+
+** Emacs Lisp
+
+Indent ~elisp~ code by 4 spaces - [[https://emacs.stackexchange.com/a/62630][https://emacs.stackexchange.com/a/62630]]
+
+#+begin_src elisp
+ (setq lisp-indent-offset 4)
+#+end_src
+
+** Minions
+
+Shows minor modes in a menu.
+https://github.com/tarsius/minions
+
+Needs to be at the very end to prevent the modeline changes from being reset.
+
+#+begin_src elisp
+      (use-package minions
+        :ensure t
+        :config
+        (minions-mode 1)
+        )
+#+end_src
+
+** emacs-gif-screencast
+
+#LINK: https://gitlab.com/ambrevar/emacs-gif-screencast
+#TODO: add keybinding for quick access
+#INSTALL: convert (https://imagemagick.org/script/convert.php), gifsicle (https://www.lcdf.org/gifsicle/)
+#+begin_src elisp
+  (use-package gif-screencast
+    :ensure t
+    :config
+    ;; To shut up the shutter sound of `screencapture' (see `gif-screencast-command').
+    (setq gif-screencast-args '("-x"))
+    ;; Optional: Used to crop the capture to the Emacs frame.
+    (setq gif-screencast-cropping-program "mogrify")
+    ;; Optional: Required to crop captured images.
+    (setq gif-screencast-capture-format "ppm"))
+#+end_src
+
+** volatile-highlights
+#SPACEMACS: https://github.com/syl20bnr/spacemacs/blob/b86a074437503677d21e2172bd175b37edbdb029/layers/%2Bspacemacs/spacemacs-editing-visual/packages.el#L158
+#PACKAGE: https://github.com/k-talo/volatile-highlights.el
+
+#+begin_src elisp
+  (use-package volatile-highlights
+    :ensure t
+    :init
+    (volatile-highlights-mode t)
+    :config
+    ;; additional extensions
+    ;; evil
+    (with-eval-after-load 'evil
+      (vhl/define-extension 'evil
+                            'evil-move
+                            'evil-paste-after
+                            'evil-paste-before
+                            'evil-paste-pop)
+      (vhl/install-extension 'evil)
+      (vhl/load-extension 'evil))
+    ;; undo-tree
+    (with-eval-after-load 'undo-tree
+      (vhl/define-extension 'undo-tree
+                            'undo-tree-move
+                            'undo-tree-yank)
+      (vhl/install-extension 'undo-tree)
+      (vhl/load-extension 'undo-tree)))
+#+end_src
+
+** evil-leader
+https://github.com/syl20bnr/spacemacs/blob/b86a074437503677d21e2172bd175b37edbdb029/core/core-keybindings.el#L97C12-L97C31
+
+  :link: https://github.com/cofi/evil-leader
+#+begin_src elisp
+  (use-package evil-leader
+    :ensure t
+    :init
+    (global-evil-leader-mode)
+    :config
+    (evil-leader/set-leader "<SPC>"))
+#+end_src
+
+*** hydra
+
+#+begin_src elisp
+  (use-package hydra
+               :ensure t
+               :config)
+#+end_src
+
+* Window Management
+
+** Packages
+
+*** winner
+#SPACEMACS: https://github.com/syl20bnr/spacemacs/blob/b86a074437503677d21e2172bd175b37edbdb029/layers/%2Bspacemacs/spacemacs-defaults/packages.el#L499
+#PACKAGE: https://www.gnu.org/software/emacs/manual/html_node/emacs/Window-Convenience.html
+
+#+begin_src elisp
+    (use-package winner
+      :init
+      (winner-mode t))
+#+end_src
+
+
+*** ace-window
+
+#+begin_src elisp
+    (use-package ace-window
+      :ensure t
+      :config
+      (setq aw-ingore-on nil))
+#+end_src
+
+** Keybindings
+#+begin_src elisp
+  (defalias 'arc/window-jump #'ace-select-window)
+  (defalias 'arc/window-jump-left #'evil-window-left)
+  (defalias 'arc/window-jump-down #'evil-window-down)
+  (defalias 'arc/window-jump-up #'evil-window-up)
+  (defalias 'arc/window-jump-right #'evil-window-right)
+
+  (defalias 'arc/window-swap #'ace-swap-window)
+  (defalias 'arc/window-swap-left #'windmove-swap-states-left)
+  (defalias 'arc/window-swap-down #'windmove-swap-states-down)
+  (defalias 'arc/window-swap-up #'windmove-swap-states-up)
+  (defalias 'arc/window-swap-right #'windmove-swap-states-right)
+
+  (defun arc/window-move ()
+    "Ace move window."
+    (interactive)
+    (aw-select " Ace - Move Window"
+               #'aw-move-window))
+
+  (defun arc/window-copy ()
+    "Ace copy window."
+    (interactive)
+    (aw-select " Ace - Copy Window"
+               #'aw-copy-window))
+
+  (defalias 'arc/window-delete 'delete-window)
+  (defalias 'arc/window-delete-other #'ace-delete-window)
+
+  (defalias 'arc/window-retain #'delete-other-windows)
+  (defalias 'arc/window-retain-other #'ace-delete-other-windows)
+
+  (defalias 'arc/window-buffer #'switch-to-buffer)
+  (defun arc/window-buffer-other ()
+    "Ace switch buffer in window."
+    (interactive)
+    (aw-select " Ace - Switch Buffer"
+               #'aw-switch-buffer-in-window))
+
+
+  (defalias 'arc/window-other #'other-window)
+
+  (defalias 'arc/window-vsplit #'split-window-right)
+  (defun arc/window-vsplit-other ()
+    "Ace vsplit window."
+    (interactive)
+    (aw-select " Ace - VSplit Buffer"
+               #'aw-split-window-horz))
+
+
+  (defalias 'arc/window-hsplit #'split-window-below)
+  (defun arc/window-hsplit-other ()
+    "Ace hsplit window."
+    (interactive)
+    (aw-select " Ace - HSplit Buffer"
+               #'aw-split-window-vert))
+
+  (defalias 'arc/window-undo #'winner-undo)
+  (defalias 'arc/window-redo #'winner-redo)
+
+  (defalias 'arc/window-wdec #'shrink-window-horizontally)
+  (defalias 'arc/window-winc #'enlarge-window-horizontally)
+  (defalias 'arc/window-hdec #'shrink-window)
+  (defalias 'arc/window-hinc #'enlarge-window)
+
+  (defalias 'arc/window-xpung #'kill-buffer-and-window)
+
+  (defhydra hydra/window ()
+    "Window Transient Mode"
+    ("[" arc/window-wdec)
+    ("]" arc/window-winc)
+    ("{" arc/window-hdec)
+    ("}" arc/window-hinc)
+    ("(" arc/window-lrot)
+    (")" arc/window-rrot)
+    ("q" nil "quit"))
+
+  (defalias 'arc/t/window      #'hydra/window/body)
+  (defalias 'arc/t/window-wdec #'hydra/window/arc/window-wdec)
+  (defalias 'arc/t/window-winc #'hydra/window/arc/window-winc)
+  (defalias 'arc/t/window-hdec #'hydra/window/arc/window-hdec)
+  (defalias 'arc/t/window-hinc #'hydra/window/arc/window-hinc)
+
+  (defalias 'arc/window-fit-buffer #'shrink-window-if-larger-than-buffer)
+  (defalias 'arc/window-balance #'balance-windows-area)
+
+  (evil-leader/set-key
+    ;; window jump
+    "w'" 'arc/window-jump
+    "wh" 'arc/window-jump-left
+    "wj" 'arc/window-jump-down
+    "wk" 'arc/window-jump-up
+    "wl" 'arc/window-jump-right
+
+    ;; window swap
+    "w/" 'arc/window-swap
+    "wH" 'arc/window-swap-left
+    "wJ" 'arc/window-swap-down
+    "wK" 'arc/window-swap-up
+    "wL" 'arc/window-swap-right
+
+    "w," 'arc/window-move
+    "w;" 'arc/window-copy
+
+    "wd" 'arc/window-delete
+    "wD" 'arc/window-delete-other
+
+    "wr" 'arc/window-retain
+    "wR" 'arc/window-retain-other
+
+    "wb" 'arc/window-buffer
+    "wB" 'arc/window-buffer-other
+
+    "wo" 'arc/window-other
+
+    "w\\" 'arc/window-vsplit
+    "w|" 'arc/window-vsplit-other
+
+    "w-" 'arc/window-hsplit
+    "w_" 'arc/window-hsplit-other
+
+    "w<" 'arc/window-undo
+    "w>" 'arc/window-redo
+
+    "w[" 'arc/t/window-wdec
+    "w]" 'arc/t/window-winc
+    "w{" 'arc/t/window-hdec
+    "w}" 'arc/t/window-hinc
+    "wf" 'arc/window-fit-buffer
+    "w=" 'arc/window-balance)
+#+end_src
+
+* ESHELL
+#+begin_src elisp
+  (add-to-list 'load-path (concat (file-name-directory user-init-file) "aweshell"))
+  (require 'aweshell)
+#+end_src
+
+#+begin_src elisp
+    (use-package corfu
+      :ensure t
+    ;; Optional customizations
+    :custom
+    (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+    (corfu-auto t)                 ;; Enable auto completion
+    (corfu-separator ?\s)          ;; Orderless field separator
+    ;;(corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+    ;;(corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+    (corfu-preview-current nil)    ;; Disable current candidate preview
+    (corfu-preselect 'prompt)      ;; Preselect the prompt
+    (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+    (corfu-scroll-margin 5)        ;; Use scroll margin
+
+    ;; Enable Corfu only for certain modes.
+    ;; :hook ((prog-mode . corfu-mode)
+    ;;        (shell-mode . corfu-mode)
+    ;;        (eshell-mode . corfu-mode))
+
+    ;; Recommended: Enable Corfu globally.
+    ;; This is recommended since Dabbrev can be used globally (M-/).
+    ;; See also `global-corfu-modes'.
+    :init
+    (global-corfu-mode))
+
+  ;; A few more useful configurations...
+  (use-package emacs
+    :init
+    ;; TAB cycle if there are only few candidates
+    (setq completion-cycle-threshold 3)
+
+    ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
+    ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
+    ;; (setq read-extended-command-predicate
+    ;;       #'command-completion-default-include-p)
+
+    ;; Enable indentation+completion using the TAB key.
+    ;; `completion-at-point' is often bound to M-TAB.
+    (setq tab-always-indent 'complete))
 #+end_src
