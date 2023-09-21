@@ -13,6 +13,9 @@
     - [[#study-the-different-configuration-variables-and-change-the-logo][Study the different configuration variables, and change the logo.]]
   - [[#pulsar][pulsar]]
     - [[#check-consult-after-jump-hook-after-consult-is-installed][check 'consult-after-jump-hook after consult is installed.]]
+  - [[#volatile-highlights][volatile-highlights]]
+    - [[#figure-out-how-to-vhldefine-extension-for-vundo][figure out how to `vhl/define-extension` for `vundo`]]
+    - [[#find-better-alternatives-to-this-package][find better alternatives to this package]]
 
 * Principles
 
@@ -156,3 +159,27 @@ Pulse highlight line on demand or after running select functions.
     (define-key map (kbd "C-c h h") #'pulsar-highlight-line))
 #+end_src
 
+** volatile-highlights
+
+:PROPERTIES:
+:URL: https://github.com/k-talo/volatile-highlights.el
+:END:
+
+Bring visual feedback to cut, copy, paste, occur, and search.
+
+*** TODO figure out how to `vhl/define-extension` for `vundo`
+*** TODO find better alternatives to this package
+
+#+begin_src elisp
+  (package-require 'volatile-highlights)
+
+  (volatile-highlights-mode t)
+
+  ;; undo-tree
+  ;;(with-eval-after-load 'undo-tree
+  ;;  (vhl/define-extension 'undo-tree
+  ;;                        'undo-tree-move
+  ;;                        'undo-tree-yank)
+  ;;  (vhl/install-extension 'undo-tree)
+  ;;  (vhl/load-extension 'undo-tree)))
+#+end_src
