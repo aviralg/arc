@@ -38,6 +38,7 @@
   - [[#console][Console]]
     - [[#exec-path-from-shell][exec-path-from-shell]]
     - [[#shell-pop][shell-pop]]
+    - [[#figure-out-how-to-quickly-close-the-popped-shell][figure out how to quickly close the popped shell]]
     - [[#eshell][eshell]]
       - [[#eshell-bookmark][eshell-bookmark]]
       - [[#esh-buf-stack][esh-buf-stack]]
@@ -45,6 +46,7 @@
       - [[#eshell-syntax-highlighting][eshell-syntax-highlighting]]
       - [[#eshell-fringe-status][eshell-fringe-status]]
       - [[#eshell-z][eshell-z]]
+    - [[#is-it-better-to-use-fzf-or-fasd][is it better to use fzf or fasd?]]
       - [[#esh-help][esh-help]]
       - [[#esh-autosuggest][esh-autosuggest]]
 
@@ -389,11 +391,13 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 
 #+end_src
 
-*** shell-pop
+*** TODO shell-pop
 
 :PROPERTIES:
 :URL: https://github.com/kyagi/shell-pop-el
 :END:
+
+*** TODO figure out how to quickly close the popped shell
 
 #+begin_src elisp
   (package-require 'shell-pop)
@@ -476,11 +480,13 @@ Bring visual feedback to cut, copy, paste, occur, and search.
   (add-hook 'eshell-mode-hook 'eshell-fringe-status-mode)
 #+end_src
 
-**** eshell-z
+**** TODO eshell-z
 
 :PROPERTIES:
 :URL: https://melpa.org/#/eshell-z
 :END:
+
+*** is it better to use fzf or fasd?
 
 #+begin_src elisp
   (package-require 'eshell-z)
