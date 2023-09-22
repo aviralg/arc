@@ -16,6 +16,24 @@
   - [[#volatile-highlights][volatile-highlights]]
     - [[#figure-out-how-to-vhldefine-extension-for-vundo][figure out how to `vhl/define-extension` for `vundo`]]
     - [[#find-better-alternatives-to-this-package][find better alternatives to this package]]
+- [[#git][Git]]
+    - [[#--evaluate-gited-dired-git-info-and-satchel-from-elpa][- evaluate gited, dired-git-info, and satchel from ELPA]]
+  - [[#git-modes][git-modes]]
+  - [[#git-timemachine][git-timemachine]]
+  - [[#git-messenger][git-messenger]]
+  - [[#git-undo][git-undo]]
+  - [[#git-link][git-link]]
+  - [[#diff-hl][diff-hl]]
+    - [[#figure-out-dired-mode-support-and-diff-hl-show-hunk-mouse-mode][figure out dired mode support and diff-hl-show-hunk-mouse-mode]]
+  - [[#magit][magit]]
+  - [[#forge][forge]]
+    - [[#setup-forge-keybindings][setup forge keybindings]]
+  - [[#magit-todos][magit-todos]]
+    - [[#--magit-todos-mode-should-be-activated-in-a-magit-buffer][- ~magit-todos-mode~ should be activated in a magit buffer.]]
+  - [[#magit-lfs][magit-lfs]]
+- [[#miscellaneous][Miscellaneous]]
+  - [[#copy-as-format][copy-as-format]]
+    - [[#figure-out-keybindings-for-other-formats-or-remove-all-keybindings][figure out keybindings for other formats or remove all keybindings]]
 
 * Principles
 
@@ -52,11 +70,11 @@ conditionally install packages.
   (unless package-archive-contents
     (package-refresh-contents))
 
-  ;; programmatically install/ensure installed
-  ;; pkgs in your personal list
-  (defun package-require (package)
-    (unless (package-installed-p package)
-      (package-install package)))
+  ;; install package if not already installed
+  (defun package-require (&rest packages)
+    (dolist (package packages)
+      (unless (package-installed-p package)
+        (package-install package))))
 #+end_src
 
 
@@ -183,3 +201,152 @@ Bring visual feedback to cut, copy, paste, occur, and search.
   ;;  (vhl/install-extension 'undo-tree)
   ;;  (vhl/load-extension 'undo-tree)))
 #+end_src
+
+
+* TODO Git
+
+*** TODO - evaluate gited, dired-git-info, and satchel from ELPA
+
+** git-modes
+
+:PROPERTIES:
+:URL: https://github.com/magit/git-modes
+:END:
+
+#+begin_src elisp
+  (package-require 'git-modes)
+  (add-to-list 'auto-mode-alist
+             (cons "/.dockerignore\\'" 'gitignore-mode))
+#+end_src
+
+** git-timemachine
+
+:PROPERTIES:
+:URL: https://codeberg.org/pidu/git-timemachine
+:END:
+
+#+begin_src elisp
+  (package-require 'git-timemachine)
+#+end_src
+
+** TODO git-messenger
+
+:PROPERTIES:
+:URL: https://github.com/emacsorphanage/git-messenger
+:END:
+
+#+begin_src elisp
+  (package-require 'git-messenger)
+
+  (global-set-key (kbd "C-x v p") 'git-messenger:popup-message)
+  ;; TODO - (define-key git-messenger-map (kbd "m") 'git-messenger:copy-message)
+  ;; Use magit-show-commit for showing status/diff commands
+  (custom-set-variables '(git-messenger:use-magit-popup t))
+#+end_src
+
+** TODO git-undo
+
+:PROPERTIES:
+:URL: https://github.com/jwiegley/git-undo-el
+:END:
+
+#+begin_src elisp
+  ;; TODO - download this manually (package-require 'git-undo)
+#+end_src
+
+** git-link
+
+:PROPERTIES:
+:URL: https://github.com/sshaw/git-link
+:END:
+
+#+begin_src elisp
+  (package-require 'git-link)
+  (global-set-key (kbd "C-c g l") 'git-link)
+#+end_src
+
+** diff-hl
+
+:PROPERTIES:
+:URL: https://github.com/dgutov/diff-hl
+:END:
+
+*** TODO figure out dired mode support and diff-hl-show-hunk-mouse-mode
+
+#+begin_src elisp
+  (package-require 'diff-hl)
+  (global-diff-hl-mode)
+  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+  (diff-hl-show-hunk-mouse-mode)
+#+end_src
+
+** magit
+
+:PROPERTIES:
+:URL: https://magit.vc
+:END:
+
+#+begin_src elisp
+  (package-require 'magit)
+#+end_src
+
+** TODO forge
+
+*** TODO setup forge keybindings
+
+:PROPERTIES:
+:URL: https://magit.vc
+:END:
+
+#+begin_src elisp
+  (package-require 'magit 'forge)
+#+end_src
+
+** TODO magit-todos
+
+:PROPERTIES:
+:URL: https://github.com/alphapapa/magit-todos
+:END:
+
+*** TODO - ~magit-todos-mode~ should be activated in a magit buffer.
+
+#+begin_src elisp
+  (package-require 'async
+                   'dash
+                   'f
+                   'hl-todo
+                   'magit
+                   'pcre2el
+                   's
+                   'magit-todos)
+  (magit-todos-mode)
+#+end_src
+
+** magit-lfs
+
+:PROPERTIES:
+:URL: https://github.com/Ailrun/magit-lfs
+:END:
+
+#+begin_src elisp
+  (package-require 'magit-lfs)
+#+end_src
+
+* Miscellaneous
+
+** copy-as-format
+
+:PROPERTIES:
+:URL: https://github.com/sshaw/copy-as-format
+:END:
+
+*** TODO figure out keybindings for other formats or remove all keybindings
+
+#+begin_src elisp
+  (package-require 'copy-as-format)
+  (global-set-key (kbd "C-c w s") 'copy-as-format-slack)
+  (global-set-key (kbd "C-c w g") 'copy-as-format-github)
+#+end_src
+
