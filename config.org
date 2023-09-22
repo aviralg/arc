@@ -34,6 +34,19 @@
 - [[#miscellaneous][Miscellaneous]]
   - [[#copy-as-format][copy-as-format]]
     - [[#figure-out-keybindings-for-other-formats-or-remove-all-keybindings][figure out keybindings for other formats or remove all keybindings]]
+- [[#integration][Integration]]
+  - [[#console][Console]]
+    - [[#exec-path-from-shell][exec-path-from-shell]]
+    - [[#shell-pop][shell-pop]]
+    - [[#eshell][eshell]]
+      - [[#eshell-bookmark][eshell-bookmark]]
+      - [[#esh-buf-stack][esh-buf-stack]]
+      - [[#eshell-did-you-mean][eshell-did-you-mean]]
+      - [[#eshell-syntax-highlighting][eshell-syntax-highlighting]]
+      - [[#eshell-fringe-status][eshell-fringe-status]]
+      - [[#eshell-z][eshell-z]]
+      - [[#esh-help][esh-help]]
+      - [[#esh-autosuggest][esh-autosuggest]]
 
 * Principles
 
@@ -348,5 +361,153 @@ Bring visual feedback to cut, copy, paste, occur, and search.
   (package-require 'copy-as-format)
   (global-set-key (kbd "C-c w s") 'copy-as-format-slack)
   (global-set-key (kbd "C-c w g") 'copy-as-format-github)
+#+end_src
+
+* Integration
+
+** Console
+
+*** exec-path-from-shell
+
+:PROPERTIES:
+:URL: https://github.com/purcell/exec-path-from-shell
+:END:
+
+#+begin_src elisp
+  (package-require 'exec-path-from-shell)
+
+  ;; copied from https://github.com/purcell/emacs.d/blob/aae26a2f66deac354daefd87b136913889cc2825/lisp/init-exec-path.el#L5
+  (with-eval-after-load 'exec-path-from-shell
+    (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
+      (add-to-list 'exec-path-from-shell-variables var)))
+
+
+  (when (or (memq window-system '(mac ns x pgtk))
+            (unless (memq system-type '(ms-dos windows-nt))
+              (daemonp)))
+    (exec-path-from-shell-initialize))
+
+#+end_src
+
+*** shell-pop
+
+:PROPERTIES:
+:URL: https://github.com/kyagi/shell-pop-el
+:END:
+
+#+begin_src elisp
+  (package-require 'shell-pop)
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(shell-pop-default-directory "~")
+   '(shell-pop-shell-type (quote ("eshell" "*eshell*" (lambda () (eshell)))))
+   '(shell-pop-term-shell "/bin/zsh")
+   '(shell-pop-universal-key "C-c C-t")
+   '(shell-pop-window-size 30)
+   '(shell-pop-full-span t)
+   '(shell-pop-window-position "bottom")
+   '(shell-pop-autocd-to-working-dir t)
+   '(shell-pop-restore-window-configuration t)
+   '(shell-pop-cleanup-buffer-at-process-exit t))
+#+end_src
+
+
+*** eshell
+
+**** eshell-bookmark
+
+:PROPERTIES:
+:URL: https://github.com/Fuco1/eshell-bookmark
+:END:
+
+#+begin_src elisp
+  (package-require 'eshell-bookmark)
+  (add-hook 'eshell-mode-hook 'eshell-bookmark-setup)
+#+end_src
+
+**** esh-buf-stack
+
+:PROPERTIES:
+:URL: https://github.com/tom-tan/esh-buf-stack
+:END:
+
+#+begin_src elisp
+  (package-require 'esh-buf-stack)
+  (setup-eshell-buf-stack)
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (local-set-key
+               (kbd "M-q") 'eshell-push-command)))
+#+end_src
+
+**** eshell-did-you-mean
+
+:PROPERTIES:
+:URL: https://github.com/xuchunyang/eshell-did-you-mean
+:END:
+
+#+begin_src elisp
+  (package-require 'eshell-did-you-mean)
+  (eshell-did-you-mean-setup)
+#+end_src
+
+**** eshell-syntax-highlighting
+
+:PROPERTIES:
+:URL: https://github.com/akreisher/eshell-syntax-highlighting
+:END:
+
+#+begin_src elisp
+  (package-require 'eshell-syntax-highlighting)
+  (eshell-syntax-highlighting-global-mode +1)
+#+end_src
+
+**** eshell-fringe-status
+
+:PROPERTIES:
+:URL: https://github.com/ryuslash/eshell-fringe-status/tree/adc6997c68e39c0d52a2af1b2fd5cf2057783797
+:END:
+
+#+begin_src elisp
+  (package-require 'eshell-fringe-status)
+  (add-hook 'eshell-mode-hook 'eshell-fringe-status-mode)
+#+end_src
+
+**** eshell-z
+
+:PROPERTIES:
+:URL: https://melpa.org/#/eshell-z
+:END:
+
+#+begin_src elisp
+  (package-require 'eshell-z)
+  (add-hook 'eshell-mode-hook
+            (defun my-eshell-mode-hook ()
+              (require 'eshell-z)))
+#+end_src
+
+**** esh-help
+
+:PROPERTIES:
+:URL: https://github.com/tom-tan/esh-help/
+:END:
+
+#+begin_src elisp
+  (package-require 'esh-help)
+  (setup-esh-help-eldoc)
+#+end_src
+
+**** esh-autosuggest
+
+:PROPERTIES:
+:URL: https://github.com/dieggsy/esh-autosuggest
+:END:
+
+#+begin_src elisp
+  (package-require 'esh-autosuggest)
+  (add-hook 'eshell-mode-hook #'esh-autosuggest-mode)
 #+end_src
 
