@@ -49,6 +49,23 @@
     - [[#is-it-better-to-use-fzf-or-fasd][is it better to use fzf or fasd?]]
       - [[#esh-help][esh-help]]
       - [[#esh-autosuggest][esh-autosuggest]]
+- [[#internet][Internet]]
+  - [[#browser][Browser]]
+  - [[#mail][Mail]]
+  - [[#irc][IRC]]
+  - [[#chat][Chat]]
+  - [[#social-network][Social Network]]
+  - [[#web-feed][Web Feed]]
+    - [[#elfeed][elfeed]]
+      - [[#elfeed-org][elfeed-org]]
+        - [[#is-this-better-than-supplying-url-in-el-files][is this better than supplying URL in .el files?]]
+      - [[#elfeed-tube][elfeed-tube]]
+        - [[#check-configuration-in-detail][check configuration in detail]]
+      - [[#elfeed-summary][elfeed-summary]]
+      - [[#elfeed-][elfeed-]]
+  - [[#ftp][FTP]]
+  - [[#torrent][Torrent]]
+    - [[#mentor][mentor]]
 
 * Principles
 
@@ -90,6 +107,12 @@ conditionally install packages.
     (dolist (package packages)
       (unless (package-installed-p package)
         (package-install package))))
+
+  ;; set INIT-DIR for later use
+  (setq INIT-DIR (file-name-directory user-init-file))
+
+  (defun init-dir-file (filename)
+    (concat (file-name-as-directory INIT-DIR) filename))
 #+end_src
 
 
@@ -517,3 +540,85 @@ Bring visual feedback to cut, copy, paste, occur, and search.
   (add-hook 'eshell-mode-hook #'esh-autosuggest-mode)
 #+end_src
 
+* Internet
+
+** Browser
+
+** Mail
+
+** IRC
+
+** Chat
+
+** Social Network
+
+** Web Feed
+
+*** elfeed
+
+:PROPERTIES:
+:URL: https://github.com/skeeto/elfeed
+:END:
+
+#+begin_src elisp
+  (package-require 'elfeed)
+  (global-set-key (kbd "C-x w") 'elfeed)
+#+end_src
+
+**** TODO elfeed-org
+
+:PROPERTIES:
+:URL: https://github.com/remyhonig/elfeed-org
+:END:
+
+***** TODO is this better than supplying URL in .el files?
+
+#+begin_src elisp
+  ;; Load elfeed-org
+  (package-require 'elfeed-org)
+
+  ;; Initialize elfeed-org
+  ;; This hooks up elfeed-org to read the configuration when elfeed
+  ;; is started with =M-x elfeed=
+  (elfeed-org)
+
+  ;; Optionally specify a number of files containing elfeed
+  ;; configuration. If not set then the location below is used.
+  ;; Note: The customize interface is also supported.
+  (setq rmh-elfeed-org-files (list (init-dir-file "elfeed.org")))
+#+end_src
+
+**** TODO elfeed-tube
+
+***** TODO check configuration in detail
+
+:PROPERTIES:
+:URL: https://github.com/karthink/elfeed-tube
+:END:
+
+#+begin_src elisp
+  (package-require 'mpv 'aio 'elfeed-tube)
+  (require 'elfeed-tube)
+  (elfeed-tube-setup)
+  (define-key elfeed-show-mode-map (kbd "F") 'elfeed-tube-fetch)
+  (define-key elfeed-show-mode-map [remap save-buffer] 'elfeed-tube-save)
+  (define-key elfeed-search-mode-map (kbd "F") 'elfeed-tube-fetch)
+  (define-key elfeed-search-mode-map [remap save-buffer] 'elfeed-tube-save)
+#+end_src
+
+#+begin_src elisp
+  (package-require 'elfeed-tube-mpv)
+  (require 'elfeed-tube-mpv)
+  (define-key elfeed-show-mode-map (kbd "C-c C-f") 'elfeed-tube-mpv-follow-mode)
+  (define-key elfeed-show-mode-map (kbd "C-c C-w") 'elfeed-tube-mpv-where)
+#+end_src
+
+**** TODO elfeed-summary
+
+**** TODO elfeed-
+
+** FTP
+
+** TODO Torrent
+
+*** TODO mentor
