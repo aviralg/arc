@@ -68,6 +68,10 @@
     - [[#mentor][mentor]]
 - [[#devops][DevOps]]
   - [[#docker][docker]]
+- [[#package-management-1][Package Management]]
+  - [[#package-manager][Package Manager]]
+  - [[#package-configuration][Package Configuration]]
+  - [[#package-updates][Package Updates]]
 
 * Principles
 
@@ -638,3 +642,12 @@ Bring visual feedback to cut, copy, paste, occur, and search.
   (package-require 'docker)
   (global-set-key (kbd "C-c d") 'docker)
 #+end_src
+
+* Package Management
+
+** Package Manager
+
+** Package Configuration
+
+** Package Updates
+
