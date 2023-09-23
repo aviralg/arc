@@ -79,6 +79,8 @@
   - [[#ht][ht]]
   - [[#f][f]]
   - [[#ts][ts]]
+  - [[#theme][Theme]]
+    - [[#modus-themes][modus-themes]]
 
 * Principles
 
@@ -713,5 +715,32 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 
 #+begin_src elisp
   (package-require 'ts)
+#+end_src
+
+** Theme
+
+*** modus-themes
+
+:PROPERTIES:
+:URL: https://protesilaos.com/emacs/modus-themes
+:END:
+
+I use ~modus-operandi~ theme because it uses soft colors on a white background.
+
+#+begin_src elisp
+  (package-require 'modus-themes)
+
+  ;; Add all your customizations prior to loading the themes
+  (setq modus-themes-italic-constructs t
+        modus-themes-bold-constructs t)
+
+  ;; Make the fringe invisible
+  (setq modus-themes-common-palette-overrides
+        '((fringe unspecified)))
+
+  ;; Load the theme of your choice.
+  (load-theme 'modus-operandi :no-confirm)
+
+  (define-key global-map (kbd "<f5>") #'modus-themes-toggle)
 #+end_src
 
