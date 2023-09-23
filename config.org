@@ -66,6 +66,8 @@
   - [[#ftp][FTP]]
   - [[#torrent][Torrent]]
     - [[#mentor][mentor]]
+- [[#devops][DevOps]]
+  - [[#docker][docker]]
 
 * Principles
 
@@ -622,3 +624,17 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 ** TODO Torrent
 
 *** TODO mentor
+
+
+* DevOps
+
+** docker
+
+:PROPERTIES:
+:URL: https://github.com/Silex/docker.el
+:END:
+
+#+begin_src elisp
+  (package-require 'docker)
+  (global-set-key (kbd "C-c d") 'docker)
+#+end_src
