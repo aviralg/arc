@@ -72,6 +72,7 @@
   - [[#package-manager][Package Manager]]
   - [[#package-configuration][Package Configuration]]
   - [[#package-updates][Package Updates]]
+- [[#config-management][Config Management]]
 
 * Principles
 
@@ -650,4 +651,6 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 ** Package Configuration
 
 ** Package Updates
+
+* Config Management
 
