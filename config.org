@@ -73,6 +73,12 @@
   - [[#package-configuration][Package Configuration]]
   - [[#package-updates][Package Updates]]
 - [[#config-management][Config Management]]
+- [[#library][Library]]
+  - [[#dash][dash]]
+  - [[#s][s]]
+  - [[#ht][ht]]
+  - [[#f][f]]
+  - [[#ts][ts]]
 
 * Principles
 
@@ -653,4 +659,59 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 ** Package Updates
 
 * Config Management
+
+
+* Library
+
+** dash
+
+:PROPERTIES:
+:URL: https://github.com/magnars/dash.el
+:END:
+
+#+begin_src elisp
+  (package-require 'dash)
+  (global-dash-fontify-mode)
+  (dash-register-info-lookup)
+#+end_src
+
+** s
+
+:PROPERTIES:
+:URL: https://github.com/magnars/s.el
+:END:
+
+#+begin_src elisp
+  (package-require 's)
+#+end_src
+
+** ht
+
+:PROPERTIES:
+:URL: https://github.com/Wilfred/ht.el
+:END:
+
+#+begin_src elisp
+  (package-require 'ht)
+#+end_src
+
+** f
+
+:PROPERTIES:
+:URL: https://github.com/rejeep/f.el
+:END:
+
+#+begin_src elisp
+  (package-require 'f)
+#+end_src
+
+** ts
+
+:PROPERTIES:
+:URL: https://github.com/alphapapa/ts.el
+:END:
+
+#+begin_src elisp
+  (package-require 'ts)
+#+end_src
 
