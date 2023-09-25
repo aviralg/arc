@@ -666,12 +666,11 @@ and I want to keep the config simple and minimal.
   (set-face-attribute 'anzu-mode-line nil
                       :foreground "yellow" :weight 'bold)
 
-  (custom-set-variables
-   '(anzu-mode-lighter "")
-   '(anzu-deactivate-region t)
-   '(anzu-search-threshold 1000)
-   '(anzu-replace-threshold 50)
-   '(anzu-replace-to-string-separator " => "))
+  (setq anzu-mode-lighter "")
+  (setq anzu-deactivate-region t)
+  (setq anzu-search-threshold 1000)
+  (setq anzu-replace-threshold 50)
+  (setq anzu-replace-to-string-separator " => ")
 
   (define-key isearch-mode-map [remap isearch-query-replace]  #'anzu-isearch-query-replace)
   (define-key isearch-mode-map [remap isearch-query-replace-regexp] #'anzu-isearch-query-replace-regexp)
@@ -1932,21 +1931,17 @@ https://github.com/snosov1/toc-org
 
 #+begin_src elisp
   (require 'shell-pop)
-  (custom-set-variables
-   ;; custom-set-variables was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(shell-pop-default-directory "~")
-   '(shell-pop-shell-type (quote ("eshell" "*eshell*" (lambda () (eshell)))))
-   '(shell-pop-term-shell "/bin/zsh")
-   '(shell-pop-universal-key "C-c C-t")
-   '(shell-pop-window-size 30)
-   '(shell-pop-full-span t)
-   '(shell-pop-window-position "bottom")
-   '(shell-pop-autocd-to-working-dir t)
-   '(shell-pop-restore-window-configuration t)
-   '(shell-pop-cleanup-buffer-at-process-exit t))
+
+  (setq shell-pop-default-directory "~")
+  (setq shell-pop-shell-type (quote ("eshell" "*eshell*" (lambda () (eshell)))))
+  (setq shell-pop-term-shell "/bin/zsh")
+  (setq shell-pop-universal-key "C-c C-t")
+  (setq shell-pop-window-size 30)
+  (setq shell-pop-full-span t)
+  (setq shell-pop-window-position "bottom")
+  (setq shell-pop-autocd-to-working-dir t)
+  (setq shell-pop-restore-window-configuration t)
+  (setq shell-pop-cleanup-buffer-at-process-exit t)
 #+end_src
 
 
