@@ -56,6 +56,7 @@
     - [[#ws-butler][ws-butler]]
   - [[#delete-enhancement][Delete Enhancement]]
   - [[#fancy-icons][Fancy Icons]]
+    - [[#kind-icon][kind-icon]]
   - [[#massive-edit][Massive Edit]]
     - [[#multiple-cursors][multiple-cursors]]
       - [[#todo-play-around-with-this-check-config-and-compare-utility-against-rectangle-mode][TODO: play around with this, check config, and compare utility against rectangle mode]]
@@ -301,6 +302,7 @@ conditionally install packages.
                    orderless
                    minions
                    ws-butler
+                   kind-icon
                    multiple-cursors
                    visual-regexp
                    ialign
@@ -1096,11 +1098,22 @@ Trim whitespace on lines touched when saving.
   (add-hook 'prog-mode-hook #'ws-butler-mode)
 #+end_src
 
-
-
 ** Delete Enhancement
 
 ** Fancy Icons
+
+*** kind-icon
+
+:PROPERTIES:
+:URL: https://github.com/jdtsmith/kind-icon
+:END:
+
+#+begin_src elisp
+  (require 'kind-icon)
+  (require 'corfu)
+  (setq kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
+#+end_src
 
 ** Massive Edit
 
