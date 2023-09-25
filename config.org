@@ -5,18 +5,125 @@
 
 * Table of Contents :toc:
 - [[#principles][Principles]]
-- [[#installation][Installation]]
-  - [[#rg][rg]]
+- [[#system-dependencies][System Dependencies]]
+  - [[#osx][OSX]]
+- [[#lexical-scoping][Lexical Scoping]]
 - [[#package-management][Package Management]]
+- [[#errors-and-warnings][Errors and Warnings]]
+  - [[#builtin][builtin]]
 - [[#interface-enhancement][Interface Enhancement]]
+  - [[#builtin-1][builtin]]
   - [[#dashboard][dashboard]]
     - [[#study-the-different-configuration-variables-and-change-the-logo][Study the different configuration variables, and change the logo.]]
+    - [[#enable-projects-in-dashboard-items][enable projects in dashboard-items]]
   - [[#pulsar][pulsar]]
     - [[#check-consult-after-jump-hook-after-consult-is-installed][check 'consult-after-jump-hook after consult is installed.]]
   - [[#volatile-highlights][volatile-highlights]]
     - [[#figure-out-how-to-vhldefine-extension-for-vundo][figure out how to `vhl/define-extension` for `vundo`]]
     - [[#find-better-alternatives-to-this-package][find better alternatives to this package]]
-- [[#git][Git]]
+  - [[#window--frame-management][Window & Frame Management]]
+    - [[#bars][Bars]]
+    - [[#fringe][Fringe]]
+    - [[#margin][Margin]]
+    - [[#font][font]]
+      - [[#emacs][emacs]]
+  - [[#navigation][Navigation]]
+    - [[#goto-line-preview][goto-line-preview]]
+    - [[#avy][avy]]
+      - [[#avy-zap][avy-zap]]
+    - [[#anzu][anzu]]
+  - [[#key-bindings][Key-bindings]]
+    - [[#hydra][hydra]]
+  - [[#minibuffer][Minibuffer]]
+    - [[#vertico][vertico]]
+    - [[#marginalia][marginalia]]
+    - [[#consult][consult]]
+      - [[#consult-eglot][consult-eglot]]
+      - [[#consult-dir][consult-dir]]
+      - [[#consult-project-extra][consult-project-extra]]
+    - [[#embark][embark]]
+      - [[#embark-consult][embark-consult]]
+  - [[#fuzzy--narrowing][Fuzzy & Narrowing]]
+    - [[#orderless][orderless]]
+- [[#mode-line][Mode-line]]
+  - [[#minions][minions]]
+- [[#editing-enhancement][Editing Enhancement]]
+  - [[#indentation-enhancement][Indentation Enhancement]]
+    - [[#builtin-2][builtin]]
+  - [[#symbols--tokens][Symbols / Tokens]]
+  - [[#whitespace-enhancement][Whitespace Enhancement]]
+    - [[#emacs-1][emacs]]
+    - [[#ws-butler][ws-butler]]
+  - [[#delete-enhancement][Delete Enhancement]]
+  - [[#fancy-icons][Fancy Icons]]
+  - [[#massive-edit][Massive Edit]]
+    - [[#multiple-cursors][multiple-cursors]]
+      - [[#todo-play-around-with-this-check-config-and-compare-utility-against-rectangle-mode][TODO: play around with this, check config, and compare utility against rectangle mode]]
+    - [[#visual-regexp][visual-regexp]]
+    - [[#ialign][ialign]]
+      - [[#todo-play-around-with-the-functionality-to-ensure-usefulness][TODO: play around with the functionality to ensure usefulness.]]
+    - [[#tiny][tiny]]
+      - [[#todo-investigate][TODO: investigate]]
+  - [[#quotes--parenthesis--delimiters-handling][Quotes & Parenthesis & Delimiters Handling]]
+    - [[#insert--edit][Insert & Edit]]
+    - [[#select][Select]]
+      - [[#expand-region][expand-region]]
+    - [[#highlight][Highlight]]
+  - [[#kill-ring--clipboard][Kill-ring / Clipboard]]
+  - [[#drag-lines][Drag Lines]]
+    - [[#drag-stuff][drag-stuff]]
+  - [[#undo--redo][Undo & Redo]]
+    - [[#vundo][vundo]]
+    - [[#undo-fu][undo-fu]]
+  - [[#multiple-major-mode][Multiple Major-Mode]]
+  - [[#snippet][Snippet]]
+    - [[#tempel][tempel]]
+      - [[#tempel-collection][tempel-collection]]
+  - [[#text-conversion][Text Conversion]]
+    - [[#fix-word][fix-word]]
+    - [[#string-inflection][string-inflection]]
+- [[#programming][Programming]]
+  - [[#completion][Completion]]
+    - [[#corfu][corfu]]
+    - [[#cape][cape]]
+  - [[#jump-to-definition--tagging][Jump to Definition / Tagging]]
+    - [[#dumb-jump][dumb-jump]]
+  - [[#lsp-client][LSP Client]]
+  - [[#debugging][Debugging]]
+  - [[#error-checking][Error Checking]]
+    - [[#flycheck][flycheck]]
+      - [[#flycheck-pos-tip][flycheck-pos-tip]]
+      - [[#flycheck-color-mode-line][flycheck-color-mode-line]]
+        - [[#fix-mode-line-to-display-color][fix mode line to display color]]
+      - [[#consult-flycheck][consult-flycheck]]
+  - [[#document][Document]]
+  - [[#code-folding][Code Folding]]
+    - [[#hideshow][hideshow]]
+  - [[#compiling][Compiling]]
+    - [[#compile-multi][compile-multi]]
+- [[#project-management][Project Management]]
+  - [[#projection][projection]]
+- [[#file-manager][File Manager]]
+  - [[#dirvish][dirvish]]
+- [[#programming-language][Programming Language]]
+  - [[#lisp-family][Lisp Family]]
+    - [[#builtin-3][builtin]]
+    - [[#lispy][lispy]]
+    - [[#racket][racket]]
+      - [[#racket-mode][racket-mode]]
+    - [[#markdown][Markdown]]
+      - [[#markdown-mode][markdown-mode]]
+- [[#ai][AI]]
+  - [[#code-completion][Code Completion]]
+  - [[#chatgpt][ChatGPT]]
+- [[#keys-cheat-sheet][Keys Cheat Sheet]]
+  - [[#which-key][which-key]]
+  - [[#cheatsheet][cheatsheet]]
+- [[#note][Note]]
+  - [[#org-mode][Org-mode]]
+    - [[#org-modern][org-modern]]
+    - [[#toc-org][toc-org]]
+- [[#version-control][Version Control]]
     - [[#--evaluate-gited-dired-git-info-and-satchel-from-elpa][- evaluate gited, dired-git-info, and satchel from ELPA]]
   - [[#git-modes][git-modes]]
   - [[#git-timemachine][git-timemachine]]
@@ -31,9 +138,6 @@
   - [[#magit-todos][magit-todos]]
     - [[#--magit-todos-mode-should-be-activated-in-a-magit-buffer][- ~magit-todos-mode~ should be activated in a magit buffer.]]
   - [[#magit-lfs][magit-lfs]]
-- [[#miscellaneous][Miscellaneous]]
-  - [[#copy-as-format][copy-as-format]]
-    - [[#figure-out-keybindings-for-other-formats-or-remove-all-keybindings][figure out keybindings for other formats or remove all keybindings]]
 - [[#integration][Integration]]
   - [[#console][Console]]
     - [[#exec-path-from-shell][exec-path-from-shell]]
@@ -49,6 +153,20 @@
     - [[#is-it-better-to-use-fzf-or-fasd][is it better to use fzf or fasd?]]
       - [[#esh-help][esh-help]]
       - [[#esh-autosuggest][esh-autosuggest]]
+  - [[#operating-system][Operating System]]
+    - [[#osx-trash][osx-trash]]
+  - [[#search][Search]]
+    - [[#ripgrep][ripgrep]]
+      - [[#rg][rg]]
+      - [[#deadgrep][deadgrep]]
+  - [[#pastebin][Pastebin]]
+  - [[#google][Google]]
+  - [[#blog-system][Blog System]]
+- [[#markdown-1][Markdown]]
+- [[#latex][LaTeX]]
+- [[#pdf][PDF]]
+  - [[#pdf-tools][pdf-tools]]
+  - [[#pdf-view-restore][pdf-view-restore]]
 - [[#internet][Internet]]
   - [[#browser][Browser]]
   - [[#mail][Mail]]
@@ -81,6 +199,26 @@
   - [[#ts][ts]]
   - [[#theme][Theme]]
     - [[#modus-themes][modus-themes]]
+- [[#multimedia][Multimedia]]
+  - [[#emms][emms]]
+    - [[#configure-emms-for-a-proper-display][configure emms for a proper display]]
+- [[#finance][Finance]]
+  - [[#beanpot-or-ledge-or-hledger][beanpot or ledge or hledger]]
+- [[#fun][Fun]]
+  - [[#speed-type][speed-type]]
+    - [[#make-keybinding][make keybinding]]
+- [[#music][Music]]
+- [[#screencasting][Screencasting]]
+  - [[#keycast][keycast]]
+  - [[#emacs-gif-screencast][emacs-gif-screencast]]
+    - [[#todo-add-keybinding-for-quick-access][TODO: add keybinding for quick access]]
+  - [[#frameshot][frameshot]]
+- [[#miscellaneous][Miscellaneous]]
+  - [[#copy-as-format][copy-as-format]]
+    - [[#figure-out-keybindings-for-other-formats-or-remove-all-keybindings][figure out keybindings for other formats or remove all keybindings]]
+  - [[#symbol-overlay][symbol-overlay]]
+  - [[#page-break-lines][page-break-lines]]
+- [[#not-useful][Not Useful]]
 
 * Principles
 
@@ -90,16 +228,43 @@
    ~@minad~, ~@tarsius~, ~@abo-abo~, ~@jwiegly~, and ~bbatsov~.
 4. Consult ~@spacemacs~ and ~@doom~ for package configuration.
 
-* Installation
+* System Dependencies
 
-** rg
+Install the following system dependencies:
 
-:PROPERTIES:
-:URL: https://github.com/BurntSushi/ripgrep
-:END:
+1. [[https://github.com/BurntSushi/ripgrep][ripgrep]] for ~deadgrep~
+2. [[https://mpv.io/][mpv]] for ~elfeed-tube~
+3. [[http://ytdl-org.github.io/youtube-dl/][youtube-dl]] for ~elfeed-tube~
+4. [[https://poppler.freedesktop.org/][poppler]] for ~pdf-tools~, and ~dirvish~
+5. [[https://imagemagick.org/index.php][imagemagick]] for ~pdf-tools~, and ~dirvish~
+6. [[https://github.com/be5invis/Iosevka][iosevka]] for default font
+7. [[https://github.com/sharkdp/fd][fd]] for ~dirvish~
+8. [[https://github.com/dirkvdb/ffmpegthumbnailer][ffmpegthumbnailer]] for ~dirvish~
+9. [[https://mediaarea.net/en/MediaInfo][mediainfo]] for ~dirvish~
+10. [[https://www.gnu.org/software/tar/][tar]]  for ~dirvish~
+11. [[https://infozip.sourceforge.net/UnZip.html][unzip]] for ~dirvish~
+12. [[https://imagemagick.org/script/convert.php][convert]] for ~emacs-gif-screenshot~
+13. [[https://www.lcdf.org/gifsicle/][gifsicle]] for ~emacs-gif-screenshot~
 
+** OSX
 #+begin_src shell
   brew install ripgrep
+  brew install mpv
+  brew install youtube-dl
+  brew install poppler
+  brew install imagemagick
+  brew install --cask font-iosevka
+  brew install coreutils
+  brew install fd
+  brew install ffmpegthumbnailer
+  brew install mediainfo
+  brew install gifsicle
+#+end_src
+
+* Lexical Scoping
+
+#+begin_src elisp
+  ;; -*- lexical-binding: t -*-
 #+end_src
 
 * Package Management
@@ -117,11 +282,102 @@ conditionally install packages.
   (unless package-archive-contents
     (package-refresh-contents))
 
-  ;; install package if not already installed
-  (defun package-require (&rest packages)
-    (dolist (package packages)
-      (unless (package-installed-p package)
-        (package-install package))))
+  (setq PACKAGES '(dashboard
+                   pulsar
+                   volatile-highlights
+                   goto-line-preview
+                   avy
+                   avy-zap
+                   anzu
+                   hydra
+                   vertico
+                   marginalia
+                   consult
+                   consult-eglot
+                   consult-dir
+                   consult-project-extra
+                   embark
+                   embark-consult
+                   orderless
+                   minions
+                   ws-butler
+                   multiple-cursors
+                   visual-regexp
+                   ialign
+                   tiny
+                   expand-region
+                   drag-stuff
+                   vundo
+                   undo-fu
+                   tempel
+                   tempel-collection
+                   fix-word
+                   string-inflection
+                   corfu
+                   cape
+                   dumb-jump
+                   flycheck
+                   flycheck-pos-tip
+                   flycheck-color-mode-line
+                   consult-flycheck
+                   compile-multi
+                   consult-compile-multi
+                   compile-multi-embark
+                   dirvish
+                   lispy
+                   racket-mode
+                   ;; TODO markdown-mode
+                   which-key
+                   cheatsheet
+                   org-modern
+                   toc-org
+                   git-modes
+                   git-timemachine
+                   git-messenger
+                   ;; git-undo
+                   git-link
+                   diff-hl
+                   magit
+                   forge
+                   async dash f hl-todo magit pcre2el s magit-todos
+                   magit-lfs
+                   exec-path-from-shell
+                   shell-pop
+                   eshell-bookmark
+                   esh-buf-stack
+                   eshell-did-you-mean
+                   eshell-syntax-highlighting
+                   eshell-fringe-status
+                   eshell-z
+                   esh-help
+                   esh-autosuggest
+                   osx-trash
+                   rg
+                   deadgrep
+                   pdf-tools
+                   pdf-view-restore
+                   elfeed
+                   elfeed-org
+                   mpv aio elfeed-tube elfeed-tube-mpv
+                   docker
+                   dash
+                   s
+                   ht
+                   f
+                   ts
+                   modus-themes
+                   emms
+                   speed-type
+                   keycast
+                   gif-screencast
+                   copy-as-format
+                   symbol-overlay
+                   page-break-lines))
+
+  ;; install packages if not already installed
+  (dolist (package PACKAGES)
+    (unless (package-installed-p package)
+      (package-install package)))
 
   ;; set INIT-DIR for later use
   (setq INIT-DIR (file-name-directory user-init-file))
@@ -131,7 +387,35 @@ conditionally install packages.
 #+end_src
 
 
+* Errors and Warnings
+
+** builtin
+
+Suppress ~ad-handle-definition: '<function>' got redefined~ messages on startup.
+
+#+begin_src elisp
+  ;; https://andrewjamesjohnson.com/suppressing-ad-handle-definition-warnings-in-emacs/
+  (setq ad-redefinition-action 'accept)
+#+end_src
+
+Get a stack trace when a function raises error.
+
+#+begin_src elisp
+  ;; https://stackoverflow.com/a/5414033
+  (setq debug-on-error t)
+#+end_src
+
+
 * Interface Enhancement
+
+** builtin
+
+Display column number in the mode line.
+I don't need line numbers on the left margin.
+
+#+begin_src elisp
+  (column-number-mode 1)
+#+end_src
 
 ** dashboard
 
@@ -142,9 +426,9 @@ conditionally install packages.
 Set a sensible startup screen that displays recently visited files, projects, bookmarks, agenda, and registers.
 
 *** TODO Study the different configuration variables, and change the logo.
-
+*** TODO enable projects in dashboard-items
 #+begin_src elisp
-  (package-require 'dashboard)
+  (require 'dashboard)
   ;; Set the title
   (setq dashboard-banner-logo-title "")
   ;; Set the banner
@@ -156,7 +440,7 @@ Set a sensible startup screen that displays recently visited files, projects, bo
   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 
   (setq dashboard-items '((recents  . 5)
-                          (projects . 5)
+                          ;;(projects . 5)
                           (bookmarks . 5)
                           (registers . 5)
                           (agenda . 5)))
@@ -190,7 +474,7 @@ Pulse highlight line on demand or after running select functions.
 *** TODO check 'consult-after-jump-hook after consult is installed.
 
 #+begin_src elisp
-  (package-require 'pulsar)
+  (require 'pulsar)
 
   ;; Check the default value of `pulsar-pulse-functions'.  That is where
   ;; you add more commands that should cause a pulse after they are
@@ -242,7 +526,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 *** TODO find better alternatives to this package
 
 #+begin_src elisp
-  (package-require 'volatile-highlights)
+  (require 'volatile-highlights)
 
   (volatile-highlights-mode t)
 
@@ -255,8 +539,1230 @@ Bring visual feedback to cut, copy, paste, occur, and search.
   ;;  (vhl/load-extension 'undo-tree)))
 #+end_src
 
+** Window & Frame Management
 
-* TODO Git
+*** Bars
+
+Hide menu, tool, and scroll bars.
+
+#+begin_src elisp
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+#+end_src
+
+*** Fringe
+
+While I prefer the margin since it is not limited to ugly looking bitmaps,
+certain features such as bookmarks need the fringe.
+
+#+begin_src elisp
+  ;; set fringe to default width with white color
+  (set-face-attribute 'fringe nil :background 'unspecified)
+#+end_src
+
+*** Margin
+
+Disable margins. While I prefer the margin for ~flycheck~ markers, emacs
+bookmarks don't show up there. I can't have both the margin and fringe enabled
+at the same time, it is a waste of space.
+
+#+begin_src elisp
+  (set-window-margins nil nil)
+#+end_src
+
+*** font
+
+**** emacs
+
+I use [[https://github.com/be5invis/Iosevka][~Iosevka~]] font for ~default~, ~fixed~, and ~variable~ faces. ~Iosevka~ is
+a beautiful open-source font for programming. I am not using the patched version
+that introduces glyphs because it is not maintained by the original developer
+and I want to keep the config simple and minimal.
+
+#+begin_src elisp
+  (set-face-attribute 'default
+                      nil
+                      :family "Iosevka"
+                      :height 120
+                      :width 'normal
+                      :weight 'regular)
+
+  (set-face-attribute 'fixed-pitch
+                      nil
+                      :family "Iosevka"
+                      :height 120
+                      :width 'normal
+                      :weight 'regular)
+
+  (set-face-attribute 'variable-pitch
+                      nil
+                      :family "Iosevka"
+                      :height 120
+                      :width 'normal
+                      :weight 'regular)
+#+end_src
+
+** Navigation
+
+*** goto-line-preview
+
+:PROPERTIES:
+:URL: https://github.com/emacs-vs/goto-line-preview
+:END:
+
+#+begin_src elisp
+  (require 'goto-line-preview)
+  (global-set-key [remap goto-line] 'goto-line-preview)
+#+end_src
+
+*** avy
+
+:PROPERTIES:
+:URL: https://github.com/abo-abo/avy
+:END:
+
+#+begin_src elisp
+  (require 'avy)
+
+  (setq avy-case-fold-search nil)       ;; case sensitive makes selection easier
+
+  (global-set-key (kbd "C-;")    'avy-goto-char-2)  ;; I use this most frequently
+  (global-set-key (kbd "C-'")    'avy-goto-line)    ;; Consistent with ivy-avy
+  (global-set-key (kbd "M-g c")  'avy-goto-char)
+  (global-set-key (kbd "M-g e")  'avy-goto-word-0)  ;; lots of candidates
+  (global-set-key (kbd "M-g g")  'avy-goto-line)    ;; digits behave like goto-line
+  (global-set-key (kbd "M-g w")  'avy-goto-word-1)  ;; first character of the word
+  (global-set-key (kbd "M-g (")  'avy-goto-open-paren)
+  (global-set-key (kbd "M-g )")  'avy-goto-close-paren)
+  (global-set-key (kbd "M-g P")  'avy-pop-mark)
+#+end_src
+
+**** avy-zap
+
+:PROPERTIES:
+:URL: https://github.com/cute-jumper/avy-zap
+:END:
+
+#+begin_src elisp
+  (require 'avy-zap)
+  (global-set-key (kbd "M-z") 'avy-zap-to-char-dwim)
+  (global-set-key (kbd "M-Z") 'avy-zap-up-to-char-dwim)
+#+end_src
+
+
+*** anzu
+
+:PROPERTIES:
+:URL: https://github.com/emacsorphanage/anzu
+:END:
+
+#+begin_src elisp
+  (require 'anzu)
+  (global-anzu-mode +1)
+
+  (set-face-attribute 'anzu-mode-line nil
+                      :foreground "yellow" :weight 'bold)
+
+  (custom-set-variables
+   '(anzu-mode-lighter "")
+   '(anzu-deactivate-region t)
+   '(anzu-search-threshold 1000)
+   '(anzu-replace-threshold 50)
+   '(anzu-replace-to-string-separator " => "))
+
+  (define-key isearch-mode-map [remap isearch-query-replace]  #'anzu-isearch-query-replace)
+  (define-key isearch-mode-map [remap isearch-query-replace-regexp] #'anzu-isearch-query-replace-regexp)
+#+end_src
+
+** Key-bindings
+
+*** hydra
+
+:PROPERTIES:
+:URL: https://github.com/abo-abo/hydra
+:END:
+
+#+begin_src elisp
+  (require 'hydra)
+#+end_src
+
+** Minibuffer
+
+*** vertico
+
+:PROPERTIES:
+:URL: https://github.com/minad/vertico
+:END:
+
+#+begin_src elisp
+  ;; Enable vertico
+  (require 'vertico)
+  (vertico-mode)
+
+  (require 'vertico-indexed)
+  (vertico-indexed-mode)
+
+  (require 'vertico-mouse)
+  (vertico-mouse-mode)
+
+  (require 'vertico-quick)
+  (keymap-set vertico-map "M-q" #'vertico-quick-insert)
+  (keymap-set vertico-map "C-q" #'vertico-quick-exit)
+
+  ;; Persist history over Emacs restarts. Vertico sorts by history position.
+  (require 'savehist)
+  (savehist-mode)
+
+  ;; A few more useful configurations...
+  ;; Add prompt indicator to `completing-read-multiple'.
+  ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
+  (defun crm-indicator (args)
+    (cons (format "[CRM%s] %s"
+                  (replace-regexp-in-string
+                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                   crm-separator)
+                  (car args))
+          (cdr args)))
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+  ;; Do not allow the cursor in the minibuffer prompt
+  (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
+  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+  ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
+  ;; Vertico commands are hidden in normal buffers.
+  ;; (setq read-extended-command-predicate
+  ;;       #'command-completion-default-include-p)
+
+  ;; Enable recursive minibuffers
+  (setq enable-recursive-minibuffers t)
+#+end_src
+
+*** marginalia
+
+:PROPERTIES:
+:URL: https://github.com/minad/marginalia
+:END:
+
+#+begin_src elisp
+  ;; Enable rich annotations using the Marginalia package
+  (require 'marginalia)
+
+  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+  ;; available in the *Completions* buffer, add it to the
+  ;; `completion-list-mode-map'.
+  (define-key minibuffer-local-map (kbd "M-A") 'marginalia-cycle)
+  (marginalia-mode)
+#+end_src
+
+*** consult
+
+:PROPERTIES:
+:URL: https://github.com/minad/consult/blob/main/README.org
+:END:
+
+#+begin_src elisp
+  (require 'consult)
+
+  ;; C-c bindings in `mode-specific-map'
+  (global-set-key (kbd "C-c M-x") 'consult-mode-command)
+  (global-set-key (kbd "C-c h") 'consult-history)
+  (global-set-key (kbd "C-c k") 'consult-kmacro)
+  (global-set-key (kbd "C-c m") 'consult-man)
+  (global-set-key (kbd "C-c i") 'consult-info)
+  (global-set-key [remap Info-search] 'consult-info)
+
+  ;; C-x bindings in `ctl-x-map'
+  (define-key ctl-x-map (kbd "M-:")  'consult-complex-command)     ;; orig. repeat-complex-command
+  (define-key ctl-x-map (kbd "b")    'consult-buffer)                ;; orig. switch-to-buffer
+  (define-key ctl-x-map (kbd "4 b")  'consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+  (define-key ctl-x-map (kbd "5 b")  'consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+  (define-key ctl-x-map (kbd "r b")  'consult-bookmark)            ;; orig. bookmark-jump
+  (define-key ctl-x-map (kbd "p b")  'consult-project-buffer)      ;; orig. project-switch-to-buffer
+
+  ;; Custom M-# bindings for fast register access
+  (global-set-key (kbd "M-#") 'consult-register-load)
+  (global-set-key (kbd "M-'") 'consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+  (global-set-key (kbd "C-M-#") 'consult-register)
+
+  ;; Other custom bindings
+  (global-set-key (kbd "M-y") 'consult-yank-pop)                ;; orig. yank-pop
+
+  ;; M-g bindings in `goto-map'
+  (global-set-key (kbd "M-g e") 'consult-compile-error)
+  (global-set-key (kbd "M-g f") 'consult-flycheck)               ;; Alternative: consult-flycheck
+  (global-set-key (kbd "M-g g") 'consult-goto-line)             ;; orig. goto-line
+  (global-set-key (kbd "M-g M-g") 'consult-goto-line)           ;; orig. goto-line
+  (global-set-key (kbd "M-g o") 'consult-outline)               ;; Alternative: consult-org-heading
+  (global-set-key (kbd "M-g m") 'consult-mark)
+  (global-set-key (kbd "M-g k") 'consult-global-mark)
+  (global-set-key (kbd "M-g i") 'consult-imenu)
+  (global-set-key (kbd "M-g I") 'consult-imenu-multi)
+
+  ;; M-s bindings in `search-map'
+  (global-set-key (kbd "M-s d") 'consult-find)                  ;; Alternative: consult-fd
+  (global-set-key (kbd "M-s D") 'consult-locate)
+  (global-set-key (kbd "M-s g") 'consult-grep)
+  (global-set-key (kbd "M-s G") 'consult-git-grep)
+  (global-set-key (kbd "M-s r") 'consult-ripgrep)
+  (global-set-key (kbd "M-s l") 'consult-line)
+  (global-set-key (kbd "M-s L") 'consult-line-multi)
+  (global-set-key (kbd "M-s k") 'consult-keep-lines)
+  (global-set-key (kbd "M-s u") 'consult-focus-lines)
+
+  ;; Isearch integration
+  (global-set-key (kbd "M-s e") 'consult-isearch-history)
+
+  (define-key isearch-mode-map (kbd "M-e")   'consult-isearch-history)       ;; orig. isearch-edit-string
+  (define-key isearch-mode-map (kbd "M-s e") 'consult-isearch-history)       ;; orig. isearch-edit-string
+  (define-key isearch-mode-map (kbd "M-s l") 'consult-line)                  ;; needed by consult-line to detect isearch
+  (define-key isearch-mode-map (kbd "M-s L") 'consult-line-multi)            ;; needed by consult-line to detect isearch
+
+  ;; Minibuffer history
+  (define-key minibuffer-local-map (kbd "M-s") 'consult-history)               ;; orig. next-matching-history-element
+  (define-key minibuffer-local-map (kbd "M-r") 'consult-history)               ;; orig. previous-matching-history-element
+
+  ;; Enable automatic preview at point in the *Completions* buffer. This is
+  ;; relevant when you use the default completion UI.
+  (add-hook 'completion-list-mode #'consult-preview-at-point-mode)
+
+
+  ;; Optionally configure the register formatting. This improves the register
+  ;; preview for `consult-register', `consult-register-load',
+  ;; `consult-register-store' and the Emacs built-ins.
+  (setq register-preview-delay 0.5
+        register-preview-function #'consult-register-format)
+
+  ;; Optionally tweak the register preview window.
+  ;; This adds thin lines, sorting and hides the mode line of the window.
+  (advice-add #'register-preview :override #'consult-register-window)
+
+  ;; Use Consult to select xref locations with preview
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+
+  ;; Configure other variables and modes in the :config section,
+  ;; after lazily loading the package.
+
+  ;; Optionally configure preview. The default value
+  ;; is 'any, such that any key triggers the preview.
+  ;; (setq consult-preview-key 'any)
+  ;; (setq consult-preview-key "M-.")
+  ;; (setq consult-preview-key '("S-<down>" "S-<up>"))
+  ;; For some commands and buffer sources it is useful to configure the
+  ;; :preview-key on a per-command basis using the `consult-customize' macro.
+  (consult-customize
+   consult-theme :preview-key '(:debounce 0.2 any)
+   consult-ripgrep
+   consult-git-grep
+   consult-grep
+   consult-bookmark
+   consult-recent-file
+   consult-xref
+   consult--source-bookmark
+   consult--source-file-register
+   consult--source-recent-file
+   consult--source-project-recent-file
+   ;; :preview-key "M-."
+   :preview-key '(:debounce 0.4 any))
+
+  ;; Optionally configure the narrowing key.
+  ;; Both < and C-+ work reasonably well.
+  (setq consult-narrow-key "<") ;; "C-+"
+
+  ;; Optionally make narrowing help available in the minibuffer.
+  ;; You may want to use `embark-prefix-help-command' or which-key instead.
+  ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
+
+  ;; By default `consult-project-function' uses `project-root' from project.el.
+  ;; Optionally configure a different project root function.
+              ;;;; 1. project.el (the default)
+  ;; (setq consult-project-function #'consult--default-project--function)
+              ;;;; 2. vc.el (vc-root-dir)
+  ;; (setq consult-project-function (lambda (_) (vc-root-dir)))
+              ;;;; 3. locate-dominating-file
+  ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
+              ;;;; 4. projectile.el (projectile-project-root)
+  ;; (autoload 'projectile-project-root "projectile")
+  ;; (setq consult-project-function (lambda (_) (projectile-project-root)))
+              ;;;; 5. No project support
+  ;; (setq consult-project-function nil)
+#+end_src
+
+**** consult-eglot
+
+:PROPERTIES:
+:URL: https://github.com/mohkale/consult-eglot
+:END:
+
+#+begin_src elisp
+  (require 'consult-eglot)
+#+end_src
+
+
+**** consult-dir
+
+:PROPERTIES:
+:URL: https://github.com/karthink/consult-dir
+:END:
+
+#+begin_src elisp
+  (require 'consult-dir)
+
+  (global-set-key (kbd "C-x C-d") 'consult-dir)
+  (define-key vertico-map (kbd "C-x C-d") 'consult-dir)
+  (define-key vertico-map (kbd "C-x C-j") 'consult-dir-jump-file)
+
+  (add-to-list 'consult-dir-sources 'consult-dir--source-tramp-ssh t)
+
+    ;; TODO: enable this after fixing bug
+    ;;(defcustom consult-dir--tramp-container-executable "docker"
+    ;;  "Default executable to use for querying container hosts."
+    ;;  :group 'consult-dir
+    ;;  :type 'string)
+
+    ;; (defcustom consult-dir--tramp-container-args nil
+    ;;  "Optional list of arguments to pass when querying container hosts."
+    ;;  :group 'consult-dir
+    ;;  :type '(repeat string))
+
+    ;; (defun consult-dir--tramp-container-hosts ()
+    ;;  "Get a list of hosts from a container host."
+    ;;  (cl-loop for line in (cdr
+    ;;                        (ignore-errors
+    ;;                          (apply #'process-lines consult-dir--tramp-container-executable
+    ;;                                 (append consult-dir--tramp-container-args (list "ps")))))
+    ;;           for cand = (split-string line "[[:space:]]+" t)
+    ;;           collect (let ((user (unless (string-empty-p (car cand))
+    ;;                                 (concat (car cand) "@")))
+    ;;                         (hostname (car (last cand))))
+    ;;                     (format "/docker:%s%s:/" user hostname))))
+
+    ;;(defvar consult-dir--source-tramp-docker
+    ;;  `(:name     "Docker"
+    ;;              :narrow   ?d
+    ;;              :category file
+    ;;              :face     consult-file
+    ;;              :history  file-name-history
+    ;;              :items    ,#'consult-dir--tramp-docker-hosts)
+    ;;  "Docker candiadate source for `consult-dir'.")
+
+    ;; Adding to the list of consult-dir sources
+    ;; (add-to-list 'consult-dir-sources 'consult-dir--source-tramp-docker t))
+#+end_src
+
+**** consult-project-extra
+
+:PROPERTIES:
+:URL: https://github.com/Qkessler/consult-project-extra
+:END:
+
+#+begin_src elisp
+  (require 'consult-project-extra)
+  (global-set-key (kbd "C-c p f") 'consult-project-extra-find)
+  (global-set-key (kbd "C-c p o") 'consult-project-extra-find-other-window)
+#+end_src
+
+
+*** embark
+
+:PROPERTIES:
+:URL: https://github.com/oantolin/embark
+:END:
+
+NOTE: read https://github.com/oantolin/embark/wiki/Additional-Configuration
+
+#+begin_src elisp
+  (require 'embark)
+
+  (global-set-key (kbd "C-.") 'embark-act)        ;; pick some comfortable binding
+  (global-set-key (kbd "C-;") 'embark-dwim)       ;; good alternative: M-.
+  (global-set-key (kbd "C-h B") 'embark-bindings) ;; alternative for `describe-bindings'
+
+
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command)
+
+  ;; Show the Embark target at point via Eldoc.  You may adjust the Eldoc
+  ;; strategy, if you want to see the documentation from multiple providers.
+  (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
+  ;; (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
+
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none))))
+#+end_src
+
+**** embark-consult
+
+#+begin_src elisp
+  ;; Consult users will also want the embark-consult package.
+  (require 'embark-consult)
+
+  ;; only need to install it, embark loads it after consult if found
+  (add-hook 'embark-collect-mode #'consult-preview-at-point-mode)
+  #+end_src
+
+** Fuzzy & Narrowing
+
+*** orderless
+
+:PROPERTIES:
+:URL: https://github.com/oantolin/orderless
+:END:
+
+#+begin_src elisp
+  (require 'orderless)
+  (setq completion-styles '(orderless basic)
+        ;; set these as `nil' to exclusively use `orderless'
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles basic partial-completion))))
+#+end_src
+
+* Mode-line
+
+** minions
+
+:PROPERTIES:
+:URL: https://github.com/tarsius/minions
+:END:
+
+Shows minor modes in a menu. Needs to be at the very end to prevent the modeline changes from being reset.
+
+#+begin_src elisp
+  (require 'minions)
+  (minions-mode 1)
+#+end_src
+
+* Editing Enhancement
+
+** Indentation Enhancement
+
+*** builtin
+
+Insert newline and indent when ~RETURN~ is pressed.
+
+#+begin_src elisp
+  (define-key global-map (kbd "RET") 'newline-and-indent)
+#+end_src
+
+** Symbols / Tokens
+
+** Whitespace Enhancement
+
+*** emacs
+
+Visualize relevant whitespace types and empty lines.
+
+#+begin_src elisp
+  ;; set the display width for tabs
+  (setq-default tab-width 4)
+
+  ;; customize the whitespaces that need to be visualized
+  (setq-default whitespace-style
+                ;; 'face is needed to to visualize the following whitespace types
+                '(face
+                  ;; visualize trailing blanks
+                  trailing
+                  ;; visualize the region representing the tab width
+                  tabs
+                  ;; visualize the tab mark
+                  tab-mark
+                  ;; visualize empty lines at beginning or end of buffer
+                  empty
+                  ;; visualize missing newline at the end of the file
+                  missing-newline-at-eof
+                  ))
+  ;; visualize empty lines at the end of buffer using fringe markers
+  (setq-default indicate-empty-lines t)
+
+  (global-whitespace-mode)
+#+end_src
+
+*** ws-butler
+
+:PROPERTIES:
+:URL: https://github.com/lewang/ws-butler
+:END:
+
+Trim whitespace on lines touched when saving.
+
+#+begin_src elisp
+  (require 'ws-butler)
+  (add-hook 'prog-mode-hook #'ws-butler-mode)
+#+end_src
+
+
+
+** Delete Enhancement
+
+** Fancy Icons
+
+** Massive Edit
+
+*** TODO multiple-cursors
+
+:PROPERTIES:
+:URL: https://github.com/magnars/multiple-cursors.el
+:END:
+
+Multiple cursors for Emacs.
+
+**** TODO: play around with this, check config, and compare utility against rectangle mode
+
+#+begin_src elisp
+  (require 'multiple-cursors)
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+#+end_src
+
+*** TODO visual-regexp
+
+:PROPERTIES:
+:URL: https://github.com/benma/visual-regexp.el
+:END:
+
+Regexp replacement with live visual feedback in the buffer.
+
+#+begin_src elisp
+  (require 'visual-regexp)
+  (define-key global-map (kbd "C-c r") 'vr/replace)
+  (define-key global-map (kbd "C-c q") 'vr/query-replace)
+  ;; if you use multiple-cursors, this is for you:
+  (define-key global-map (kbd "C-c m") 'vr/mc-mark)
+#+end_src
+
+*** TODO ialign
+
+:PROPERTIES:
+:URL: https://github.com/mkcms/interactive-align
+:END:
+
+**** TODO: play around with the functionality to ensure usefulness.
+
+#+begin_src elisp
+  (require 'ialign)
+  (global-set-key (kbd "C-x l") 'ialign)
+#+end_src
+
+*** TODO tiny
+
+:PROPERTIES:
+:URL: https://github.com/abo-abo/tiny
+:END:
+
+**** TODO: investigate
+
+#+begin_src elisp
+(require 'tiny)
+(tiny-setup-default)
+#+end_src
+
+** Quotes & Parenthesis & Delimiters Handling
+
+*** Insert & Edit
+
+*** Select
+
+**** expand-region
+
+:PROPERTIES:
+:URL: https://github.com/magnars/expand-region.el
+:END:
+
+#+begin_src elisp
+  (require 'expand-region)
+  (global-set-key (kbd "C-=") 'er/expand-region)
+#+end_src
+
+
+*** Highlight
+
+** Kill-ring / Clipboard
+
+** Drag Lines
+
+*** drag-stuff
+:PROPERTIES:
+:URL: https://github.com/rejeep/drag-stuff.el
+:END:
+
+Drag words, lines, and region, up, down, right, and left using ~<M-up>~,
+~<M-down>~, ~<M-right>~, and ~<M-left>~.
+
+#+begin_src elisp
+  (require 'drag-stuff)
+  (drag-stuff-global-mode 1)
+  (drag-stuff-define-keys)
+#+end_src
+
+** Undo & Redo
+
+*** vundo
+
+:PROPERTIES:
+:URL: https://github.com/casouri/vundo
+:END:
+
+#+begin_src elisp
+  (require 'vundo)
+#+end_src
+o
+
+*** undo-fu
+
+:PROPERTIES:
+:URL: https://codeberg.org/ideasman42/emacs-undo-fu
+:END:
+
+#+begin_src elisp
+  (require 'undo-fu)
+  (global-unset-key (kbd "C-z"))
+  (global-set-key (kbd "C-z")   'undo-fu-only-undo)
+  (global-set-key (kbd "C-S-z") 'undo-fu-only-redo)
+#+end_src
+
+** Multiple Major-Mode
+
+** Snippet
+
+*** tempel
+
+:PROPERTIES:
+:URL: https://github.com/minad/tempel
+:END:
+
+#+begin_src elisp
+  (require 'tempel)
+
+  ;; Require trigger prefix before template name when completing.
+  ;; :custom
+  ;; (tempel-trigger-prefix "<")
+
+  (global-set-key (kbd "M-+") #'tempel-complete) ;; Alternative tempel-expand
+  (global-set-key (kbd "M-*") #'tempel-insert)
+
+  ;; Setup completion at point
+  (defun tempel-setup-capf ()
+    ;; Add the Tempel Capf to `completion-at-point-functions'.
+    ;; `tempel-expand' only triggers on exact matches. Alternatively use
+    ;; `tempel-complete' if you want to see all matches, but then you
+    ;; should also configure `tempel-trigger-prefix', such that Tempel
+    ;; does not trigger too often when you don't expect it. NOTE: We add
+    ;; `tempel-expand' *before* the main programming mode Capf, such
+    ;; that it will be tried first.
+    (setq-local completion-at-point-functions
+                (cons #'tempel-expand
+                      completion-at-point-functions)))
+
+  (add-hook 'conf-mode-hook 'tempel-setup-capf)
+  (add-hook 'prog-mode-hook 'tempel-setup-capf)
+  (add-hook 'text-mode-hook 'tempel-setup-capf)
+
+  ;; Optionally make the Tempel templates available to Abbrev,
+  ;; either locally or globally. `expand-abbrev' is bound to C-x '.
+  (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
+  (global-tempel-abbrev-mode)
+#+end_src
+
+**** tempel-collection
+
+:PROPERTIES:
+:URL: https://github.com/minad/tempel-collection
+:END:
+
+#+begin_src elisp
+  ;; Optional: Add tempel-collection.
+  ;; The package is young and doesn't have comprehensive coverage.
+  (require 'tempel-collection)
+#+end_src
+
+
+** Text Conversion
+
+*** fix-word
+
+:PROPERTIES:
+:URL: https://github.com/mrkkrp/fix-word
+:END:
+
+#+begin_src elisp
+  (require 'fix-word)
+  (global-set-key (kbd "M-u") #'fix-word-upcase)
+  (global-set-key (kbd "M-l") #'fix-word-downcase)
+  (global-set-key (kbd "M-c") #'fix-word-capitalize)
+#+end_src
+
+*** string-inflection
+
+:PROPERTIES:
+:URL: https://github.com/akicho8/string-inflection
+:END:
+
+#+begin_src elisp
+  (require 'string-inflection)
+
+  ;; default
+  (global-set-key (kbd "C-c C-u") 'string-inflection-all-cycle)
+
+  ;; for ruby
+  (add-hook 'ruby-mode-hook
+            #'(lambda ()
+               (local-set-key (kbd "C-c C-u") 'string-inflection-ruby-style-cycle)))
+
+  ;; for elixir
+  (add-hook 'elixir-mode-hook
+            #'(lambda ()
+               (local-set-key (kbd "C-c C-u") 'string-inflection-elixir-style-cycle)))
+
+  ;; for java
+  (add-hook 'java-mode-hook
+            #'(lambda ()
+               (local-set-key (kbd "C-c C-u") 'string-inflection-java-style-cycle)))
+
+  ;; for python
+  (add-hook 'python-mode-hook
+            #'(lambda ()
+                (local-set-key (kbd "C-c C-u") 'string-inflection-python-style-cycle)))
+#+end_src
+
+* Programming
+
+** Completion
+
+*** corfu
+
+:PROPERTIES:
+:URL: https://github.com/minad/corfu
+:END:
+
+#+begin_src elisp
+      (require 'corfu)
+      (global-corfu-mode)
+
+      ;; TAB cycle if there are only few candidates
+      (setq completion-cycle-threshold 3)
+
+      ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
+      ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
+      ;; (setq read-extended-command-predicate
+      ;;       #'command-completion-default-include-p)
+
+      ;; Enable indentation+completion using the TAB key.
+      ;; `completion-at-point' is often bound to M-TAB.
+      (setq tab-always-indent 'complete)
+
+
+    ;; You can also enable Corfu more generally for every minibuffer, as long as no
+    ;; completion UI is active. In the following example we check for Mct and
+    ;; Vertico. Furthermore we ensure that Corfu is not enabled if a password is
+    ;; read from the minibuffer.
+    (defun corfu-enable-always-in-minibuffer ()
+      "Enable Corfu in the minibuffer if Vertico/Mct are not active."
+      (unless (or (bound-and-true-p mct--active)
+                  (bound-and-true-p vertico--input)
+                  (eq (current-local-map) read-passwd-map))
+        ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+        (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+                    corfu-popupinfo-delay nil)
+        (corfu-mode 1)))
+    (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
+
+
+  ;; When completing in the Eshell I recommend conservative local settings without
+  ;; auto completion, such that the completion behavior is similar to widely used
+  ;; shells like Bash, Zsh or Fish.
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (setq-local corfu-auto nil)
+              (corfu-mode)))
+#+end_src
+
+*** cape
+
+:PROPERTIES:
+:URL: https://github.com/minad/cape
+:END:
+
+#+begin_src elisp
+  (require 'cape)
+
+  ;; Add extensions
+  ;; Bind dedicated completion commands
+  ;; Alternative prefix keys: C-c p, M-p, M-+, ...
+  (global-set-key (kbd "C-c p p") 'completion-at-point) ;; capf
+  (global-set-key (kbd "C-c p t") 'complete-tag)        ;; etags
+  (global-set-key (kbd "C-c p d") 'cape-dabbrev)        ;; or dabbrev-completion
+  (global-set-key (kbd "C-c p h") 'cape-history)
+  (global-set-key (kbd "C-c p f") 'cape-file)
+  (global-set-key (kbd "C-c p k") 'cape-keyword)
+  (global-set-key (kbd "C-c p s") 'cape-elisp-symbol)
+  (global-set-key (kbd "C-c p e") 'cape-elisp-block)
+  (global-set-key (kbd "C-c p a") 'cape-abbrev)
+  (global-set-key (kbd "C-c p l") 'cape-line)
+  (global-set-key (kbd "C-c p w") 'cape-dict)
+  (global-set-key (kbd "C-c p :") 'cape-emoji)
+  (global-set-key (kbd "C-c p \\") 'cape-tex)
+  (global-set-key (kbd "C-c p _") 'cape-tex)
+  (global-set-key (kbd "C-c p ^") 'cape-tex)
+  (global-set-key (kbd "C-c p &") 'cape-sgml)
+  (global-set-key (kbd "C-c p r") 'cape-rfc1345)
+
+  ;; Add to the global default value of `completion-at-point-functions' which is
+  ;; used by `completion-at-point'.  The order of the functions matters, the
+  ;; first function returning a result wins.  Note that the list of buffer-local
+  ;; completion functions takes precedence over the global list.
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+  (add-to-list 'completion-at-point-functions #'cape-history)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (add-to-list 'completion-at-point-functions #'cape-tex)
+  (add-to-list 'completion-at-point-functions #'cape-sgml)
+  (add-to-list 'completion-at-point-functions #'cape-rfc1345)
+  (add-to-list 'completion-at-point-functions #'cape-abbrev)
+  (add-to-list 'completion-at-point-functions #'cape-dict)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
+  (add-to-list 'completion-at-point-functions #'cape-line)
+#+end_src
+
+** Jump to Definition / Tagging
+
+*** dumb-jump
+
+:PROPERTIES:
+:URL: https://github.com/jacktasia/dumb-jump
+:END:
+
+#+begin_src elisp
+  (require 'dumb-jump)
+
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  (setq dumb-jump-force-searcher 'rg)
+
+  (defhydra dumb-jump-hydra (:color blue :columns 3)
+    "Dumb Jump"
+    ("j" dumb-jump-go "Go")
+    ("o" dumb-jump-go-other-window "Other window")
+    ("e" dumb-jump-go-prefer-external "Go external")
+    ("x" dumb-jump-go-prefer-external-other-window "Go external other window")
+    ("i" dumb-jump-go-prompt "Prompt")
+    ("l" dumb-jump-quick-look "Quick look")
+    ("b" dumb-jump-back "Back"))
+#+end_src
+
+** LSP Client
+
+** Debugging
+
+** Error Checking
+
+*** TODO flycheck
+
+:PROPERTIES:
+:URL: https://github.com/flycheck/flycheck
+:END:
+
+Check ~MELPA~ for all auxiliary ~flycheck~ packages.
+
+#+begin_src elisp
+  (require 'flycheck)
+
+  (setq flycheck-indication-mode 'left-margin)
+
+  (global-flycheck-mode)
+
+  (global-set-key (kbd "C-c e ?") 'flycheck-verify-setup)
+  (global-set-key (kbd "C-c e s") 'flycheck-select-checker)
+  (global-set-key (kbd "C-c e i") 'flycheck-manual)
+  (global-set-key (kbd "C-c e l") 'flycheck-list-errors)
+  (global-set-key (kbd "C-c e n") 'flycheck-next-error)
+  (global-set-key (kbd "C-c e p") 'flycheck-previous-error)
+  (global-set-key (kbd "C-c e f") 'flycheck-first-error)
+  (global-set-key (kbd "C-c e x") 'flycheck-disable-checker)
+  (global-set-key (kbd "C-c e v") 'flycheck-verify-checker)
+  (global-set-key (kbd "C-c e d") 'flycheck-describe-checker)
+  (global-set-key (kbd "C-c e h") 'flycheck-display-error-at-point)
+  (global-set-key (kbd "C-c e e") 'flycheck-explain-error-at-point)
+  (global-set-key (kbd "C-c e b") 'flycheck-buffer)
+  (global-set-key (kbd "C-c e c") 'flycheck-clear)
+  (global-set-key (kbd "C-c e y") 'flycheck-copy-errors-as-kill)
+  (global-set-key (kbd "C-c e V") 'flycheck-version)
+  (global-set-key (kbd "C-c e C") 'flycheck-compile)
+#+end_src
+
+**** flycheck-pos-tip
+:PROPERTIES:
+:URL: https://github.com/flycheck/flycheck-pos-tip
+:END:
+
+#+begin_src elisp
+  (require 'flycheck-pos-tip)
+  (flycheck-pos-tip-mode)
+#+end_src
+
+**** TODO flycheck-color-mode-line
+
+:PROPERTIES:
+:URL: https://github.com/flycheck/flycheck-color-mode-line
+:END:
+
+***** TODO fix mode line to display color
+
+#+begin_src elisp
+  (require 'flycheck-color-mode-line)
+  (add-hook 'flycheck-mode-hook #'flycheck-color-mode-line-mode)
+#+end_src
+
+**** consult-flycheck
+:PROPERTIES:
+:URL: https://github.com/minad/consult-flycheck
+:END:
+
+#+begin_src elisp
+  (require 'consult-flycheck)
+#+end_src
+
+** Document
+
+** Code Folding
+
+*** hideshow
+
+~hideshow~ mode is already available as part of ~emacs~. Installing a new mode
+like ~origami~ is not required. This link explains how to make ~hideshow~
+accessible through two keybindings:
+https://karthinks.com/software/simple-folding-with-hideshow/
+
+#+begin_src elisp
+  (require 'hideshow)
+
+  (defun hs-cycle (&optional level)
+    (interactive "p")
+    (let (message-log-max
+          (inhibit-message t))
+      (if (= level 1)
+          (pcase last-command
+            ('hs-cycle
+             (hs-hide-level 1)
+             (setq this-command 'hs-cycle-children))
+            ('hs-cycle-children
+             ;; TODO: Fix this case. `hs-show-block' needs to be
+             ;; called twice to open all folds of the parent
+             ;; block.
+             (save-excursion (hs-show-block))
+             (hs-show-block)
+             (setq this-command 'hs-cycle-subtree))
+            ('hs-cycle-subtree
+             (hs-hide-block))
+            (_
+             (if (not (hs-already-hidden-p))
+                 (hs-hide-block)
+               (hs-hide-level 1)
+               (setq this-command 'hs-cycle-children))))
+        (hs-hide-level level)
+        (setq this-command 'hs-hide-level))))
+
+  (keymap-global-set "C-<tab>" 'hs-cycle)
+
+  (defun hs-global-cycle ()
+    (interactive)
+    (pcase last-command
+      ('hs-global-cycle
+       (save-excursion (hs-show-all))
+       (setq this-command 'hs-global-show))
+      (_ (hs-hide-all))))
+
+  (keymap-global-set "C-S-<tab>" 'hs-global-cycle)
+#+end_src
+
+** Compiling
+
+*** compile-multi
+
+:PROPERTIES:
+:URL: https://github.com/mohkale/compile-multi
+:END:
+
+#+begin_src elisp
+  (require 'compile-multi)
+
+  (require 'consult-compile-multi)
+  (consult-compile-multi-mode)
+
+  (require 'compile-multi-embark)
+  (compile-multi-embark-mode +1)
+#+end_src
+
+* Project Management
+
+** TODO projection
+
+:PROPERTIES:
+:URL: https://github.com/mohkale/projection
+:END:
+
+#+begin_src elisp
+#+end_src
+
+* File Manager
+
+** dirvish
+
+:PROPERTIES:
+:URL: https://github.com/alexluigit/dirvish
+:END:
+
+#+begin_src elisp
+  (require 'dirvish)
+  (dirvish-override-dired-mode)
+#+end_src
+
+* Programming Language
+
+** Lisp Family
+
+
+*** builtin
+
+Indent ~elisp~ code by 4 spaces - [[https://emacs.stackexchange.com/a/62630][https://emacs.stackexchange.com/a/62630]]
+
+#+begin_src elisp
+ (setq lisp-indent-offset 4)
+#+end_src
+
+*** lispy
+
+:PROPERTIES:
+:URL: https://github.com/abo-abo/lispy
+:END:
+
+#+begin_src elisp
+  (require 'lispy)
+
+  (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+  (add-hook 'racket-mode-hook (lambda () (lispy-mode 1)))
+
+  (defun conditionally-enable-lispy ()
+    (when (eq this-command 'eval-expression)
+      (lispy-mode 1)))
+  (add-hook 'minibuffer-setup-hook 'conditionally-enable-lispy)
+#+end_src
+
+*** racket
+
+**** racket-mode
+
+:PROPERTIES:
+:URL: https://www.racket-mode.com
+:END:
+
+#+begin_src elisp
+  (require 'racket-mode)
+
+  (add-hook 'racket-mode-hook 'eglot-ensure)
+  (add-to-list 'eglot-server-programs
+               '(racket-mode . ("racket" "-l" "racket-langserver")))
+#+end_src
+
+
+*** TODO Markdown
+
+**** TODO markdown-mode
+
+#+begin_src elisp
+#+end_src
+
+
+
+
+* AI
+
+** Code Completion
+
+** ChatGPT
+
+* Keys Cheat Sheet
+
+** which-key
+
+:PROPERTIES:
+:URL: https://github.com/justbur/emacs-which-key
+:END:
+
+#+begin_src elisp
+  (require 'which-key)
+  (setq which-key-popup-type 'minibuffer)
+  (which-key-mode)
+#+end_src
+
+** cheatsheet
+
+:PROPERTIES:
+:URL: https://github.com/mykyta-shyrin/cheatsheet
+:END:
+
+#+begin_src elisp
+  (require 'cheatsheet)
+#+end_src
+
+
+* Note
+
+** Org-mode
+
+:PROPERTIES:
+:URL: https://github.com/minad/org-modern
+:END:
+
+*** org-modern
+
+#+begin_src elisp
+  (require 'org-modern)
+
+  (setq org-auto-align-tags nil
+        org-tags-column 0
+        org-catch-invisible-edits 'show-and-error
+        org-special-ctrl-a/e t
+        org-insert-heading-respect-content t
+
+        ;; Org styling, hide markup etc.
+        org-hide-emphasis-markers t
+        org-pretty-entities t
+        org-ellipsis "…"
+
+        ;; Agenda styling
+        org-agenda-tags-column 0
+        org-agenda-block-separator ?─
+        org-agenda-time-grid '((daily today require-timed)
+                               (800 1000 1200 1400 1600 1800 2000)
+                               " ┄┄┄┄┄ "
+                               "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+        org-agenda-current-time-string "⭠ now ─────────────────────────────────────────────────")
+
+  (global-org-modern-mode)
+#+end_src
+
+*** toc-org
+
+https://github.com/snosov1/toc-org
+#+begin_src elisp
+  (require 'toc-org)
+
+  (add-hook 'org-mode-hook 'toc-org-mode)
+
+  ;; enable in markdown, too
+  (add-hook 'markdown-mode-hook 'toc-org-mode)
+  ;; TODO DEBUG THIS -> (define-key markdown-mode-map (kbd "C-c C-o") 'toc-org-markdown-follow-thing-at-point))
+#+end_src
+
+* TODO Version Control
 
 *** TODO - evaluate gited, dired-git-info, and satchel from ELPA
 
@@ -267,7 +1773,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'git-modes)
+  (require 'git-modes)
   (add-to-list 'auto-mode-alist
              (cons "/.dockerignore\\'" 'gitignore-mode))
 #+end_src
@@ -279,7 +1785,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'git-timemachine)
+  (require 'git-timemachine)
 #+end_src
 
 ** TODO git-messenger
@@ -289,7 +1795,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'git-messenger)
+  (require 'git-messenger)
 
   (global-set-key (kbd "C-x v p") 'git-messenger:popup-message)
   ;; TODO - (define-key git-messenger-map (kbd "m") 'git-messenger:copy-message)
@@ -304,7 +1810,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  ;; TODO - download this manually (package-require 'git-undo)
+  ;; TODO - download this manually (require 'git-undo)
 #+end_src
 
 ** git-link
@@ -314,7 +1820,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'git-link)
+  (require 'git-link)
   (global-set-key (kbd "C-c g l") 'git-link)
 #+end_src
 
@@ -327,7 +1833,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 *** TODO figure out dired mode support and diff-hl-show-hunk-mouse-mode
 
 #+begin_src elisp
-  (package-require 'diff-hl)
+  (require 'diff-hl)
   (global-diff-hl-mode)
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
@@ -342,7 +1848,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'magit)
+    (require 'magit)
 #+end_src
 
 ** TODO forge
@@ -354,7 +1860,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'magit 'forge)
+  (require 'forge)
 #+end_src
 
 ** TODO magit-todos
@@ -366,14 +1872,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 *** TODO - ~magit-todos-mode~ should be activated in a magit buffer.
 
 #+begin_src elisp
-  (package-require 'async
-                   'dash
-                   'f
-                   'hl-todo
-                   'magit
-                   'pcre2el
-                   's
-                   'magit-todos)
+  (require 'magit-todos)
   (magit-todos-mode)
 #+end_src
 
@@ -384,23 +1883,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'magit-lfs)
-#+end_src
-
-* Miscellaneous
-
-** copy-as-format
-
-:PROPERTIES:
-:URL: https://github.com/sshaw/copy-as-format
-:END:
-
-*** TODO figure out keybindings for other formats or remove all keybindings
-
-#+begin_src elisp
-  (package-require 'copy-as-format)
-  (global-set-key (kbd "C-c w s") 'copy-as-format-slack)
-  (global-set-key (kbd "C-c w g") 'copy-as-format-github)
+  (require 'magit-lfs)
 #+end_src
 
 * Integration
@@ -414,19 +1897,16 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'exec-path-from-shell)
+  (require 'exec-path-from-shell)
 
   ;; copied from https://github.com/purcell/emacs.d/blob/aae26a2f66deac354daefd87b136913889cc2825/lisp/init-exec-path.el#L5
-  (with-eval-after-load 'exec-path-from-shell
-    (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
-      (add-to-list 'exec-path-from-shell-variables var)))
-
+  (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
+    (add-to-list 'exec-path-from-shell-variables var))
 
   (when (or (memq window-system '(mac ns x pgtk))
             (unless (memq system-type '(ms-dos windows-nt))
               (daemonp)))
     (exec-path-from-shell-initialize))
-
 #+end_src
 
 *** TODO shell-pop
@@ -438,7 +1918,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 *** TODO figure out how to quickly close the popped shell
 
 #+begin_src elisp
-  (package-require 'shell-pop)
+  (require 'shell-pop)
   (custom-set-variables
    ;; custom-set-variables was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
@@ -466,7 +1946,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'eshell-bookmark)
+  (require 'eshell-bookmark)
   (add-hook 'eshell-mode-hook 'eshell-bookmark-setup)
 #+end_src
 
@@ -477,7 +1957,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'esh-buf-stack)
+  (require 'esh-buf-stack)
   (setup-eshell-buf-stack)
   (add-hook 'eshell-mode-hook
             (lambda ()
@@ -492,7 +1972,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'eshell-did-you-mean)
+  (require 'eshell-did-you-mean)
   (eshell-did-you-mean-setup)
 #+end_src
 
@@ -503,18 +1983,18 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'eshell-syntax-highlighting)
+  (require 'eshell-syntax-highlighting)
   (eshell-syntax-highlighting-global-mode +1)
 #+end_src
 
 **** eshell-fringe-status
 
 :PROPERTIES:
-:URL: https://github.com/ryuslash/eshell-fringe-status/tree/adc6997c68e39c0d52a2af1b2fd5cf2057783797
+:URL: https://github.com/ryuslash/eshell-fringe-status/
 :END:
 
 #+begin_src elisp
-  (package-require 'eshell-fringe-status)
+  (require 'eshell-fringe-status)
   (add-hook 'eshell-mode-hook 'eshell-fringe-status-mode)
 #+end_src
 
@@ -527,7 +2007,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 *** is it better to use fzf or fasd?
 
 #+begin_src elisp
-  (package-require 'eshell-z)
+  (require 'eshell-z)
   (add-hook 'eshell-mode-hook
             (defun my-eshell-mode-hook ()
               (require 'eshell-z)))
@@ -540,7 +2020,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'esh-help)
+  (require 'esh-help)
   (setup-esh-help-eldoc)
 #+end_src
 
@@ -551,9 +2031,90 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'esh-autosuggest)
-  (add-hook 'eshell-mode-hook #'esh-autosuggest-mode)
+    (require 'esh-autosuggest)
+    (add-hook 'eshell-mode-hook #'esh-autosuggest-mode)
 #+end_src
+
+** Operating System
+
+*** osx-trash
+
+:PROPERTIES:
+:URL: https://github.com/emacsorphanage/osx-trash/
+:END:
+
+#+begin_src elisp
+  (when (eq system-type 'darwin)
+    (osx-trash-setup))
+  (setq delete-by-moving-to-trash t)
+#+end_src
+
+** TODO Search
+
+*** TODO ripgrep
+
+1. Evaluate ~rg~ and ~deadgrep~ to decide which one to keep
+2. Change emacs ~grep~ for finding text and filtering files to use ~rg~
+3. Change ~occur~ mode to use ~rg~ for searching through buffers
+
+**** rg
+
+:PROPERTIES:
+:URL: https://github.com/dajva/rg.el
+:END:
+
+#+begin_src elisp
+  (require 'rg)
+  (rg-enable-menu)
+#+end_src
+
+**** deadgrep
+
+:PROPERTIES:
+:URL: https://github.com/Wilfred/deadgrep
+:END:
+
+#+begin_src elisp
+  (require 'deadgrep)
+  (global-set-key (kbd "<f5>") #'deadgrep)
+#+end_src
+
+** Pastebin
+
+** Google
+
+** Blog System
+
+* TODO Markdown
+
+* TODO LaTeX
+
+* PDF
+
+** pdf-tools
+
+:PROPERTIES:
+:URL: https://github.com/vedang/pdf-tools
+:END:
+
+#+begin_src elisp
+  (require 'pdf-tools)
+  (pdf-tools-install)
+#+end_src
+
+
+** pdf-view-restore
+
+:PROPERTIES:
+:URL: https://github.com/007kevin/pdf-view-restore
+:END:
+
+#+begin_src elisp
+  (require 'pdf-view-restore)
+  (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode)
+  (setq pdf-view-restore-filename (init-dir-file "pdf-view-restore"))
+#+end_src
+
 
 * Internet
 
@@ -576,7 +2137,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'elfeed)
+  (require 'elfeed)
   (global-set-key (kbd "C-x w") 'elfeed)
 #+end_src
 
@@ -590,7 +2151,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 
 #+begin_src elisp
   ;; Load elfeed-org
-  (package-require 'elfeed-org)
+  (require 'elfeed-org)
 
   ;; Initialize elfeed-org
   ;; This hooks up elfeed-org to read the configuration when elfeed
@@ -612,7 +2173,6 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'mpv 'aio 'elfeed-tube)
   (require 'elfeed-tube)
   (elfeed-tube-setup)
   (define-key elfeed-show-mode-map (kbd "F") 'elfeed-tube-fetch)
@@ -622,7 +2182,6 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 #+end_src
 
 #+begin_src elisp
-  (package-require 'elfeed-tube-mpv)
   (require 'elfeed-tube-mpv)
   (define-key elfeed-show-mode-map (kbd "C-c C-f") 'elfeed-tube-mpv-follow-mode)
   (define-key elfeed-show-mode-map (kbd "C-c C-w") 'elfeed-tube-mpv-where)
@@ -648,7 +2207,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'docker)
+  (require 'docker)
   (global-set-key (kbd "C-c d") 'docker)
 #+end_src
 
@@ -659,6 +2218,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 ** Package Configuration
 
 ** Package Updates
+
 
 * Config Management
 
@@ -672,7 +2232,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'dash)
+  (require 'dash)
   (global-dash-fontify-mode)
   (dash-register-info-lookup)
 #+end_src
@@ -684,7 +2244,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 's)
+  (require 's)
 #+end_src
 
 ** ht
@@ -694,7 +2254,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'ht)
+  (require 'ht)
 #+end_src
 
 ** f
@@ -704,7 +2264,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'f)
+  (require 'f)
 #+end_src
 
 ** ts
@@ -714,7 +2274,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 :END:
 
 #+begin_src elisp
-  (package-require 'ts)
+  (require 'ts)
 #+end_src
 
 ** Theme
@@ -728,7 +2288,7 @@ Bring visual feedback to cut, copy, paste, occur, and search.
 I use ~modus-operandi~ theme because it uses soft colors on a white background.
 
 #+begin_src elisp
-  (package-require 'modus-themes)
+  (require 'modus-themes)
 
   ;; Add all your customizations prior to loading the themes
   (setq modus-themes-italic-constructs t
@@ -744,3 +2304,122 @@ I use ~modus-operandi~ theme because it uses soft colors on a white background.
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle)
 #+end_src
 
+* Multimedia
+
+** TODO emms
+
+:PROPERTIES:
+:URL: https://www.gnu.org/software/emms/
+:END:
+
+*** TODO configure emms for a proper display
+
+#+begin_src elisp
+  (require 'emms)
+  (require 'emms-setup)
+  (emms-all)
+  (setq emms-player-list '(emms-player-mpv)
+        emms-info-functions '(emms-info-native))
+#+end_src
+
+* Finance
+
+** TODO beanpot or ledge or hledger
+
+* Fun
+
+** TODO speed-type
+
+*** TODO make keybinding
+
+#+begin_src elisp
+  (require 'speed-type)
+#+end_src
+
+* Music
+
+* Screencasting
+
+** TODO keycast
+
+:PROPERTIES:
+:URL: https://github.com/tarsius/keycast
+:END:
+
+#+begin_src elisp
+  (require 'keycast)
+  ;;(setq keycast-mode-line-remove-tail-elements nil)
+  ;;(keycast-mode-line-mode)
+#+end_src
+
+** TODO emacs-gif-screencast
+
+:PROPERTIES:
+:URL: https://gitlab.com/ambrevar/emacs-gif-screencast
+:END:
+
+*** TODO: add keybinding for quick access
+
+#+begin_src elisp
+  (require 'gif-screencast)
+  ;; To shut up the shutter sound of `screencapture' (see `gif-screencast-command').
+  (setq gif-screencast-args '("-x"))
+  ;; Optional: Used to crop the capture to the Emacs frame.
+  (setq gif-screencast-cropping-program "mogrify")
+  ;; Optional: Required to crop captured images.
+  (setq gif-screencast-capture-format "ppm")
+#+end_src
+
+** TODO frameshot
+
+* Miscellaneous
+
+** copy-as-format
+
+:PROPERTIES:
+:URL: https://github.com/sshaw/copy-as-format
+:END:
+
+*** TODO figure out keybindings for other formats or remove all keybindings
+
+#+begin_src elisp
+  (require 'copy-as-format)
+  (global-set-key (kbd "C-c w s") 'copy-as-format-slack)
+  (global-set-key (kbd "C-c w g") 'copy-as-format-github)
+#+end_src
+
+
+** symbol-overlay
+
+:PROPERTIES:
+:URL: https://github.com/wolray/symbol-overlay
+:END:
+
+#+begin_src elisp
+  (require 'symbol-overlay)
+  (global-set-key (kbd "M-i") 'symbol-overlay-put)
+  (global-set-key (kbd "M-n") 'symbol-overlay-switch-forward)
+  (global-set-key (kbd "M-p") 'symbol-overlay-switch-backward)
+  (global-set-key (kbd "<f7>") 'symbol-overlay-mode)
+  (global-set-key (kbd "<f8>") 'symbol-overlay-remove-all)
+#+end_src
+
+** page-break-lines
+
+:PROPERTIES:
+:URL: https://github.com/purcell/page-break-lines
+:END:
+
+#+begin_src elisp
+  (require 'page-break-lines)
+  (global-page-break-lines-mode)
+#+end_src
+
+
+* Not Useful
+
+These package were either slow or I didn't find them useful.
+
+1. ~rainbow-blocks~ - Did not find this useful.
+2. ~rainbow-delimiters~ - Slowed down navigation
+3. ~bm~ - Builtin bookmarks functionality is good enough.
