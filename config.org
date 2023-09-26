@@ -1051,6 +1051,13 @@ Insert newline and indent when ~RETURN~ is pressed.
   (define-key global-map (kbd "RET") 'newline-and-indent)
 #+end_src
 
+Emacs normally uses both tabs and spaces to indent lines. With this
+setting, all indentation can be made from spaces only.
+
+#+begin_src elisp
+  (setq-default indent-tabs-mode nil)
+#+end_src
+
 ** Symbols / Tokens
 
 ** Whitespace Enhancement
