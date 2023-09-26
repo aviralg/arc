@@ -419,6 +419,13 @@ I don't need line numbers on the left margin.
   (column-number-mode 1)
 #+end_src
 
+
+Change cursor to a non-blinking bar.
+
+#+begin_src elisp
+  (setq-default cursor-type 'bar)
+  (blink-cursor-mode 0)
+#+end_src
 ** dashboard
 
 :PROPERTIES:
