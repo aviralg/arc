@@ -127,9 +127,10 @@
 
 1. Use builtin features wherever possible.
 2. Add a package iff the benefit outweighs its setup cost.
-3. Prefer packages by influential package writers such as ~protesilaos~,
-   ~@minad~, ~@tarsius~, ~@abo-abo~, ~@jwiegly~, and ~bbatsov~.
-4. Consult ~@spacemacs~ and ~@doom~ for package configuration.
+3. Prefer packages by influential package writers: [[https://github.com/protesilaos][~@protesilaos~]],
+   [[https://github.com/minad][~@minad~]], [[https://github.com/tarsius][~@tarsius~]], [[https://github.com/abo-abo][~@abo-abo~]], [[https://github.com/jwiegley][~@jwiegly~]], [[https://github.com/purcell][~@purcell~]], and
+   [[https://github.com/bbatsov][~@bbatsov~]].
+4. Consult [[https://github.com/syl20bnr/spacemacs][~@spacemacs~]] and [[https://github.com/doomemacs/doomemacs][~@doom~]] for package configuration.
 
 * System Dependencies
 
