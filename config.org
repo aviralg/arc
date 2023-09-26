@@ -14,106 +14,44 @@
 - [[#interface-enhancement][Interface Enhancement]]
   - [[#builtin-1][builtin]]
   - [[#dashboard][dashboard]]
-    - [[#study-the-different-configuration-variables-and-change-the-logo][Study the different configuration variables, and change the logo.]]
-    - [[#enable-projects-in-dashboard-items][enable projects in dashboard-items]]
   - [[#pulsar][pulsar]]
-    - [[#check-consult-after-jump-hook-after-consult-is-installed][check 'consult-after-jump-hook after consult is installed.]]
   - [[#volatile-highlights][volatile-highlights]]
-    - [[#figure-out-how-to-vhldefine-extension-for-vundo][figure out how to `vhl/define-extension` for `vundo`]]
-    - [[#find-better-alternatives-to-this-package][find better alternatives to this package]]
   - [[#window--frame-management][Window & Frame Management]]
-    - [[#bars][Bars]]
-    - [[#fringe][Fringe]]
-    - [[#margin][Margin]]
-    - [[#font][font]]
-      - [[#emacs][emacs]]
   - [[#navigation][Navigation]]
-    - [[#goto-line-preview][goto-line-preview]]
-    - [[#avy][avy]]
-      - [[#avy-zap][avy-zap]]
-    - [[#anzu][anzu]]
   - [[#key-bindings][Key-bindings]]
-    - [[#hydra][hydra]]
   - [[#minibuffer][Minibuffer]]
-    - [[#vertico][vertico]]
-    - [[#marginalia][marginalia]]
-    - [[#consult][consult]]
-      - [[#consult-eglot][consult-eglot]]
-      - [[#consult-dir][consult-dir]]
-      - [[#consult-project-extra][consult-project-extra]]
-    - [[#embark][embark]]
-      - [[#embark-consult][embark-consult]]
   - [[#fuzzy--narrowing][Fuzzy & Narrowing]]
-    - [[#orderless][orderless]]
 - [[#mode-line][Mode-line]]
   - [[#minions][minions]]
 - [[#editing-enhancement][Editing Enhancement]]
   - [[#indentation-enhancement][Indentation Enhancement]]
-    - [[#builtin-2][builtin]]
   - [[#symbols--tokens][Symbols / Tokens]]
   - [[#whitespace-enhancement][Whitespace Enhancement]]
-    - [[#emacs-1][emacs]]
-    - [[#ws-butler][ws-butler]]
   - [[#delete-enhancement][Delete Enhancement]]
   - [[#fancy-icons][Fancy Icons]]
-    - [[#kind-icon][kind-icon]]
   - [[#massive-edit][Massive Edit]]
-    - [[#multiple-cursors][multiple-cursors]]
-      - [[#todo-play-around-with-this-check-config-and-compare-utility-against-rectangle-mode][TODO: play around with this, check config, and compare utility against rectangle mode]]
-    - [[#visual-regexp][visual-regexp]]
-    - [[#ialign][ialign]]
-      - [[#todo-play-around-with-the-functionality-to-ensure-usefulness][TODO: play around with the functionality to ensure usefulness.]]
-    - [[#tiny][tiny]]
-      - [[#todo-investigate][TODO: investigate]]
   - [[#quotes--parenthesis--delimiters-handling][Quotes & Parenthesis & Delimiters Handling]]
-    - [[#insert--edit][Insert & Edit]]
-    - [[#select][Select]]
-      - [[#expand-region][expand-region]]
-    - [[#highlight][Highlight]]
   - [[#kill-ring--clipboard][Kill-ring / Clipboard]]
   - [[#drag-lines][Drag Lines]]
-    - [[#drag-stuff][drag-stuff]]
   - [[#undo--redo][Undo & Redo]]
-    - [[#vundo][vundo]]
-    - [[#undo-fu][undo-fu]]
   - [[#multiple-major-mode][Multiple Major-Mode]]
   - [[#snippet][Snippet]]
-    - [[#tempel][tempel]]
-      - [[#tempel-collection][tempel-collection]]
   - [[#text-conversion][Text Conversion]]
-    - [[#fix-word][fix-word]]
-    - [[#string-inflection][string-inflection]]
 - [[#programming][Programming]]
   - [[#completion][Completion]]
-    - [[#corfu][corfu]]
-    - [[#cape][cape]]
   - [[#jump-to-definition--tagging][Jump to Definition / Tagging]]
-    - [[#dumb-jump][dumb-jump]]
   - [[#lsp-client][LSP Client]]
   - [[#debugging][Debugging]]
   - [[#error-checking][Error Checking]]
-    - [[#flycheck][flycheck]]
-      - [[#flycheck-pos-tip][flycheck-pos-tip]]
-      - [[#flycheck-color-mode-line][flycheck-color-mode-line]]
-        - [[#fix-mode-line-to-display-color][fix mode line to display color]]
-      - [[#consult-flycheck][consult-flycheck]]
   - [[#document][Document]]
   - [[#code-folding][Code Folding]]
-    - [[#hideshow][hideshow]]
   - [[#compiling][Compiling]]
-    - [[#compile-multi][compile-multi]]
 - [[#project-management][Project Management]]
   - [[#projection][projection]]
 - [[#file-manager][File Manager]]
   - [[#dirvish][dirvish]]
 - [[#programming-language][Programming Language]]
   - [[#lisp-family][Lisp Family]]
-    - [[#builtin-3][builtin]]
-    - [[#lispy][lispy]]
-    - [[#racket][racket]]
-      - [[#racket-mode][racket-mode]]
-    - [[#markdown][Markdown]]
-      - [[#markdown-mode][markdown-mode]]
 - [[#ai][AI]]
   - [[#code-completion][Code Completion]]
   - [[#chatgpt][ChatGPT]]
@@ -122,48 +60,25 @@
   - [[#cheatsheet][cheatsheet]]
 - [[#note][Note]]
   - [[#org-mode][Org-mode]]
-    - [[#org-modern][org-modern]]
-    - [[#toc-org][toc-org]]
 - [[#version-control][Version Control]]
-    - [[#--evaluate-gited-dired-git-info-and-satchel-from-elpa][- evaluate gited, dired-git-info, and satchel from ELPA]]
   - [[#git-modes][git-modes]]
   - [[#git-timemachine][git-timemachine]]
   - [[#git-messenger][git-messenger]]
   - [[#git-undo][git-undo]]
   - [[#git-link][git-link]]
   - [[#diff-hl][diff-hl]]
-    - [[#figure-out-dired-mode-support-and-diff-hl-show-hunk-mouse-mode][figure out dired mode support and diff-hl-show-hunk-mouse-mode]]
   - [[#magit][magit]]
   - [[#forge][forge]]
-    - [[#setup-forge-keybindings][setup forge keybindings]]
   - [[#magit-todos][magit-todos]]
-    - [[#--magit-todos-mode-should-be-activated-in-a-magit-buffer][- ~magit-todos-mode~ should be activated in a magit buffer.]]
   - [[#magit-lfs][magit-lfs]]
 - [[#integration][Integration]]
   - [[#console][Console]]
-    - [[#exec-path-from-shell][exec-path-from-shell]]
-    - [[#shell-pop][shell-pop]]
-    - [[#figure-out-how-to-quickly-close-the-popped-shell][figure out how to quickly close the popped shell]]
-    - [[#eshell][eshell]]
-      - [[#eshell-bookmark][eshell-bookmark]]
-      - [[#esh-buf-stack][esh-buf-stack]]
-      - [[#eshell-did-you-mean][eshell-did-you-mean]]
-      - [[#eshell-syntax-highlighting][eshell-syntax-highlighting]]
-      - [[#eshell-fringe-status][eshell-fringe-status]]
-      - [[#eshell-z][eshell-z]]
-    - [[#is-it-better-to-use-fzf-or-fasd][is it better to use fzf or fasd?]]
-      - [[#esh-help][esh-help]]
-      - [[#esh-autosuggest][esh-autosuggest]]
   - [[#operating-system][Operating System]]
-    - [[#osx-trash][osx-trash]]
   - [[#search][Search]]
-    - [[#ripgrep][ripgrep]]
-      - [[#rg][rg]]
-      - [[#deadgrep][deadgrep]]
   - [[#pastebin][Pastebin]]
   - [[#google][Google]]
   - [[#blog-system][Blog System]]
-- [[#markdown-1][Markdown]]
+- [[#markdown][Markdown]]
 - [[#latex][LaTeX]]
 - [[#pdf][PDF]]
   - [[#pdf-tools][pdf-tools]]
@@ -175,16 +90,8 @@
   - [[#chat][Chat]]
   - [[#social-network][Social Network]]
   - [[#web-feed][Web Feed]]
-    - [[#elfeed][elfeed]]
-      - [[#elfeed-org][elfeed-org]]
-        - [[#is-this-better-than-supplying-url-in-el-files][is this better than supplying URL in .el files?]]
-      - [[#elfeed-tube][elfeed-tube]]
-        - [[#check-configuration-in-detail][check configuration in detail]]
-      - [[#elfeed-summary][elfeed-summary]]
-      - [[#elfeed-][elfeed-]]
   - [[#ftp][FTP]]
   - [[#torrent][Torrent]]
-    - [[#mentor][mentor]]
 - [[#devops][DevOps]]
   - [[#docker][docker]]
 - [[#package-management-1][Package Management]]
@@ -199,26 +106,21 @@
   - [[#f][f]]
   - [[#ts][ts]]
   - [[#theme][Theme]]
-    - [[#modus-themes][modus-themes]]
 - [[#multimedia][Multimedia]]
   - [[#emms][emms]]
-    - [[#configure-emms-for-a-proper-display][configure emms for a proper display]]
 - [[#finance][Finance]]
   - [[#beanpot-or-ledge-or-hledger][beanpot or ledge or hledger]]
 - [[#fun][Fun]]
   - [[#speed-type][speed-type]]
-    - [[#make-keybinding][make keybinding]]
 - [[#music][Music]]
 - [[#screencasting][Screencasting]]
   - [[#keycast][keycast]]
   - [[#emacs-gif-screencast][emacs-gif-screencast]]
-    - [[#todo-add-keybinding-for-quick-access][TODO: add keybinding for quick access]]
   - [[#frameshot][frameshot]]
 - [[#miscellaneous][Miscellaneous]]
   - [[#copy-as-format][copy-as-format]]
-    - [[#figure-out-keybindings-for-other-formats-or-remove-all-keybindings][figure out keybindings for other formats or remove all keybindings]]
-  - [[#symbol-overlay][symbol-overlay]]
   - [[#page-break-lines][page-break-lines]]
+  - [[#htmlize][htmlize]]
 - [[#not-useful][Not Useful]]
 
 * Principles
@@ -301,8 +203,12 @@ conditionally install packages.
                    embark-consult
                    orderless
                    minions
+                   symbol-overlay
+                   rainbow-mode
+                   highlight-numbers
                    ws-butler
                    kind-icon
+                   iedit
                    multiple-cursors
                    visual-regexp
                    ialign
@@ -322,6 +228,7 @@ conditionally install packages.
                    flycheck-pos-tip
                    flycheck-color-mode-line
                    consult-flycheck
+                   devdocs
                    compile-multi
                    consult-compile-multi
                    compile-multi-embark
@@ -345,6 +252,7 @@ conditionally install packages.
                    magit-lfs
                    exec-path-from-shell
                    shell-pop
+                   pcmpl-args
                    eshell-bookmark
                    esh-buf-stack
                    eshell-did-you-mean
@@ -373,8 +281,8 @@ conditionally install packages.
                    keycast
                    gif-screencast
                    copy-as-format
-                   symbol-overlay
-                   page-break-lines))
+                   page-break-lines
+                   htmlize))
 
   ;; install packages if not already installed
   (dolist (package PACKAGES)
@@ -419,6 +327,14 @@ I don't need line numbers on the left margin.
   (column-number-mode 1)
 #+end_src
 
+Display fill column at 80 characters.
+
+#+begin_src elisp
+  ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Displaying-Boundaries.html
+  ;;(setq-default fill-column 80)
+  ;;(setq-default display-fill-column-indicator-character ?a)
+  ;;(global-display-fill-column-indicator-mode)
+#+end_src
 
 Change cursor to a non-blinking bar.
 
@@ -434,6 +350,20 @@ Both initial frame and subsequent frames should be maximized.
   (add-to-list 'initial-frame-alist '(fullscreen . maximized))
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
+
+Highlight current line.
+
+#+begin_src elisp
+  ;; https://emacsredux.com/blog/2013/04/02/highlight-current-line/
+  (global-hl-line-mode +1)
+#+end_src
+
+Highlight TODO and friends.
+
+#+begin_src elisp
+  (global-hl-todo-mode +1)
+#+end_src
+
 ** dashboard
 
 :PROPERTIES:
@@ -1075,6 +1005,45 @@ setting, all indentation can be made from spaces only.
 
 ** Symbols / Tokens
 
+*** symbol-overlay
+
+:PROPERTIES:
+:URL: https://github.com/wolray/symbol-overlay
+:END:
+
+#+begin_src elisp
+  (require 'symbol-overlay)
+  (global-set-key (kbd "M-i") 'symbol-overlay-put)
+  (global-set-key (kbd "M-n") 'symbol-overlay-switch-forward)
+  (global-set-key (kbd "M-p") 'symbol-overlay-switch-backward)
+  (global-set-key (kbd "<f7>") 'symbol-overlay-mode)
+  (global-set-key (kbd "<f8>") 'symbol-overlay-remove-all)
+#+end_src
+
+*** rainbow-mode
+
+:PROPERTIES:
+:URL: https://github.com/emacsmirror/rainbow-mode
+:END:
+
+#+begin_src elisp
+  (require 'rainbow-mode)
+  (add-hook 'prog-mode-hook 'rainbow-mode)
+#+end_src
+
+*** highlight-numbers
+
+:PROPERTIES:
+:URL: https://github.com/Fanael/highlight-numbers
+:END:
+
+#+begin_src elisp
+  (require 'highlight-numbers)
+  (add-hook 'prog-mode-hook 'highlight-numbers-mode)
+#+end_src
+
+
+
 ** Whitespace Enhancement
 
 *** emacs
@@ -1137,6 +1106,16 @@ Trim whitespace on lines touched when saving.
 #+end_src
 
 ** Massive Edit
+
+:PROPERTIES:
+:URL: https://github.com/victorhge/iedit
+:END:
+
+*** iedit
+
+#+begin_src elisp
+  (require 'iedit)
+#+end_src
 
 *** TODO multiple-cursors
 
@@ -1468,6 +1447,12 @@ o
 
 ** Jump to Definition / Tagging
 
+**** xref
+
+#+begin_src elisp
+  (setq xref-search-program 'ripgrep)
+#+end_src
+
 *** dumb-jump
 
 :PROPERTIES:
@@ -1478,6 +1463,11 @@ o
   (require 'dumb-jump)
 
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
+
+  ;; prints the search term in *Messages* buffer
+  (setq dumb-jump-debug t)
+
   (setq dumb-jump-force-searcher 'rg)
 
   (defhydra dumb-jump-hydra (:color blue :columns 3)
@@ -1508,7 +1498,7 @@ Check ~MELPA~ for all auxiliary ~flycheck~ packages.
 #+begin_src elisp
   (require 'flycheck)
 
-  (setq flycheck-indication-mode 'left-margin)
+  (setq flycheck-indication-mode 'left-fringe)
 
   (global-flycheck-mode)
 
@@ -1565,6 +1555,21 @@ Check ~MELPA~ for all auxiliary ~flycheck~ packages.
 
 ** Document
 
+*** devdocs
+
+:PROPERTIES:
+:URL: https://github.com/astoff/devdocs.el
+:END:
+
+#+begin_src elisp
+  (require 'devdocs)
+  (global-set-key (kbd "C-h D") 'devdocs-lookup)
+  (add-hook 'python-mode-hook (lambda () (setq-local devdocs-current-docs '("python~3.11"))))
+  (add-hook 'c-mode-hook (lambda () (setq-local devdocs-current-docs '("c"))))
+  (add-hook 'c++-mode-hook (lambda () (setq-local devdocs-current-docs '("cpp"))))
+  (add-hook 'lua-mode-hook (lambda () (setq-local devdocs-current-docs '("lua~5.4"))))
+#+end_src
+
 ** Code Folding
 
 *** hideshow
@@ -1575,8 +1580,7 @@ accessible through two keybindings:
 https://karthinks.com/software/simple-folding-with-hideshow/
 
 #+begin_src elisp
-  (require 'hideshow)
-
+    (require 'hideshow)
   (defun hs-cycle (&optional level)
     (interactive "p")
     (let (message-log-max
@@ -1603,17 +1607,16 @@ https://karthinks.com/software/simple-folding-with-hideshow/
         (hs-hide-level level)
         (setq this-command 'hs-hide-level))))
 
-  (keymap-global-set "C-<tab>" 'hs-cycle)
-
   (defun hs-global-cycle ()
-    (interactive)
-    (pcase last-command
-      ('hs-global-cycle
-       (save-excursion (hs-show-all))
-       (setq this-command 'hs-global-show))
-      (_ (hs-hide-all))))
+      (interactive)
+      (pcase last-command
+        ('hs-global-cycle
+         (save-excursion (hs-show-all))
+         (setq this-command 'hs-global-show))
+        (_ (hs-hide-all))))
 
-  (keymap-global-set "C-S-<tab>" 'hs-global-cycle)
+  (global-set-key (kbd "C-<tab>") 'hs-cycle)
+    (global-set-key (kbd "C-S-<tab>") 'hs-global-cycle)
 #+end_src
 
 ** Compiling
@@ -1654,8 +1657,12 @@ https://karthinks.com/software/simple-folding-with-hideshow/
 :END:
 
 #+begin_src elisp
-  (require 'dirvish)
-  (dirvish-override-dired-mode)
+    (when (string= system-type "darwin")
+        (setq dired-use-ls-dired t
+              insert-directory-program "gls"
+              dired-listing-switches "-aBhl --group-directories-first"))
+    (require 'dirvish)
+    (dirvish-override-dired-mode)
 #+end_src
 
 * Programming Language
@@ -1834,7 +1841,7 @@ https://github.com/snosov1/toc-org
   (global-set-key (kbd "C-x v p") 'git-messenger:popup-message)
   ;; TODO - (define-key git-messenger-map (kbd "m") 'git-messenger:copy-message)
   ;; Use magit-show-commit for showing status/diff commands
-  (custom-set-variables '(git-messenger:use-magit-popup t))
+  (setq git-messenger:use-magit-popup t)
 #+end_src
 
 ** TODO git-undo
@@ -1906,8 +1913,8 @@ https://github.com/snosov1/toc-org
 *** TODO - ~magit-todos-mode~ should be activated in a magit buffer.
 
 #+begin_src elisp
-  (require 'magit-todos)
-  (magit-todos-mode)
+  ;;(require 'magit-todos)
+  ;;(magit-todos-mode)
 #+end_src
 
 ** magit-lfs
@@ -1966,6 +1973,15 @@ https://github.com/snosov1/toc-org
   (setq shell-pop-cleanup-buffer-at-process-exit t)
 #+end_src
 
+*** pcmpl-args
+
+:PROPERTIES:
+:URL: https://github.com/JonWaltman/pcmpl-args.el
+:END:
+
+#+begin_src elisp
+  (require 'pcmpl-args)
+#+end_src
 
 *** eshell
 
@@ -2419,21 +2435,6 @@ I use ~modus-operandi~ theme because it uses soft colors on a white background.
 #+end_src
 
 
-** symbol-overlay
-
-:PROPERTIES:
-:URL: https://github.com/wolray/symbol-overlay
-:END:
-
-#+begin_src elisp
-  (require 'symbol-overlay)
-  (global-set-key (kbd "M-i") 'symbol-overlay-put)
-  (global-set-key (kbd "M-n") 'symbol-overlay-switch-forward)
-  (global-set-key (kbd "M-p") 'symbol-overlay-switch-backward)
-  (global-set-key (kbd "<f7>") 'symbol-overlay-mode)
-  (global-set-key (kbd "<f8>") 'symbol-overlay-remove-all)
-#+end_src
-
 ** page-break-lines
 
 :PROPERTIES:
@@ -2445,6 +2446,15 @@ I use ~modus-operandi~ theme because it uses soft colors on a white background.
   (global-page-break-lines-mode)
 #+end_src
 
+** htmlize
+
+:PROPERTIES:
+:URL: https://github.com/hniksic/emacs-htmlize
+:END:
+
+#+begin_src elisp
+  (require 'htmlize)
+#+end_src
 
 * Not Useful
 
