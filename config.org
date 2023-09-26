@@ -426,6 +426,14 @@ Change cursor to a non-blinking bar.
   (setq-default cursor-type 'bar)
   (blink-cursor-mode 0)
 #+end_src
+
+Both initial frame and subsequent frames should be maximized.
+
+#+begin_src elisp
+  ;; https://emacs.stackexchange.com/a/3017
+  (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
 ** dashboard
 
 :PROPERTIES:
