@@ -9,6 +9,7 @@
   - [[#osx][OSX]]
 - [[#lexical-scoping][Lexical Scoping]]
 - [[#package-management][Package Management]]
+- [[#encoding][Encoding]]
 - [[#errors-and-warnings][Errors and Warnings]]
   - [[#builtin][builtin]]
 - [[#interface-enhancement][Interface Enhancement]]
@@ -297,6 +298,39 @@ conditionally install packages.
     (concat (file-name-as-directory INIT-DIR) filename))
 #+end_src
 
+* Encoding
+
+We convince ~Emacs~ to always use ~UTF-8~ encoding by default when opening
+files or interacting with processes. Emacs will still use a different
+coding system if the file has a file-local encoding declaration near
+the top of the file: ~-*- coding: euc-tw -*-~.
+
+This code snippet has been borrowed from:
+[[https://www.masteringemacs.org/article/working-coding-systems-unicode-emacs][Mastering Emacs: Working with Coding Systems and Unicode in Emacs]].
+
+#+begin_src elisp
+  (use-package emacs
+      :ensure t
+
+      :config
+
+      ;; this should be enough for new Emacs
+      (set-default-coding-systems 'utf-8)
+
+      ;; these are needed if the previous command does not suffice,
+      ;; or if we are dealing with old Emacsen
+      (prefer-coding-system 'utf-8)
+      (set-terminal-coding-system 'utf-8)
+      (set-keyboard-coding-system 'utf-8)
+      ;; backwards compatibility as default-buffer-file-coding-system
+      ;; is deprecated in 23.2.
+      (if (boundp 'buffer-file-coding-system)
+          (setq-default buffer-file-coding-system 'utf-8)
+          (setq default-buffer-file-coding-system 'utf-8))
+
+      ;; Treat clipboard input as UTF-8 string first; compound text next, etc.
+      (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+#+end_src
 
 * Errors and Warnings
 
