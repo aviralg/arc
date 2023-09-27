@@ -10,6 +10,7 @@
 - [[#lexical-scoping][Lexical Scoping]]
 - [[#package-management][Package Management]]
 - [[#encoding][Encoding]]
+- [[#indentation][Indentation]]
 - [[#errors-and-warnings][Errors and Warnings]]
   - [[#builtin][builtin]]
 - [[#interface-enhancement][Interface Enhancement]]
@@ -25,7 +26,6 @@
 - [[#mode-line][Mode-line]]
   - [[#minions][minions]]
 - [[#editing-enhancement][Editing Enhancement]]
-  - [[#indentation-enhancement][Indentation Enhancement]]
   - [[#symbols--tokens][Symbols / Tokens]]
   - [[#whitespace-enhancement][Whitespace Enhancement]]
   - [[#delete-enhancement][Delete Enhancement]]
@@ -330,6 +330,39 @@ This code snippet has been borrowed from:
 
       ;; Treat clipboard input as UTF-8 string first; compound text next, etc.
       (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+#+end_src
+
+* Indentation
+
+Disable ~indent-tabs-mode~, a minor mode to toggle the insertion of ~TAB~
+characters for indentation. This ensures that ~Emacs~ uses spaces for
+indentation.
+
+#+begin_src elisp
+  (setq-default indent-tabs-mode nil)
+#+end_src
+
+Set the display column width of a ~TAB~ character to 4. This doesn’t
+affect the actual size of the indentation step, only the columns used
+to display it, if it is present literally.
+
+#+begin_src elisp
+  ;; set the display width for tabs
+  (setq-default tab-width 4)
+  #+end_src
+
+Insert a newline, then indent according to the major mode when ~RETURN~
+is pressed. This results in code that is indented throughout
+construction.
+
+#+begin_src elisp
+  (define-key global-map (kbd "RET") 'newline-and-indent)
+#+end_src
+
+Set the indentation step to 4 for ~CC-mode~ buffers.
+
+#+begin_src elisp
+  (setq-default c-basic-offset 4)
 #+end_src
 
 * Errors and Warnings
@@ -1021,23 +1054,6 @@ Shows minor modes in a menu. Needs to be at the very end to prevent the modeline
 
 * Editing Enhancement
 
-** Indentation Enhancement
-
-*** builtin
-
-Insert newline and indent when ~RETURN~ is pressed.
-
-#+begin_src elisp
-  (define-key global-map (kbd "RET") 'newline-and-indent)
-#+end_src
-
-Emacs normally uses both tabs and spaces to indent lines. With this
-setting, all indentation can be made from spaces only.
-
-#+begin_src elisp
-  (setq-default indent-tabs-mode nil)
-#+end_src
-
 ** Symbols / Tokens
 
 *** symbol-overlay
@@ -1086,8 +1102,6 @@ setting, all indentation can be made from spaces only.
 Visualize relevant whitespace types and empty lines.
 
 #+begin_src elisp
-  ;; set the display width for tabs
-  (setq-default tab-width 4)
 
   ;; customize the whitespaces that need to be visualized
   (setq-default whitespace-style
