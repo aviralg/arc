@@ -46,10 +46,11 @@
 ;; PACKAGE MANAGEMENT
 
 
-(add-to-list 'package-archives
-             '("gnu"   . "http://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+(use-package package
+    :ensure nil
+    :init
+        (add-to-list 'package-archives '("gnu"   . "http://elpa.gnu.org/packages/"))
+        (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")))
 
 ;; Emacs comes with several built-in packages, such as Org-mode, that are
 ;; essential for many users. However, these built-in packages are often not the
@@ -469,7 +470,7 @@
 
   ;; How tall the mode-line should be. It's only respected in GUI.
   ;; If the actual char height is larger, it respects the actual height.
-  (setq doom-modeline-height 18)
+  ;; TODO - (setq doom-modeline-height 18)
 
   ;; How wide the mode-line bar should be. It's only respected in GUI.
   (setq doom-modeline-bar-width 4)
