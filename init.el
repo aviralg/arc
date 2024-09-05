@@ -365,7 +365,11 @@
   (setq fontaine-latest-state-file (locate-user-emacs-file "fontaine-latest-state.eld"))
 
   (setq fontaine-presets
-        '((small
+        '((38-inch-monitor
+           :default-height 180)
+          (34-inch-monitor
+           :default-height 160)
+          (small
            :default-family "Iosevka Comfy Motion"
            :default-height 80
            :variable-pitch-family "Iosevka Comfy Duo")
