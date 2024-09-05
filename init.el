@@ -2113,3 +2113,14 @@
   ;; Env vars
   (with-eval-after-load 'exec-path-from-shell
     (exec-path-from-shell-copy-env "PYTHONPATH")))
+
+
+;; CSV MODE
+
+
+;; https://elpa.gnu.org/packages/csv-mode.html
+;; TODO - add pretty-hydra
+(use-package csv-mode
+  :ensure t
+  :config
+  (add-hook 'csv-mode-hook 'csv-guess-set-separator))
