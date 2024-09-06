@@ -2124,3 +2124,17 @@
   :ensure t
   :config
   (add-hook 'csv-mode-hook 'csv-guess-set-separator))
+
+
+;; ESS R
+
+
+(use-package ess
+  :ensure t
+  :config
+  (setq ess-offset-continued 'straight
+        ess-use-flymake t
+        ess-nuke-trailing-whitespace-p t
+        ess-style 'DEFAULT
+        ess-eval-visibly t))
+
