@@ -1551,6 +1551,11 @@
   :config
   (consult-eglot-embark-mode))
 
+(use-package eldoc-box
+  :ensure t
+  :config
+  (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t))
+
 
 ;; DEBUGGING
 
