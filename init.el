@@ -2129,3 +2129,11 @@
   :ensure t
   :config
   (add-hook 'csv-mode-hook 'csv-guess-set-separator))
+
+
+;; ESS R
+
+
+(use-package ess
+  :ensure t)
+
