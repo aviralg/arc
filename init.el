@@ -2092,8 +2092,12 @@
 
 
 ;; https://github.com/jschaf/powershell.el
-(use-package powershell
-  :ensure t)
+;;(use-package powershell
+;;  :ensure t
+;;  :config)
+  ;; (add-hook 'powershell-mode-hook 'eglot-ensure)
+  ;;(add-to-list 'eglot-server-programs '(powershell-mode .
+  ;;                                                      ("pwsh" "-NoLogo" "-NoProfile" "-Command" "~/src/PowerShellEditorServices/module/PowerShellEditorServices/Start-EditorServices.ps1" "-BundledModulesPath" "/Users/andschwa/src/PowerShellEditorServices/module" "-Stdio" "-LogPath" "/Users/andschwa/src/pses.log" "-SessionDetailsPath" "/Users/andschwa/src/session.json" "-HostName" "Emacs" "-HostProfileId" "Emacs" "-HostVersion" "1.0.0" "-LogLevel" "Diagnostic"))))
 
 
 ;; PYTHON
