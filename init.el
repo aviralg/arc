@@ -1642,10 +1642,10 @@
   :after magit)
 
 ;; https://github.com/alphapapa/magit-todos
-(use-package magit-todos
-  :ensure t
-  :after magit
-  :config (magit-todos-mode 1))
+;; (use-package magit-todos
+;;   :ensure t
+;;   :after magit
+;;   :config (magit-todos-mode 1))
 
 ;; https://github.com/magit/forge
 (use-package forge
