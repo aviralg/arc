@@ -61,6 +61,15 @@
 ;; Always ensure packages are installed
 (setq use-package-always-ensure t)
 
+;; https://github.com/jwiegley/use-package/issues/768
+(if init-file-debug
+      (setq use-package-verbose t
+            use-package-expand-minimally nil
+            use-package-compute-statistics t
+            debug-on-error t)
+    (setq use-package-verbose nil
+          use-package-expand-minimally t))
+
 
 ;; ENCODING
 
@@ -313,9 +322,9 @@
         modus-themes-to-toggle '(modus-vivendi modus-operandi)
         modus-themes-mode-line '(borderless)
 
-        modus-themes-common-palette-overrides '((bg-mode-line-active bg-blue-intense)
-                                                (fg-mode-line-active fg-main)
-                                                (border-mode-line-active blue-intense))
+        ;; modus-themes-common-palette-overrides '((bg-mode-line-active bg-blue-intense)
+        ;;                                        (fg-mode-line-active fg-main)
+        ;;                                        (border-mode-line-active blue-intense))
         ;; modus-themes-italic-constructs t
         ;; modus-themes-bold-constructs t
         ;; modus-themes-mixed-fonts t
@@ -370,9 +379,9 @@
           (34-inch-monitor
            :default-height 160)
           (small
-           :default-family "Iosevka Comfy Motion"
+           :default-family "Iosevka Fixed"
            :default-height 80
-           :variable-pitch-family "Iosevka Comfy Duo")
+           :variable-pitch-family "Iosevka Fixed")
           (regular) ; like this it uses all the fallback values and is named `regular'
           (medium
            :default-weight semilight
@@ -382,11 +391,11 @@
            :inherit medium
            :default-height 150)
           (live-stream
-           :default-family "Iosevka Comfy Wide Motion"
+           :default-family "Iosevka Fixed"
            :default-height 150
            :default-weight medium
-           :fixed-pitch-family "Iosevka Comfy Wide Motion"
-           :variable-pitch-family "Iosevka Comfy Wide Duo"
+           :fixed-pitch-family "Iosevka Fixed"
+           :variable-pitch-family "Iosevka Fixed"
            :bold-weight extrabold)
           (presentation
            :default-height 180)
@@ -396,12 +405,12 @@
            ;; I keep all properties for didactic purposes, but most can be
            ;; omitted.  See the fontaine manual for the technicalities:
            ;; <https://protesilaos.com/emacs/fontaine>.
-           :default-family "Iosevka Comfy"
+           :default-family "Iosevka Fixed"
            :default-weight regular
            :default-slant normal
            :default-height 100
 
-           :fixed-pitch-family "Iosevka Comfy"
+           :fixed-pitch-family "Iosevka Fixed"
            :fixed-pitch-weight nil
            :fixed-pitch-slant nil
            :fixed-pitch-height 1.0
@@ -411,7 +420,7 @@
            :fixed-pitch-serif-slant nil
            :fixed-pitch-serif-height 1.0
 
-           :variable-pitch-family "Iosevka Comfy Motion Duo"
+           :variable-pitch-family "Iosevka Fixed"
            :variable-pitch-weight nil
            :variable-pitch-slant nil
            :variable-pitch-height 1.0
@@ -461,6 +470,11 @@
 
 ;; MODELINE
 
+
+(use-package minions
+  :ensure t
+  :config
+  (minions-mode))
 
 (use-package doom-modeline
   :ensure t
@@ -654,6 +668,12 @@
   (setq doom-modeline-before-update-env-hook nil)
   (setq doom-modeline-after-update-env-hook nil))
 
+(use-package flycheck-color-mode-line
+  :ensure t
+  :config
+  (eval-after-load "flycheck"
+    '(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
+
 
 ;; DASHBOARD
 
@@ -712,7 +732,7 @@
 ;; MINIBUFFER
 
 
-(setq enable-recursive-minibuffers t)
+;;(setq enable-recursive-minibuffers t)
 
 ;; Keep the cursor out of the read-only portions of the minibuffer
 (setq minibuffer-prompt-properties
@@ -1051,11 +1071,19 @@
   ;; setting is useful beyond Corfu.
   (read-extended-command-predicate #'command-completion-default-include-p))
 
-(use-package nerd-icons-corfu
-  :ensure t
-  :after (nerd-icons corfu)
-  :config
-  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+;; (use-package nerd-icons-corfu
+;;   :ensure t
+;;   :after (nerd-icons corfu)
+;;   :config
+;;   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+;; (use-package completion-preview
+;;   :ensure nil
+;;   :hook (prog-mode . completion-preview-mode)
+;;   :bind
+;;   ( :map completion-preview-active-mode-map
+;;     ("M-n" . completion-preview-next-candidate)
+;;     ("M-p" . completion-preview-prev-candidate)))
 
 
 ;; CUT COPY PASTE KILL-RING
@@ -1551,14 +1579,18 @@
   :config
   (consult-eglot-embark-mode))
 
-(use-package eldoc-box
-  :ensure t
-  :config
-  (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t))
+;;(use-package eldoc-box
+;;  :ensure t
+;;  :config
+;;  (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t))
 
 
 ;; DEBUGGING
 
+
+(use-package realgud-lldb
+  :ensure t
+  :after (realgud))
 
 ;; https://github.com/realgud/realgud
 ;; TODO - configure external debuggers from https://github.com/realgud/realgud/wiki/Debuggers-Available
@@ -1867,8 +1899,10 @@
 
 
 ;; https://github.com/mykyta-shyrin/cheatsheet
-(use-package cheatsheet
-  :ensure t)
+;; (use-package cheatsheet
+;;  :ensure t)
+
+(load-file "~/.emacs.d/cheatsheet.el")
 
 
 ;; DEVDOCS
@@ -2006,7 +2040,7 @@
   :config
   (setq shell-pop-default-directory "~"
         shell-pop-shell-type (quote ("eshell" "*eshell*" (lambda nil (eshell shell-pop-term-shell))))
-        shell-pop-universal-key "C-t"
+        shell-pop-universal-key "C-`"
         shell-pop-window-size 30
         shell-pop-full-span t
         shell-pop-window-position "bottom"
@@ -2032,12 +2066,21 @@
   :ensure t
   :config
   (setq rust-format-on-save t)
+  (setq rust-mode-treesitter-derive t)
   (add-hook 'rust-mode-hook
             (lambda () (prettify-symbols-mode)))
   (add-hook 'rust-mode-hook 'eglot-ensure)
   (add-to-list 'eglot-server-programs
                '((rust-ts-mode rust-mode) .
                  ("rust-analyzer" :initializationOptions (:check (:command "clippy"))))))
+
+(use-package rustic
+  :ensure t
+  :config
+  (setq rustic-format-on-save t)
+  (setq rustic-lsp-client 'eglot)
+  :custom
+  (rustic-cargo-use-last-stored-arguments t))
 
 (use-package flycheck-rust
   :ensure t
@@ -2086,18 +2129,6 @@
 ;; https://ess.r-project.org/Manual/ess.html
 (use-package ess
   :ensure t)
-
-
-;; POWERSHELL
-
-
-;; https://github.com/jschaf/powershell.el
-;;(use-package powershell
-;;  :ensure t
-;;  :config)
-  ;; (add-hook 'powershell-mode-hook 'eglot-ensure)
-  ;;(add-to-list 'eglot-server-programs '(powershell-mode .
-  ;;                                                      ("pwsh" "-NoLogo" "-NoProfile" "-Command" "~/src/PowerShellEditorServices/module/PowerShellEditorServices/Start-EditorServices.ps1" "-BundledModulesPath" "/Users/andschwa/src/PowerShellEditorServices/module" "-Stdio" "-LogPath" "/Users/andschwa/src/pses.log" "-SessionDetailsPath" "/Users/andschwa/src/session.json" "-HostName" "Emacs" "-HostProfileId" "Emacs" "-HostVersion" "1.0.0" "-LogLevel" "Diagnostic"))))
 
 
 ;; PYTHON
@@ -2155,3 +2186,263 @@
         ess-nuke-trailing-whitespace-p t
         ess-style 'DEFAULT
         ess-eval-visibly t))
+
+
+;; FSHARP
+
+
+(use-package fsharp-mode
+  :ensure t)
+
+(use-package eglot-fsharp
+  :ensure t
+  :after fsharp-mode
+  :config
+  (add-hook 'fsharp-mode-hook #'eglot-ensure))
+
+
+;; DAPE
+
+
+(use-package dape
+  :ensure t
+  :config
+
+  ;; Add hints for variable values in buffer
+  (setq dape-inlay-hints t
+        dape-buffer-window-arrangement 'right)
+
+  ;; Emphasize currently source line of current debugged program
+  (add-hook 'dape-display-source-hook 'pulse-momentary-highlight-one-line)
+
+  ;; Create a memorable alias for `dape'.
+  (defalias 'start-debugging #'dape))
+
+(global-set-key (kbd "s-<up>") #'beginning-of-buffer)
+(global-set-key (kbd "s-<down>") #'end-of-buffer)
+
+
+;; CHEATSHEET
+
+
+(cheatsheet-add-group
+ "Leaving Emacs"
+ '(:key "C-z" :command suspend-frame :description "Iconify Emacs or suspend it in terminal")
+ '(:key "C-x C-c" :command save-buffers-kill-terminal :description "Exit Emacs"))
+
+(cheatsheet-add-group
+ "Files"
+ '(:key "C-x C-f" :command find-file :description "Read a file into Emacs" )
+ '(:key "C-x C-s" :command save-buffer :description "Save a file back to disk")
+ '(:key "C-x s"   :command save-some-buffers :description "Save all files")
+ '(:key "C-x i"   :command insert-file :description "Insert contents of another file into this buffer")
+ '(:key "C-x C-v" :command find-alternate-file :description "Replace this file with the file you really want")
+ '(:key "C-x C-w" :command write-file :description "Write buffer to a specified file")
+ '(:key "C-x C-q" :command read-only-mode :description "Toggle read-only status of buffer"))
+ 
+(cheatsheet-add-group
+ "Help"
+ '(:key "C-h t" :command help-with-tutorial :description "Start tutorial")
+ '(:key "C-x 1" :command delete-other-windows :description "remove help window")
+ '(:key "C-M-v" :command scroll-other-window :description "scroll help window")
+ '(:key "C-h a" :command apropos-command :description "apropos: show commands matching a string")
+ '(:key "C-h k" :command describe-key :description "describe the function a key runs")
+ '(:key "C-h f" :command describe-function :description "describe a function")
+ '(:key "C-h m" :command describe-mode :description "get mode-specific information"))
+ 
+ 
+(cheatsheet-add-group
+ "Incremental Search"
+ '(:key "C-s"   :command isearch-forward :description "search forward; repeat for next match")
+ '(:key "C-r"   :command isearch-backward :description "search backward; repeat for previous match")
+ '(:key "C-M-s" :command isearch-forward-regexp :description "regular expression search")
+ '(:key "C-M-r" :command isearch-backward-regexp :description "reverse regular expression search")
+ '(:key "M-p"   :command symbol-overlay-switch-backward :description "select previous search string")
+ '(:key "M-n"   :command symbol-overlay-switch-forward :description "select next search string")
+ '(:key "RET"   :command "" :description "exit incremental search")
+ '(:key "DEL"   :command "" :description "undo effect of last character")
+ '(:key "C-g"   :command "" :description "abort current search"))
+
+(use-package outline-indent
+  :ensure t
+  :defer t
+  :commands outline-indent-minor-mode
+  :custom
+  (outline-indent-ellipsis " ▼ ")
+  :config
+  (outline-indent-minor-mode))
+
+
+
+
+;; (cheatsheet-add-group
+;;  "Error Recovery"
+;;  '(:key "C-g" :description "Abort partially typed or executing command")
+;;  '(:key "M-x recover-session" :description "Recover files lost by a system crash")
+;;  '(:key "C-x u, C-_ {\rm or} C-/" :description "Undo an unwanted change")
+;;  '(:key "M-x revert-buffer" :description "Restore a buffer to its original contents")
+;;  '(:key "C-l" :description "Redraw garbaged screen"))
+;; 
+;; (cheatsheet-add-group
+;;  'Motion
+;;  '(:key "C-b" :description "Prev character")
+;;  '(:key "C-f" :description "Next character")
+;;  '(:key "M-b" :description "Prev word")
+;;  '(:key "M-f" :description "Next word")
+;;  '(:key "C-p" :description "Prev line")
+;;  '(:key "C-n" :description "Next Line")
+;;  '(:key "C-a" :description "Beginning of line")
+;;  '(:key "C-e" :description "End of line")
+;;  '(:key "M-a" :description "Beginning of sentence")
+;;  '(:key "M-e" :description "End of sentence")
+;;  '(:key "M-{" :description "Beginning of paragraph")
+;;  '(:key "M-}" :description "End of paragraph")
+;;  '(:key "C-x [" :description "Beg Page")
+;;  '(:key "C-x ]" :description "End Page")
+;;  '(:key "C-M-b" :description "Beg Sexp")
+;;  '(:key "C-M-f" :description "End Sexp")
+;;  '(:key "C-M-a" :description "Beg function")
+;;  '(:key "C-M-e" :description "End function")
+;;  '(:key "M-<" :description "Beginning of Buffer")
+;;  '(:key "M->" :description "End of Buffer")
+;; 
+;;  '(:key "C-v" :description "Scroll to next screen")
+;;  '(:key "M-v" :description "Scroll to previous screen")
+;;  '(:key "C-x <" :description "Scroll left")
+;;  '(:key "C-x >" :description "Scroll right")
+;;  '(:key "C-l" :description "Scroll current line to center, top, bottom")
+;;  '(:key "M-g g" :description "Goto line")
+;;  '(:key "M-g c" :description "Goto char")
+;;  '(:key "M-m" :description "Back to indentation"))
+;; 
+;; (cheatsheet-add-group
+;;  'Kill
+;;  '(:key "C-k"        :description "Kill from cursor to end of line")
+;;  '(:key "M-d"        :description "Kill a word")
+;;  '(:key "M-BS"       :description "Kill a word backward")
+;;  '(:key "M-k"        :description "Kill from cursor to end of sentence")
+;;  '(:key "C-w"        :description "Kill region")
+;;  '(:key "M-z <char>" :description "Kill through next occurrence of <char>")
+;;  '(:key "C-x BS"     :description "Kill backward to beginning of sentence"))
+;; 
+;; (cheatsheet-add-group
+;;  'Marking
+;;  '(:key "C-@ • C-SPC" :description "Set mark here")
+;;  '(:key "C-x C-x" :description "Exchange point and mark")
+;;  '(:key "M-@" :description "Set mark <arg> words away")
+;;  '(:key "M-h" :description "Mark paragraph")
+;;  '(:key "C-x C-p" :description "Mark page")
+;;  '(:key "C-M-@" :description "Mark sexp")
+;;  '(:key "C-M-h" :description "Mark function")
+;;  '(:key "C-x h" :description "Mark buffer"))
+;; 
+;; (cheatsheet-add-group
+;;  'Help
+;;  '(:key "C-h t" :description "Open tutorial")
+;;  '(:key "C-x 1" :description "remove help window")
+;;  '(:key "C-M-v" :description "scroll help window")
+;;  '(:key "C-h a" :description "apropos: show commands matching a string")
+;;  '(:key "C-h k" :description "describe the function a key runs")
+;;  '(:key "C-h f" :description "describe a function")
+;;  '(:key "C-h m" :description "get mode-specific information"))
+;; 
+;; (cheatsheet-add-group
+;;  'Rectangles
+;;  '(:key "C-x r r" :description "Copy rectangle to register")
+;;  '(:key "C-x r k" :description "Kill rectangle")
+;;  '(:key "C-x r y" :description "Yank rectangle")
+;;  '(:key "C-x r o" :description "Open rectangle, shifting text right")
+;;  '(:key "C-x r c" :description "Blank out rectangle")
+;;  '(:key "C-x r t" :description "Prefix each line of rectangle with a string"))
+;; 
+;; (cheatsheet-add-group
+;;  'Shells
+;;  '(:key "M-!" :description "Execute a shell command synchronously")
+;;  '(:key "M-&" :description "Execute a shell command asynchronously")
+;;  '(:key "M-|" :description "Run a shell command on the region")
+;;  '(:key "C-u M-|" :description "Filter region through a shell command")
+;;  '(:key "M-x shell" :description "Start a shell in window *shell*"))
+;; 
+;; (cheatsheet-add-group
+;;  'Buffers
+;;  '(:key "C-x b" :description "Select another buffer")
+;;  '(:key "C-x C-b" :description "List all buffers")
+;;  '(:key "C-x k" :description "Kill a buffer"))
+;; 
+;; (cheatsheet-add-group
+;;  'Transposing
+;;  '(:key "C-t" :description "Transpose characters")
+;;  '(:key "M-t" :description "Transpose words")
+;;  '(:key "C-x C-t" :description "Transpose lines")
+;;  '(:key "C-M-t" :description "Transpose sexps"))
+;; 
+;; (cheatsheet-add-group
+;;  'Registers
+;;  '(:key "C-x r s" :description "Save region in register")
+;;  '(:key "C-x r i" :description "Insert register contents into buffer")
+;;  '(:key "C-x r SPC" :description "Save value of point in register")
+;;  '(:key "C-x r j" :description "Jump to point saved in register"))
+;; 
+;; (cheatsheet-add-group
+;;  'Elisp
+;;  '(:key "C-x C-e" :description "Eval sexp before point")
+;;  '(:key "C-M-x" :description "Eval current defun")
+;;  '(:key "M-x eval-region" :description "Eval region")
+;;  '(:key "M-:" :description "Read and eval minibuffer")
+;;  '(:key "M-x load-library" :description "Load a Lisp library from load-path"))
+
+;; using straight use-package with custom recipe
+;; (use-package transient-showcase
+;;   :straight '(transient-showcase
+;;               :type git :host github
+;;               :repo "positron-solutions/transient-showcase"))
+
+(use-package calibredb
+  :defer t
+  :config
+  (setq calibredb-root-dir "~/Ebooks")
+  ;; for folder driver metadata: it should be .metadata.calibre
+  (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
+  (setq calibredb-search-page-max-rows 100)
+  (setq calibredb-id-width 4)
+  (setq calibredb-size-show t)
+  (setq calibredb-format-nerd-icons t)
+  (setq calibredb-format-all-the-icons t)
+  (setq calibredb-format-icons-in-terminal t)
+  (setq calibredb-format-character-icons t))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("2e7dc2838b7941ab9cabaa3b6793286e5134f583c04bde2fba2f4e20f2617cf7" default))
+ '(geiser-chez-binary "chez")
+ '(package-selected-packages
+   '(ace-window anzu avy-zap beginend browse-at-remote browse-kill-ring calibredb
+                casual chess compile-multi-embark compiler-explorer
+                consult-compile-multi consult-dir consult-eglot-embark corfu
+                csv-mode dape dashboard deadgrep devdocs diff-hl dired-git
+                dired-git-info dired-quick-sort dired-rsync diredfl disproject
+                docker doom-modeline dracula-theme drag-stuff easy-kill eat
+                eglot-fsharp ess exec-path-from-shell expand-region fd-dired
+                flycheck-color-mode-line flycheck-eglot flycheck-rust fontaine
+                forge format-all geiser-chez geiser-racket git-modes goto-chg
+                hl-todo htmlize hungry-delete ialign ibuffer-project iedit
+                magit-lfs major-mode-hydra marginalia minions mistty
+                modus-themes mwim nerd-icons-completion nerd-icons-corfu
+                nerd-icons-dired nerd-icons-ibuffer nov orderless org-modern
+                org-present org-ql outline-indent page-break-lines pdf-tools
+                quickrun rainbow-mode realgud-lldb riscv-mode rustic shell-pop
+                simpleclip string-inflection sudo-edit symbol-overlay
+                tempel-collection titlecase toc-org vertico vundo wgrep
+                writeroom-mode))
+ '(warning-suppress-types '((emacs) (defvaralias) (lexical-binding))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(put 'downcase-region 'disabled nil)
