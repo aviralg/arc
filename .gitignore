@@ -1,10 +1,19 @@
 # -*- mode: gitignore; -*-
 
-# ignore everything
-*
+# Compiled
+*.elc
 
-# include init.el
-!init.el
+# Packaging
+.cask/
+.eask/
+.eldev/
+.keg/
 
-# include config.org
-!config.org
+# Built distribution
+dist/
+
+# Backup files
+*~
+
+# Undo-tree save-files
+*.~undo-tree
