@@ -170,8 +170,8 @@
 
 (global-hl-line-mode)
 
-
-(setq debug-on-error t)
+;; TODO - enable for debugging
+(setq debug-on-error nil)
 
 
 ;; Auto-revert in Emacs is a feature that automatically updates the

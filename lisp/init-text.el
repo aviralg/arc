@@ -10,10 +10,12 @@
 ;; Disable the obsolete practice of end-of-line spacing from the typewriter era.
 (setq sentence-end-double-space nil)
 
-(use-package jinx
-  :ensure t
-  :hook (emacs-startup . global-jinx-mode)
-  :bind (("M-$" . jinx-correct)
-         ("C-M-$" . jinx-languages)))
+;; (use-package jinx
+;;   :ensure t
+;;   :hook (emacs-startup . global-jinx-mode)
+;;   :bind (("M-$" . jinx-correct)
+;;          ("C-M-$" . jinx-languages)))
+
+(setq Man-sed-command "gsed")
 
 (provide 'init-text)
