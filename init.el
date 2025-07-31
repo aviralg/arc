@@ -170,15 +170,13 @@
 
 (global-hl-line-mode)
 
-;; TODO - enable for debugging
+;; INFO - enable for debugging
 (setq debug-on-error nil)
-
 
 ;; Auto-revert in Emacs is a feature that automatically updates the
 ;; contents of a buffer to reflect changes made to the underlying file
 ;; on disk.
 (add-hook 'after-init-hook #'global-auto-revert-mode)
-
 
 ;; Enable `auto-save-mode' to prevent data loss. Use `recover-file' or
 ;; `recover-session' to restore unsaved changes.
@@ -197,7 +195,7 @@
 (require 'init-window)
 (require 'init-search)
 (require 'init-dired)
-;;(require 'init-git)
+(require 'init-git)
 (require 'init-session)
 (require 'init-edit)
 (require 'init-ibuffer)
@@ -224,6 +222,7 @@
 (require 'init-proc)
 (require 'init-misc)
 (require 'init-help)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -105,10 +105,4 @@
   :bind (:map dired-mode-map
               ("C-c C-r" . dired-rsync)))
 
-;; Allow rsync from dired buffers
-(use-package casual-suite
-  :ensure t
-  :bind (:map dired-mode-map
-              ("M-m" . casual-dired-tmenu)))
-
 (provide 'init-dired)

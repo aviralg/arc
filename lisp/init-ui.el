@@ -150,7 +150,7 @@
 
 
 ;; Allow nested minibuffers
-(setq enable-recursive-minibuffers t)
+(setq enable-recursive-minibuffers nil)
 
 ;; Keep the cursor out of the read-only portions of the.minibuffer
 (setq minibuffer-prompt-properties
@@ -423,5 +423,29 @@
   (dashboard-set-file-icons t))
 
 (load-theme 'modus-operandi t)
+
+
+
+;; CASUAL SUITE
+
+
+(use-package casual-suite
+  :ensure t
+  :config
+  (keymap-set calendar-mode-map "M-m" #'casual-calendar-tmenu)
+  (keymap-set calc-mode-map "M-m" #'casual-calc-tmenu)
+  (keymap-set dired-mode-map "M-m" #'casual-dired-tmenu)
+  (keymap-set isearch-mode-map "M-m" #'casual-isearch-tmenu)
+  (keymap-set ibuffer-mode-map "M-m" #'casual-ibuffer-tmenu)
+  (keymap-set ibuffer-mode-map "F" #'casual-ibuffer-filter-tmenu)
+  (keymap-set ibuffer-mode-map "s" #'casual-ibuffer-sortby-tmenu)
+  (keymap-set Info-mode-map "M-m" #'casual-info-tmenu)
+  (keymap-set reb-mode-map "M-m" #'casual-re-builder-tmenu)
+  (keymap-set reb-lisp-mode-map "M-m" #'casual-re-builder-tmenu)
+  (keymap-set bookmark-bmenu-mode-map "M-m" #'casual-bookmarks-tmenu)
+  (keymap-set org-agenda-mode-map "M-m" #'casual-agenda-tmenu)
+  (keymap-global-set "M-g" #'casual-avy-tmenu)
+  (keymap-set symbol-overlay-map "M-m" #'casual-symbol-overlay-tmenu)
+  (keymap-global-set "M-m" #'casual-editkit-main-tmenu))
 
 (provide 'init-ui)
