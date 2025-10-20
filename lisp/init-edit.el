@@ -35,15 +35,6 @@
 ;; https://github.com/abo-abo/avy
 (use-package avy
   :ensure t
-  :bind (("C-;" . avy-goto-char-2)
-         ("C-'" . avy-goto-line)
-         ("M-g c" . avy-goto-char)
-         ("M-g e" . avy-goto-word-0)  ;; lots of candidates
-         ("M-g g" . avy-goto-line)    ;; digits behave like goto-line
-         ("M-g w" . avy-goto-word-1)  ;; first character of the word
-         ("M-g (" . avy-goto-open-paren)
-         ("M-g )" . avy-goto-close-paren)
-         ("M-g P" . avy-pop-mark))
   :config
   ;; case sensitive makes selection easier
   (setq avy-case-fold-search nil))

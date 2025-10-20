@@ -223,6 +223,10 @@
 (require 'init-misc)
 (require 'init-help)
 
+(let ((file-to-load "~/projects/emacs-custom-config/config.el"))
+  (when (file-exists-p file-to-load)
+    (load-file file-to-load)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

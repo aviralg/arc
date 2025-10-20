@@ -16,25 +16,24 @@
 
 ;;; Dired
 
-(setq dired-free-space nil
-      dired-dwim-target t  ; Propose a target for intelligent moving or copying.
-      dired-deletion-confirmer 'y-or-n-p
-      dired-filter-verbose nil
-      dired-recursive-deletes 'top
-      dired-recursive-copies 'always
-      dired-create-destination-dirs 'ask
-      image-dired-thumb-size 150)
+  (setq insert-directory-program "/opt/homebrew/opt/coreutils/libexec/gnubin/ls")
+  (setq dired-free-space nil
+        dired-dwim-target t ; Propose a target for intelligent moving or copying.
+        dired-deletion-confirmer 'y-or-n-p
+        dired-filter-verbose nil
+        dired-recursive-deletes 'top
+        dired-recursive-copies 'always
+        dired-create-destination-dirs 'ask
+        image-dired-thumb-size 150)
 
-(setq dired-vc-rename-file t)
+  (setq dired-vc-rename-file t)
 
-;; Disable the prompt about killing the Dired buffer for a deleted directory.
-(setq dired-clean-confirm-killing-deleted-buffers nil)
+  ;; Disable the prompt about killing the Dired buffer for a deleted directory.
+  (setq dired-clean-confirm-killing-deleted-buffers nil)
 
-;; dired-omit-mode
-(setq dired-omit-verbose nil)
-(setq dired-omit-files (concat "\\`[.]\\'"))
-
-
+  ;; dired-omit-mode
+  (setq dired-omit-verbose nil)
+  (setq dired-omit-files (concat "\\`[.]\\'"))
   )
 
 (use-package dired-aux

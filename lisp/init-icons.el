@@ -21,9 +21,4 @@
   :hook
   (marginalia-mode-hook . nerd-icons-completion-marginalia-setup))
 
-(use-package compile-multi-nerd-icons
-  :ensure t
-  :after (compile-multi nerd-icons-completion)
-  :demand t)
-
 (provide 'init-icons)

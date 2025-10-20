@@ -448,4 +448,9 @@
   (keymap-set symbol-overlay-map "M-m" #'casual-symbol-overlay-tmenu)
   (keymap-global-set "M-m" #'casual-editkit-main-tmenu))
 
+(use-package page-break-lines
+  :ensure t
+  :config
+  (global-page-break-lines-mode))
+
 (provide 'init-ui)

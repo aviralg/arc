@@ -163,10 +163,4 @@
   (add-hook 'emacs-startup-hook #'easysession-load-including-geometry 102)
   (add-hook 'emacs-startup-hook #'easysession-save-mode 103))
 
-(use-package perspective
-  :ensure t
-  :bind (("C-x k" . persp-kill-buffer*))
-  :init
-  (persp-mode))
-
 (provide 'init-session)

@@ -123,8 +123,6 @@
 
 ;; Cross-referencing commands
 (use-package xref
-  :bind (("M-g ." . xref-find-definitions)
-         ("M-g ," . xref-go-back))
   :init
   ;; Use faster search tool
   (setq xref-search-program 'ripgrep)
@@ -265,7 +263,8 @@ Install the doc if it's not installed."
 (use-package compile-multi
   :ensure t
   :config
-  (setq compile-multi-default-directory #'project--root))
+  (setq compile-multi-default-directory #'project--root)
+  (setq compile-multi-config nil))
 
 (use-package consult-compile-multi
   :ensure t
@@ -276,8 +275,7 @@ Install the doc if it's not installed."
 (use-package compile-multi-nerd-icons
   :ensure t
   :after nerd-icons-completion
-  :after compile-multi
-  :demand t)
+  :after compile-multi)
 
 (use-package compile-multi-embark
   :ensure t
