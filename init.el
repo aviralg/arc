@@ -507,22 +507,6 @@ Display a summary buffer if anything is missing."
 
 
 ;;; =========================================================================
-;;;; ---- Theme ----
-;;; =========================================================================
-;; Modus Operandi — a light, accessible theme built into Emacs.
-;; Enables italics for comments, bold for keywords, and mixed fonts
-;; for org-mode (variable-pitch prose + fixed-pitch code).
-
-(use-package modus-themes
-  :ensure nil
-  :demand t
-  :init
-  (setq modus-themes-italic-constructs t
-        modus-themes-bold-constructs t
-        modus-themes-mixed-fonts t)
-  (load-theme 'modus-operandi :no-confirm))
-
-;;; =========================================================================
 ;;;; ---- Overlay Highlighting ----
 ;;; =========================================================================
 ;;; Paint arbitrary regions with a chosen face -------
@@ -559,20 +543,6 @@ Display a summary buffer if anything is missing."
   "Remove all overlay highlights in the current buffer."
   (interactive)
   (remove-overlays nil nil 'category 'my-highlight))
-
-;;; =========================================================================
-;;;; ---- Mode Line ----
-;;; =========================================================================
-;; Compact mode line showing column number, buffer size, and current
-;; function name (useful for navigating large files).
-
-(setq mode-line-compact 'long)
-(column-number-mode 1)
-(size-indication-mode 1)
-(which-function-mode 1)
-;; Show empty string instead of "???" when outside a function,
-;; so the mode line doesn't change width between function/top-level.
-(setq which-func-unknown "")
 
 ;;; =========================================================================
 ;;;; ---- Server ----
@@ -620,6 +590,7 @@ Display a summary buffer if anything is missing."
 ;;; =========================================================================
 
 (load (expand-file-name "modules/completion" user-emacs-directory))
+(load (expand-file-name "modules/theme" user-emacs-directory))
 (load (expand-file-name "modules/search" user-emacs-directory))
 (load (expand-file-name "modules/code" user-emacs-directory))
 (load (expand-file-name "modules/git"    user-emacs-directory))
