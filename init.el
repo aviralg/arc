@@ -889,29 +889,6 @@ Display a summary buffer if anything is missing."
   :bind ("M-i" . symbol-overlay-put))
 
 ;;; =========================================================================
-;;;; ---- Spell Checking ----
-;;; =========================================================================
-;; Use hunspell as the spell-check backend when available.
-;; Auto-enable on-the-fly spell checking in text buffers.
-
-(use-package ispell
-  :ensure nil
-  :demand t
-  :config
-  (when (executable-find "hunspell")
-    (setq ispell-program-name "hunspell"
-          ispell-dictionary "en_US")))
-
-;; Auto-enable on-the-fly spell checking in text buffers,
-;; but only if a spell checker is actually installed.
-(use-package flyspell
-  :ensure nil
-  :demand t
-  :config
-  (when (executable-find ispell-program-name)
-    (add-hook 'text-mode-hook #'flyspell-mode)))
-
-;;; =========================================================================
 ;;;; ---- Language Modes ----
 ;;; =========================================================================
 
@@ -1312,7 +1289,8 @@ All built-in commands are also available directly via their C-M-* bindings."
 (load (expand-file-name "modules/git"    user-emacs-directory))
 (load (expand-file-name "modules/dired"  user-emacs-directory))
 (load (expand-file-name "modules/org"    user-emacs-directory))
-(load (expand-file-name "modules/shell"  user-emacs-directory))
+(load (expand-file-name "modules/shell"    user-emacs-directory))
+(load (expand-file-name "modules/spelling" user-emacs-directory))
 
 ;;; =========================================================================
 ;;;; ---- Cheatsheet ----
