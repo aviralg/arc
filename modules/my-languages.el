@@ -1,4 +1,4 @@
-;;; modules/languages.el --- Programming language modes -*- lexical-binding: t; -*-
+;;; modules/my-languages.el --- Programming language modes -*- lexical-binding: t; -*-
 
 ;;; --- Python ---
 ;; Uses python-ts-mode (tree-sitter) with eglot for LSP.
@@ -19,16 +19,17 @@
 ;; configures eglot to use the correct Python for the project.
 ;; Without this, LSP reports false "module not found" errors.
 (use-package pet
+  :ensure t
   :demand t
   :config
-  (add-hook 'python-ts-mode-hook
-            (lambda ()
-              (when-let* ((python (pet-executable-find "python")))
-                (setq-local python-shell-interpreter python))
-              (when-let* ((root (pet-virtualenv-root)))
-                (setq-local python-shell-virtualenv-root root))
-              (pet-eglot-setup)
-              (eglot-ensure))))
+  (defun my--pet-setup-python ()
+    (when-let* ((python (pet-executable-find "python")))
+      (setq-local python-shell-interpreter python))
+    (when-let* ((root (pet-virtualenv-root)))
+      (setq-local python-shell-virtualenv-root root))
+    (pet-eglot-setup)
+    (eglot-ensure))
+  (add-hook 'python-ts-mode-hook #'my--pet-setup-python))
 
 ;;; --- C / C++ ---
 ;; Uses c-ts-mode / c++-ts-mode (tree-sitter) with eglot for LSP.
@@ -70,6 +71,7 @@
 ;; profiled redisplay (markdown-match-code + cascading matchers). Remaining
 ;; font-lock is deferred to idle time so keystroke insertion never blocks.
 (use-package markdown-mode
+  :ensure t
   :demand t
   :mode ("\\.md\\'" . markdown-mode)
   :config
@@ -83,6 +85,7 @@
 
 ;; Swift support (non-tree-sitter, since the Swift grammar has build issues).
 (use-package swift-mode
+  :ensure t
   :demand t
   :mode "\\.swift\\'")
 
@@ -98,11 +101,16 @@
 ;;   C-<right>   absorb
 ;;   C-<left>    expel
 ;;   M-S         unwrap
-;;   M-(         wrap
+;;   M-(         wrap  (shadows insert-parentheses — use C-u N M-( via
+;;                      M-x insert-parentheses if you need to wrap N sexps)
+;;
+;; Limitation: these commands operate on sexps as Emacs sees them.
+;; Comments between sexps may be included in the gap text during
+;; absorb/expel since skip-chars-forward doesn't skip comments.
 
 ;; ---- helpers ----
 
-(defun my/lisp--enclosing-open ()
+(defun my--lisp-enclosing-open ()
   "Return the position of the opening delimiter of the enclosing list.
 Signals `user-error' if point is not inside any list."
   (condition-case nil
@@ -112,7 +120,7 @@ Signals `user-error' if point is not inside any list."
     (scan-error
      (user-error "Not inside any list"))))
 
-(defun my/lisp--enclosing-close ()
+(defun my--lisp-enclosing-close ()
   "Return the position of the closing delimiter of the enclosing list.
 Signals `user-error' if point is not inside any list."
   (condition-case nil
@@ -127,16 +135,19 @@ Signals `user-error' if point is not inside any list."
 (defun my/lisp-absorb ()
   "Pull the next sibling sexp inside the current list.
 
-  (a b c) d  →  (a b c d)"
+  (a b c) d  →  (a b c d)
+
+Comments between the closing delimiter and the next sexp are
+skipped (left outside the list)."
   (interactive)
-  (let* ((close-pos   (my/lisp--enclosing-close))
+  (let* ((close-pos   (my--lisp-enclosing-close))
          (close-char  (char-after close-pos))
          (after-close (1+ close-pos))
          (next-end
           (condition-case nil
               (save-excursion
                 (goto-char after-close)
-                (skip-chars-forward " \t\n")
+                (forward-comment (buffer-size))
                 (forward-sexp 1)
                 (point))
             (scan-error
@@ -145,16 +156,20 @@ Signals `user-error' if point is not inside any list."
       (delete-region close-pos (1+ close-pos))
       (goto-char close-pos)
       (insert gap-and-sexp)
-      (insert close-char))))
+      (insert close-char)
+      (indent-region (my--lisp-enclosing-open) (1+ (point))))))
 
 ;; ---- expel (barf forward) ----
 
 (defun my/lisp-expel ()
   "Push the last sexp out of the current list.
 
-  (a b c d)  →  (a b c) d"
+  (a b c d)  →  (a b c) d
+
+Comments between the last sexp and the closing delimiter are
+skipped (left inside the list)."
   (interactive)
-  (let* ((close-pos  (my/lisp--enclosing-close))
+  (let* ((close-pos  (my--lisp-enclosing-close))
          (close-char (char-after close-pos))
          last-sexp-start last-sexp-end)
     (condition-case nil
@@ -168,13 +183,14 @@ Signals `user-error' if point is not inside any list."
        (user-error "expel: list is empty")))
     (let ((ws-start (save-excursion
                       (goto-char last-sexp-start)
-                      (skip-chars-backward " \t\n")
+                      (forward-comment (- (buffer-size)))
                       (point)))
           (sexp-text (buffer-substring-no-properties
                       last-sexp-start last-sexp-end)))
       (delete-region ws-start (1+ close-pos))
       (goto-char ws-start)
-      (insert close-char " " sexp-text))))
+      (insert close-char " " sexp-text)
+      (indent-region (my--lisp-enclosing-open) (point)))))
 
 ;; ---- unwrap (splice) ----
 
@@ -183,8 +199,8 @@ Signals `user-error' if point is not inside any list."
 
   (a (b c) d) with point in (b c)  →  (a b c d)"
   (interactive)
-  (let ((open-pos  (my/lisp--enclosing-open))
-        (close-pos (my/lisp--enclosing-close)))
+  (let ((open-pos  (my--lisp-enclosing-open))
+        (close-pos (my--lisp-enclosing-close)))
     (delete-region close-pos (1+ close-pos))
     (delete-region open-pos  (1+ open-pos))))
 
@@ -196,7 +212,9 @@ Signals `user-error' if point is not inside any list."
   point before b in `a b c'  →  `a (b) c'
   region `b c'               →  `(b c)'
 
-Point is placed just inside the opening paren after the operation."
+Point is placed just inside the opening paren after the operation.
+Unlike the built-in `insert-parentheses', this does not accept a
+prefix argument to wrap N sexps.  Use M-x insert-parentheses for that."
   (interactive)
   (if (use-region-p)
       (let ((beg (region-beginning))
@@ -270,8 +288,8 @@ All built-in commands are also available directly via their C-M-* bindings."
 (dolist (hook '(emacs-lisp-mode-hook
                 lisp-mode-hook
                 lisp-interaction-mode-hook
-                scheme-mode-hook
-                scheme-ts-mode-hook))
+                scheme-mode-hook))
   (add-hook hook #'my/lisp-edit-mode))
 
-;;; modules/languages.el ends here
+(provide 'my-languages)
+;;; modules/my-languages.el ends here

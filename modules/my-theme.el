@@ -1,4 +1,4 @@
-;;; modules/theme.el --- Theme and mode line -*- lexical-binding: t; -*-
+;;; modules/my-theme.el --- Theme and mode line -*- lexical-binding: t; -*-
 
 ;; Modus Operandi — a light, accessible theme built into Emacs.
 ;; Enables italics for comments, bold for keywords, and mixed fonts
@@ -19,9 +19,13 @@
 (setq mode-line-compact 'long)
 (column-number-mode 1)
 (size-indication-mode 1)
-(which-function-mode 1)
+;; Show current function name in mode line. Restricted to prog-mode
+;; because imenu scanning on every cursor move is expensive in large
+;; non-code buffers (org, markdown, shell).
+(add-hook 'prog-mode-hook #'which-function-mode)
 ;; Show empty string instead of "???" when outside a function,
 ;; so the mode line doesn't change width between function/top-level.
 (setq which-func-unknown "")
 
-;;; modules/theme.el ends here
+(provide 'my-theme)
+;;; modules/my-theme.el ends here

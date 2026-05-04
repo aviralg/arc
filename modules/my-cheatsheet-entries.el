@@ -1,10 +1,11 @@
-;;; cheatsheet-entries.el --- Cheatsheet data -*- lexical-binding: t -*-
+;;; my-cheatsheet-entries.el --- Cheatsheet data -*- lexical-binding: t -*-
 ;;
 ;; Registers all entries via my/cheatsheet-add.
 ;; Keybindings and package names are auto-detected at render time.
-;; Load after cheatsheet.el.
 
 ;;; Code:
+
+(require 'my-cheatsheet)
 
 ;;;; ---- Buffers & Windows ----
 
@@ -612,25 +613,6 @@
 (my/cheatsheet-add "Emacs: Frames" 'other-frame-prefix "Next command's buffer in other frame")
 (my/cheatsheet-add "Emacs: Frames" 'tear-off-window "Tear off window into a new frame")
 
-;;;; ---- Emacs: Tabs ----
-
-(my/cheatsheet-add "Emacs: Tabs" 'tab-new "Create a new tab")
-(my/cheatsheet-add "Emacs: Tabs" 'tab-close "Close the current tab")
-(my/cheatsheet-add "Emacs: Tabs" 'tab-close-other "Close all other tabs")
-(my/cheatsheet-add "Emacs: Tabs" 'tab-next "Switch to the next tab")
-(my/cheatsheet-add "Emacs: Tabs" 'tab-previous "Switch to the previous tab")
-(my/cheatsheet-add "Emacs: Tabs" 'tab-undo "Undo the last tab close")
-(my/cheatsheet-add "Emacs: Tabs" 'tab-duplicate "Duplicate the current tab")
-(my/cheatsheet-add "Emacs: Tabs" 'tab-move "Move the current tab forward")
-(my/cheatsheet-add "Emacs: Tabs" 'tab-rename "Rename the current tab")
-(my/cheatsheet-add "Emacs: Tabs" 'tab-switch "Switch to a tab by name")
-(my/cheatsheet-add "Emacs: Tabs" 'tab-group "Change the tab group")
-(my/cheatsheet-add "Emacs: Tabs" 'tab-detach "Detach tab into a new frame")
-(my/cheatsheet-add "Emacs: Tabs" 'tab-window-detach "Detach window into a new tab")
-(my/cheatsheet-add "Emacs: Tabs" 'tab-recent "Select most recently visited tab")
-(my/cheatsheet-add "Emacs: Tabs" 'find-file-other-tab "Find file in another tab")
-(my/cheatsheet-add "Emacs: Tabs" 'switch-to-buffer-other-tab "Switch buffer in another tab")
-
 ;;;; ---- Emacs: Files ----
 
 (my/cheatsheet-add "Emacs: Files" 'find-file "Open (visit) a file")
@@ -795,4 +777,5 @@
 (my/cheatsheet-add "Emacs: C-x 4 / C-x 5" 'display-buffer "Display buffer in some window")
 (my/cheatsheet-add "Emacs: C-x 4 / C-x 5" 'display-buffer-other-frame "Display buffer in other frame")
 
-;;; cheatsheet-entries.el ends here
+(provide 'my-cheatsheet-entries)
+;;; my-cheatsheet-entries.el ends here

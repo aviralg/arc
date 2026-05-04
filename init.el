@@ -23,9 +23,8 @@
 ;;; =========================================================================
 ;;;; ---- Package Management ----
 ;;; =========================================================================
-;; Configure ELPA/MELPA archives and install any missing packages on first
-;; launch. The explicit package list is the single source of truth for
-;; external dependencies — use-package handles configuration, not installation.
+;; Configure ELPA/MELPA archives. Each use-package block declares
+;; :ensure t to install its own package on first use.
 
 (require 'package)
 (setq package-archives
@@ -35,18 +34,9 @@
 
 (package-initialize)
 
-(defvar my--required-packages
-  '(no-littering vertico orderless marginalia consult embark embark-consult
-    corfu cape magit avy ace-window popper casual-suite markdown-mode
-    swift-mode wgrep diff-hl diredfl crux consult-eglot exec-path-from-shell
-    pet symbol-overlay))
-
-;; Refresh archives and install anything missing (typically first launch only)
-(let ((missing (seq-remove #'package-installed-p my--required-packages)))
-  (when missing
-    (package-refresh-contents)
-    (dolist (pkg missing)
-      (package-install pkg))))
+;; use-package :ensure t handles installation — prevent customize
+;; from maintaining a redundant package-selected-packages list.
+(setq package-selected-packages nil)
 
 ;;; =========================================================================
 ;;;; ---- Dependency Check ----
@@ -112,6 +102,7 @@ Display a summary buffer if anything is missing."
 ;; Loaded early so subsequent packages pick up the redirected paths.
 
 (use-package no-littering
+  :ensure t
   :demand t
   :init
   (setq no-littering-var-directory
@@ -140,11 +131,10 @@ Display a summary buffer if anything is missing."
 ;; from the user's default shell.
 
 (use-package exec-path-from-shell
+  :ensure t
   :demand t
   :if (memq window-system '(mac ns))
   :config
-  (setq exec-path-from-shell-variables
-        '("PATH" "MANPATH" "PYTHONPATH"))
   (exec-path-from-shell-initialize))
 
 ;;; =========================================================================
@@ -165,28 +155,55 @@ Display a summary buffer if anything is missing."
 ;;;; ---- Modules ----
 ;;; =========================================================================
 
-(defun my--load-module (name)
-  "Load NAME from the modules/ directory."
-  (load (expand-file-name (concat "modules/" name) user-emacs-directory)))
+(add-to-list 'load-path
+             (expand-file-name "modules/" user-emacs-directory))
 
-(my--load-module "defaults")
-(my--load-module "buffers")
-(my--load-module "completion")
-(my--load-module "editing")
-(my--load-module "theme")
-(my--load-module "windows")
-(my--load-module "search")
-(my--load-module "code")
-(my--load-module "git")
-(my--load-module "dired")
-(my--load-module "org")
-(my--load-module "shell")
-(my--load-module "spelling")
-(my--load-module "navigation")
-(my--load-module "casual")
-(my--load-module "languages")
-(my--load-module "cheatsheet")
-(my--load-module "cheatsheet-entries")
+(defun my--load-module (name)
+  "Require the module my-NAME from the modules/ directory.
+Errors are caught and displayed in *Warnings* so one broken module
+doesn't prevent the rest from loading."
+  (condition-case err
+      (require (intern name))
+    (error (display-warning 'init (format "Module %s failed: %s" name err) :error))))
+
+;; Load order matters:
+;;   defaults  — core settings used by everything
+;;   buffers   — savehist must load before completion (corfu-history)
+;;   completion — consult/embark must load before search, code, navigation
+;;              (named my-completion to avoid shadowing built-in)
+;;   editing   — standalone
+;;   theme     — standalone
+;;   windows   — standalone
+;;   search    — uses isearch (consult-line binding in isearch-mode-map)
+;;   code      — uses consult (consult-flymake, consult-xref, consult-eglot)
+;;   git       — standalone
+;;   dired     — standalone (named my-dired to avoid shadowing built-in)
+;;   org       — standalone (named my-org to avoid shadowing built-in)
+;;   shell     — uses consult (consult-history in eshell)
+;;              (named my-shell to avoid shadowing built-in)
+;;   spelling  — ispell must load before flyspell
+;;   navigation — uses embark (avy-action-embark)
+;;   casual    — uses keymaps from dired, ibuffer, org, etc.
+;;   languages — uses eglot (pet-eglot-setup, eglot-ensure)
+
+(my--load-module "my-defaults")
+(my--load-module "my-buffers")
+(my--load-module "my-completion")
+(my--load-module "my-editing")
+(my--load-module "my-theme")
+(my--load-module "my-windows")
+(my--load-module "my-search")
+(my--load-module "my-code")
+(my--load-module "my-git")
+(my--load-module "my-dired")
+(my--load-module "my-org")
+(my--load-module "my-shell")
+(my--load-module "my-spelling")
+(my--load-module "my-navigation")
+(my--load-module "my-casual")
+(my--load-module "my-languages")
+(my--load-module "my-cheatsheet")
+(my--load-module "my-cheatsheet-entries")
 
 ;;; =========================================================================
 ;;;; ---- Startup Time ----

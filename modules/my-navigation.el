@@ -1,8 +1,9 @@
-;;; modules/navigation.el --- Jump and navigate -*- lexical-binding: t; -*-
+;;; modules/my-navigation.el --- Jump and navigate -*- lexical-binding: t; -*-
 
 ;; Avy for jumping to visible text. Press "." during avy to run
 ;; embark-act at the target location (avy + embark composition).
 (use-package avy
+  :ensure t
   :demand t
   :after embark
   :bind (("C-'" . avy-goto-char-timer)
@@ -26,7 +27,9 @@
 ;; Highlight all occurrences of the symbol at point. M-i toggles
 ;; highlighting; then n/p/r in the overlay keymap jump/rename.
 (use-package symbol-overlay
+  :ensure t
   :demand t
   :bind ("M-i" . symbol-overlay-put))
 
-;;; modules/navigation.el ends here
+(provide 'my-navigation)
+;;; modules/my-navigation.el ends here

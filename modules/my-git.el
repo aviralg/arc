@@ -1,7 +1,8 @@
-;;; modules/git.el --- Version control -*- lexical-binding: t; -*-
+;;; modules/my-git.el --- Version control -*- lexical-binding: t; -*-
 
 ;; Full-featured git interface. Opens in the current window.
 (use-package magit
+  :ensure t
   :demand t
   :bind ("C-x g" . magit-status)
   :config
@@ -13,6 +14,7 @@
 ;; Horizontal split shows files side-by-side.
 (use-package ediff
   :ensure nil
+  :demand t
   :config
   (setq ediff-window-setup-function #'ediff-setup-windows-plain
         ediff-split-window-function #'split-window-horizontally))
@@ -21,6 +23,7 @@
 ;; Flydiff mode updates indicators without saving (on-the-fly).
 ;; Refreshes after magit operations.
 (use-package diff-hl
+  :ensure t
   :demand t
   :after magit
   :hook ((dired-mode . diff-hl-dired-mode)
@@ -32,4 +35,5 @@
   ;; and diff-hl-previous-hunk (C-x v ] and C-x v [ by default).
   (setq diff-hl-next-previous-hunk-auto-recenter t))
 
-;;; modules/git.el ends here
+(provide 'my-git)
+;;; modules/my-git.el ends here

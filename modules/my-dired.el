@@ -1,8 +1,9 @@
-;;; modules/dired.el --- File management -*- lexical-binding: t; -*-
+;;; modules/my-dired.el --- File management -*- lexical-binding: t; -*-
 
 ;; Uses GNU ls (gls) on macOS for --group-directories-first support.
 (use-package dired
   :ensure nil
+  :demand t
   :config
   ;; Guess target directory from other dired window (for copy/move)
   (setq dired-dwim-target t
@@ -19,8 +20,10 @@
 
 ;; Colorize dired output (file sizes, dates, permissions, etc.).
 (use-package diredfl
+  :ensure t
   :demand t
   :config
   (diredfl-global-mode 1))
 
-;;; modules/dired.el ends here
+(provide 'my-dired)
+;;; modules/my-dired.el ends here

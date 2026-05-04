@@ -1,4 +1,4 @@
-;;; modules/buffers.el --- Buffer persistence and management -*- lexical-binding: t; -*-
+;;; modules/my-buffers.el --- Buffer persistence and management -*- lexical-binding: t; -*-
 
 ;; Persist minibuffer history (M-x, search, etc.) across sessions.
 ;; Also saves consult history for smarter completion ranking.
@@ -38,6 +38,7 @@
 ;; Auto-save bookmarks after every change so they survive crashes.
 (use-package bookmark
   :ensure nil
+  :demand t
   :config
   (setq bookmark-save-flag 1))
 
@@ -54,6 +55,19 @@
         global-auto-revert-non-file-buffers t
         auto-revert-verbose nil))
 
+;; Periodically save visited files to their real locations.
+;; Complements numbered backups — if Emacs crashes, you lose at most
+;; 5 seconds of work instead of everything since the last manual save.
+;; Note: this fires file-system events every 5s, which can trigger
+;; build-tool watchers (webpack, entr, etc.). Most tools debounce,
+;; but if builds fire continuously, this is the cause.
+(use-package files
+  :ensure nil
+  :demand t
+  :config
+  (setq auto-save-visited-interval 5)
+  (auto-save-visited-mode 1))
+
 ;; Disambiguate buffer names by appending parent directory path
 ;; (e.g., "init.el|config/" instead of "init.el<2>").
 (use-package uniquify
@@ -69,4 +83,5 @@
   :ensure nil
   :bind ("C-x C-b" . ibuffer))
 
-;;; modules/buffers.el ends here
+(provide 'my-buffers)
+;;; modules/my-buffers.el ends here

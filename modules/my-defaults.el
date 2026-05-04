@@ -1,4 +1,8 @@
-;;; modules/defaults.el --- Core Emacs behavior -*- lexical-binding: t; -*-
+;;; modules/my-defaults.el --- Core Emacs behavior -*- lexical-binding: t; -*-
+
+;; Naming convention used across all modules:
+;;   my/name   — public interactive commands (M-x visible)
+;;   my--name  — private helper functions and hooks
 
 ;;; --- Startup & Behavior ---
 ;; Suppress startup screen, use y/n instead of yes/no, confirm before
@@ -25,7 +29,7 @@
 
 ;;; --- File Handling ---
 ;; Resolve symlinks to avoid duplicate buffers for the same file.
-;; Suppress warnings when symlinks point to the same target.
+;; Suppress warnings when visiting a file already open under a different name.
 ;; Preserve system clipboard before Emacs kills overwrite it.
 (setq find-file-visit-truename t
       find-file-suppress-same-file-warnings t
@@ -46,6 +50,8 @@
       scroll-preserve-screen-position t
       auto-window-vscroll nil
       fast-but-imprecise-scrolling t)
+(pixel-scroll-precision-mode 1)
+(setq pixel-scroll-precision-use-momentum nil)
 
 ;;; --- Performance ---
 ;; Increase subprocess read buffer (benefits LSP/eglot).
@@ -69,8 +75,8 @@
 
 ;;; --- Encoding ---
 ;; UTF-8 as the default for all file I/O, subprocess communication,
-;; and terminal encoding.
-(set-default-coding-systems 'utf-8)
+;; terminal encoding, and line endings (LF, not CRLF).
+(prefer-coding-system 'utf-8-unix)
 
 ;;; --- Fonts ---
 ;; Set default, fixed-pitch, and variable-pitch fonts. Guarded for
@@ -84,10 +90,12 @@
   (when (find-font (font-spec :family "NewComputerModern10"))
     (set-face-attribute 'variable-pitch nil :family "NewComputerModern10")))
 (if (daemonp)
-    (add-hook 'after-make-frame-functions
-              (lambda (frame)
-                (when (display-graphic-p frame)
-                  (with-selected-frame frame (my--setup-fonts)))))
+    (progn
+      (defun my--setup-fonts-once (frame)
+        (when (display-graphic-p frame)
+          (with-selected-frame frame (my--setup-fonts))
+          (remove-hook 'after-make-frame-functions #'my--setup-fonts-once)))
+      (add-hook 'after-make-frame-functions #'my--setup-fonts-once))
   (when (display-graphic-p)
     (my--setup-fonts)))
 
@@ -114,8 +122,10 @@
 (use-package which-key
   :ensure nil
   :demand t
+  :init
+  (setq which-key-idle-delay 0.5)
   :config
-  (which-key-mode 1)
-  (setq which-key-idle-delay 0.5))
+  (which-key-mode 1))
 
-;;; modules/defaults.el ends here
+(provide 'my-defaults)
+;;; modules/my-defaults.el ends here

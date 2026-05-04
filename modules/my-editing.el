@@ -1,4 +1,4 @@
-;;; modules/editing.el --- Text editing -*- lexical-binding: t; -*-
+;;; modules/my-editing.el --- Text editing -*- lexical-binding: t; -*-
 
 ;;; --- Cursor & Indentation ---
 ;; Thin bar cursor. Spaces instead of tabs. 4-space indent. 80-col fill.
@@ -36,18 +36,25 @@
 (add-hook 'text-mode-hook #'my--show-trailing-whitespace)
 
 ;;; --- Whitespace Cleanup ---
-;; Delete trailing whitespace on save, but only in code and text buffers
-;; (avoids mangling binary files or vendored code).
+;; Delete trailing whitespace on manual save, but not during
+;; auto-save-visited-mode's periodic saves (which would yank
+;; whitespace out from under you mid-edit).
+;; The guard checks this-command: auto-save's timer doesn't set it
+;; to save-buffer, so the cleanup is skipped during auto-saves.
+(defun my--delete-trailing-whitespace-manually ()
+  (when (memq this-command '(save-buffer save-some-buffers))
+    (delete-trailing-whitespace)))
+
 (defun my--enable-trailing-whitespace-cleanup ()
-  (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
+  (add-hook 'before-save-hook #'my--delete-trailing-whitespace-manually nil t))
 (add-hook 'prog-mode-hook #'my--enable-trailing-whitespace-cleanup)
 (add-hook 'text-mode-hook #'my--enable-trailing-whitespace-cleanup)
 
 ;; Auto-close brackets, quotes, and parens in code buffers.
-(use-package electric
+(use-package elec-pair
   :ensure nil
   :demand t
-  :hook (prog-mode . electric-pair-mode))
+  :hook (prog-mode . electric-pair-local-mode))
 
 ;; Highlight matching parenthesis with minimal delay (50ms).
 (use-package paren
@@ -113,11 +120,15 @@
 ;; C-a → move to indentation first, then to column 0
 ;; C-k → kill to end of line, or kill empty line entirely
 ;; C-o → open line below with correct indentation
+;;       (in dired/ibuffer/etc., C-o is overridden by casual-suite
+;;       to open a transient menu; dired-display-file is available
+;;       inside that menu)
 ;; C-S-o → open line above
 ;; C-c d → duplicate line or region
 ;; C-c D → delete file and its buffer
 ;; C-c r → rename file and its buffer
 (use-package crux
+  :ensure t
   :demand t
   :bind (("C-a"     . crux-move-beginning-of-line)
          ("C-k"     . crux-smart-kill-line)
@@ -132,4 +143,5 @@
   ;; Auto-reopen files as root when hitting permission errors
   (crux-reopen-as-root-mode 1))
 
-;;; modules/editing.el ends here
+(provide 'my-editing)
+;;; modules/my-editing.el ends here

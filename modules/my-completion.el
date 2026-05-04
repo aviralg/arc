@@ -1,4 +1,4 @@
-;;; modules/completion.el --- Minibuffer and in-buffer completion -*- lexical-binding: t; -*-
+;;; modules/my-completion.el --- Minibuffer and in-buffer completion -*- lexical-binding: t; -*-
 
 ;;; --- Minibuffer Completion ---
 ;; Modern completion stack: vertico (vertical UI), orderless (fuzzy
@@ -8,6 +8,7 @@
 ;; Vertical minibuffer completion UI with cycling and directory
 ;; navigation (RET enters dirs, DEL goes up).
 (use-package vertico
+  :ensure t
   :demand t
   :config
   (vertico-mode 1)
@@ -36,15 +37,25 @@
 ;; Space-separated completion matching — "buf init" matches "consult-buffer"
 ;; and "init.el". Falls back to basic for non-orderless-aware commands.
 (use-package orderless
+  :ensure t
   :demand t
   :config
   (setq completion-styles '(orderless basic)
+        ;; Remove built-in category defaults so they don't override
+        ;; orderless matching. Per-category overrides go in
+        ;; completion-category-overrides instead (e.g., file below).
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))
-        orderless-matching-styles '(orderless-literal orderless-regexp orderless-flex)))
+        orderless-matching-styles '(orderless-literal orderless-regexp))
+  ;; Prefix a component with ~ to use flex matching on demand.
+  (defun my--orderless-flex-dispatcher (word _index _total)
+    (when (string-prefix-p "~" word)
+      (cons 'orderless-flex (substring word 1))))
+  (setq orderless-style-dispatchers '(my--orderless-flex-dispatcher)))
 
 ;; Rich annotations in the minibuffer (file sizes, docstrings, etc.).
 (use-package marginalia
+  :ensure t
   :demand t
   :config
   (marginalia-mode 1))
@@ -53,6 +64,7 @@
 ;; C-. to act, C-; for default action, C-h B to explore all bindings.
 ;; Also replaces the default prefix-help with embark's richer version.
 (use-package embark
+  :ensure t
   :demand t
   :bind (("C-."   . embark-act)
          ("C-;"   . embark-dwim)
@@ -66,6 +78,7 @@
 ;; C-o in isearch jumps to consult-line with the current search term.
 ;; Preview is manual (M-.) for heavy commands like ripgrep.
 (use-package consult
+  :ensure t
   :demand t
   :bind (("C-x b"   . consult-buffer)
          ("C-x 4 b" . consult-buffer-other-window)
@@ -104,6 +117,7 @@
 ;; Integration between embark and consult — provides embark actions
 ;; for consult commands (e.g., export grep results to a buffer).
 (use-package embark-consult
+  :ensure t
   :demand t
   :after (embark consult))
 
@@ -117,6 +131,7 @@
 ;; a short delay. History mode ranks frequently used completions higher.
 ;; Popupinfo shows documentation for the selected candidate.
 (use-package corfu
+  :ensure t
   :demand t
   :after savehist
   :config
@@ -142,22 +157,21 @@
 ;; The cape-wrap advice on eglot fixes issues where eglot's completion
 ;; would block other backends or return stale results.
 (use-package cape
+  :ensure t
   :demand t
   :config
   (defun my--setup-cape-backends ()
-    (add-hook 'completion-at-point-functions #'cape-keyword nil t)
-    (add-hook 'completion-at-point-functions #'cape-file nil t)
-    (add-hook 'completion-at-point-functions #'cape-dabbrev nil t))
+    (add-hook 'completion-at-point-functions #'cape-dabbrev 90 t)
+    (add-hook 'completion-at-point-functions #'cape-file 91 t)
+    (add-hook 'completion-at-point-functions #'cape-keyword 92 t))
   (add-hook 'prog-mode-hook #'my--setup-cape-backends)
   (add-hook 'text-mode-hook #'my--setup-cape-backends)
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda ()
-              (add-hook 'completion-at-point-functions #'cape-elisp-symbol nil t)))
-  (add-hook 'eshell-mode-hook
-            (lambda ()
-              (add-hook 'completion-at-point-functions #'cape-history nil t)))
-  ;; Bust stale eglot completion cache
-  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+  (defun my--setup-cape-elisp ()
+    (add-hook 'completion-at-point-functions #'cape-elisp-symbol nil t))
+  (add-hook 'emacs-lisp-mode-hook #'my--setup-cape-elisp)
+  (defun my--setup-cape-eshell ()
+    (add-hook 'completion-at-point-functions #'cape-history nil t))
+  (add-hook 'eshell-mode-hook #'my--setup-cape-eshell)
   ;; Allow cape backends to supplement eglot results
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-nonexclusive))
 
@@ -186,4 +200,5 @@
           try-complete-lisp-symbol-partially
           try-complete-lisp-symbol)))
 
-;;; modules/completion.el ends here
+(provide 'my-completion)
+;;; modules/my-completion.el ends here

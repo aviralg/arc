@@ -1,4 +1,4 @@
-;;; modules/cheatsheet.el --- Keybinding cheatsheet browser -*- lexical-binding: t -*-
+;;; modules/my-cheatsheet.el --- Keybinding cheatsheet browser -*- lexical-binding: t -*-
 ;;
 ;; Provides:
 ;;   (my/cheatsheet-add SECTION COMMAND DESCRIPTION)
@@ -367,4 +367,5 @@ The heading text and separator together span exactly 120 characters."
 
 (keymap-global-set "C-c ?" #'my/cheatsheet)
 
-;;; modules/cheatsheet.el ends here
+(provide 'my-cheatsheet)
+;;; modules/my-cheatsheet.el ends here

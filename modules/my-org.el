@@ -1,4 +1,4 @@
-;;; modules/org.el --- Org mode -*- lexical-binding: t; -*-
+;;; modules/my-org.el --- Org mode -*- lexical-binding: t; -*-
 
 (use-package org
   :ensure nil
@@ -62,4 +62,5 @@
             (todo "WAITING" ((org-agenda-overriding-header "Waiting")))
             (todo "TODO" ((org-agenda-overriding-header "To Do"))))))))
 
-;;; modules/org.el ends here
+(provide 'my-org)
+;;; modules/my-org.el ends here

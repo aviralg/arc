@@ -1,4 +1,4 @@
-;;; modules/code.el --- LSP, tree-sitter, diagnostics, project -*- lexical-binding: t; -*-
+;;; modules/my-code.el --- LSP, tree-sitter, diagnostics, project -*- lexical-binding: t; -*-
 
 ;; LSP client — auto-starts for configured language modes.
 ;; Shuts down when the last buffer for a project closes.
@@ -13,10 +13,11 @@
   :config
   (setq eglot-autoshutdown t
         eglot-events-buffer-config '(:size 20000)
-        eglot-sync-connect 3))
+        eglot-sync-connect nil))
 
 ;; Search LSP workspace symbols through consult's interface (M-g s).
 (use-package consult-eglot
+  :ensure t
   :after (eglot consult)
   :bind (:map eglot-mode-map
               ("M-g s" . consult-eglot-symbols)))
@@ -52,19 +53,21 @@
   (setq major-mode-remap-alist
         (seq-filter
          (lambda (entry)
-           (treesit-language-available-p
-          (pcase (cdr entry)
-            ('python-ts-mode     'python)
-            ('c-ts-mode          'c)
-            ('c++-ts-mode        'cpp)
-            ;; c-or-c++-ts-mode needs both c and cpp grammars
-            ('c-or-c++-ts-mode   (and (treesit-language-available-p 'c) 'cpp))
-            ('js-json-ts-mode    'json)
-            ('json-ts-mode       'json)
-            ('yaml-ts-mode       'yaml)
-            ('bash-ts-mode       'bash)
-            ('cmake-ts-mode      'cmake)
-            ('toml-ts-mode       'toml))))
+           (when-let* ((lang
+                        (pcase (cdr entry)
+                          ('python-ts-mode     'python)
+                          ('c-ts-mode          'c)
+                          ('c++-ts-mode        'cpp)
+                          ('c-or-c++-ts-mode   (and (treesit-language-available-p 'c)
+                                                    (treesit-language-available-p 'cpp)
+                                                    'cpp))
+                          ('js-json-ts-mode    'json)
+                          ('json-ts-mode       'json)
+                          ('yaml-ts-mode       'yaml)
+                          ('bash-ts-mode       'bash)
+                          ('cmake-ts-mode      'cmake)
+                          ('toml-ts-mode       'toml))))
+             (treesit-language-available-p lang)))
        '((python-mode    . python-ts-mode)
          (c-mode         . c-ts-mode)
          (c++-mode       . c++-ts-mode)
@@ -74,8 +77,9 @@
          (conf-toml-mode . toml-ts-mode)
          (sh-mode        . bash-ts-mode))))
 
-  ;; yaml and cmake have no built-in base mode to remap from,
-  ;; so associate file extensions directly with the ts-mode.
+  ;; yaml has no built-in base mode to remap from, so associate file
+  ;; extensions directly with the ts-mode. cmake is handled via :mode
+  ;; in languages.el.
   (when (treesit-language-available-p 'yaml)
     (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))))
 
@@ -127,13 +131,15 @@
   ;; Use fd for faster project file listing (respects .gitignore).
   ;; Only overrides the default when no specific dirs are requested;
   ;; falls back to the default implementation for narrowed scopes.
-  ;; Returns absolute paths to satisfy the project-files API contract.
+  ;; Uses process-lines to avoid shell metacharacter issues.
+  ;; fd -a returns absolute paths, satisfying the project-files API contract.
   (when (executable-find "fd")
     (cl-defmethod project-files ((project (head vc)) &optional dirs)
       (let* ((root (project-root project))
              (default-directory root))
         (if (or (null dirs) (equal dirs (list root)))
-            (split-string (shell-command-to-string "fd -t f -H -E .git -a") "\n" t)
+            (process-lines "fd" "-t" "f" "-H" "-E" ".git" "-a")
           (cl-call-next-method))))))
 
-;;; modules/code.el ends here
+(provide 'my-code)
+;;; modules/my-code.el ends here

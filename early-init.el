@@ -38,6 +38,8 @@
 
 ;;;; ---- Post-Startup Restoration ----
 ;; Restore file handlers and GC threshold after init completes.
+;; Added with depth -90 so it runs before other startup hooks —
+;; if a later hook errors, GC and file handlers are already restored.
 (add-hook 'emacs-startup-hook
           (lambda ()
             (setq file-name-handler-alist
@@ -46,7 +48,8 @@
                            my--file-name-handler-alist))
                   gc-cons-threshold (* 64 1024 1024)
                   gc-cons-percentage 0.1)
-            (makunbound 'my--file-name-handler-alist)))
+            (makunbound 'my--file-name-handler-alist))
+          -90)
 
 ;;;; ---- Native Compilation ----
 ;; Silence native-comp warnings that pop up during async compilation.
