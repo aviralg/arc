@@ -118,6 +118,7 @@
 ;; Popupinfo shows documentation for the selected candidate.
 (use-package corfu
   :demand t
+  :after savehist
   :config
   (global-corfu-mode 1)
   (setq corfu-auto t

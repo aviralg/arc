@@ -18,6 +18,7 @@
 (use-package recentf
   :ensure nil
   :demand t
+  :after no-littering
   :config
   (recentf-mode 1)
   (setq recentf-max-saved-items 200

@@ -17,8 +17,7 @@
 
 ;; Search LSP workspace symbols through consult's interface (M-g s).
 (use-package consult-eglot
-  :demand t
-  :after eglot
+  :after (eglot consult)
   :bind (:map eglot-mode-map
               ("M-g s" . consult-eglot-symbols)))
 

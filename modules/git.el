@@ -22,6 +22,7 @@
 ;; Refreshes after magit operations.
 (use-package diff-hl
   :demand t
+  :after magit
   :hook ((dired-mode . diff-hl-dired-mode)
          (magit-post-refresh . diff-hl-magit-post-refresh))
   :config

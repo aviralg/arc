@@ -170,11 +170,11 @@ Display a summary buffer if anything is missing."
   (load (expand-file-name (concat "modules/" name) user-emacs-directory)))
 
 (my--load-module "defaults")
+(my--load-module "buffers")
 (my--load-module "completion")
 (my--load-module "editing")
 (my--load-module "theme")
 (my--load-module "windows")
-(my--load-module "buffers")
 (my--load-module "search")
 (my--load-module "code")
 (my--load-module "git")

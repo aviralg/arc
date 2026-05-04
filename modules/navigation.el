@@ -4,6 +4,7 @@
 ;; embark-act at the target location (avy + embark composition).
 (use-package avy
   :demand t
+  :after embark
   :bind (("C-'" . avy-goto-char-timer)
          ("M-g w" . avy-goto-word-1)
          ("M-g l" . avy-goto-line))
