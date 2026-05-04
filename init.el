@@ -165,31 +165,28 @@ Display a summary buffer if anything is missing."
 ;;;; ---- Modules ----
 ;;; =========================================================================
 
-(load (expand-file-name "modules/defaults" user-emacs-directory))
-(load (expand-file-name "modules/completion" user-emacs-directory))
-(load (expand-file-name "modules/editing" user-emacs-directory))
-(load (expand-file-name "modules/theme" user-emacs-directory))
-(load (expand-file-name "modules/windows" user-emacs-directory))
-(load (expand-file-name "modules/buffers" user-emacs-directory))
-(load (expand-file-name "modules/search" user-emacs-directory))
-(load (expand-file-name "modules/code" user-emacs-directory))
-(load (expand-file-name "modules/git"    user-emacs-directory))
-(load (expand-file-name "modules/dired"  user-emacs-directory))
-(load (expand-file-name "modules/org"    user-emacs-directory))
-(load (expand-file-name "modules/shell"    user-emacs-directory))
-(load (expand-file-name "modules/spelling"   user-emacs-directory))
-(load (expand-file-name "modules/navigation" user-emacs-directory))
-(load (expand-file-name "modules/casual"     user-emacs-directory))
-(load (expand-file-name "modules/languages"  user-emacs-directory))
+(defun my--load-module (name)
+  "Load NAME from the modules/ directory."
+  (load (expand-file-name (concat "modules/" name) user-emacs-directory)))
 
-;;; =========================================================================
-;;;; ---- Cheatsheet ----
-;;; =========================================================================
-;; Interactive keybinding browser. C-c ? opens the cheatsheet buffer.
-;; cheatsheet.el defines the UI; cheatsheet-entries.el registers all entries.
-
-(load (expand-file-name "cheatsheet" user-emacs-directory))
-(load (expand-file-name "cheatsheet-entries" user-emacs-directory))
+(my--load-module "defaults")
+(my--load-module "completion")
+(my--load-module "editing")
+(my--load-module "theme")
+(my--load-module "windows")
+(my--load-module "buffers")
+(my--load-module "search")
+(my--load-module "code")
+(my--load-module "git")
+(my--load-module "dired")
+(my--load-module "org")
+(my--load-module "shell")
+(my--load-module "spelling")
+(my--load-module "navigation")
+(my--load-module "casual")
+(my--load-module "languages")
+(my--load-module "cheatsheet")
+(my--load-module "cheatsheet-entries")
 
 ;;; =========================================================================
 ;;;; ---- Startup Time ----
