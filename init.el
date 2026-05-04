@@ -148,129 +148,6 @@ Display a summary buffer if anything is missing."
   (exec-path-from-shell-initialize))
 
 ;;; =========================================================================
-;;;; ---- General Defaults ----
-;;; =========================================================================
-;; Core Emacs behavior: startup, minibuffer, file handling, encoding,
-;; scrolling, performance, editing, window layout, and font configuration.
-
-(use-package emacs
-  :ensure nil
-  :demand t
-  :config
-
-  ;;; --- Startup & Behavior ---
-  ;; Suppress startup screen, use y/n instead of yes/no, confirm before
-  ;; quitting, silence the bell, prefer newer source over stale bytecode.
-  (setq inhibit-startup-screen t
-        initial-scratch-message nil
-        use-short-answers t
-        confirm-kill-emacs #'y-or-n-p
-        ring-bell-function #'ignore
-        require-final-newline t
-        load-prefer-newer t
-        sentence-end-double-space nil)
-
-  ;;; --- Minibuffer ---
-  ;; Allow recursive minibuffer sessions (needed for embark inside
-  ;; minibuffer). Show depth indicator when nested. Prevent cursor
-  ;; from entering the read-only prompt text — requires BOTH the
-  ;; cursor-intangible property AND cursor-intangible-mode active.
-  (setq enable-recursive-minibuffers t)
-  (minibuffer-depth-indicate-mode 1)
-  (setq minibuffer-prompt-properties
-        '(read-only t cursor-intangible t face minibuffer-prompt))
-  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
-
-  ;;; --- File Handling ---
-  ;; Resolve symlinks to avoid duplicate buffers for the same file.
-  ;; Suppress warnings when symlinks point to the same target.
-  ;; Preserve system clipboard before Emacs kills overwrite it.
-  (setq find-file-visit-truename t
-        find-file-suppress-same-file-warnings t
-        save-interprogram-paste-before-kill t)
-
-  ;;; --- Compilation ---
-  ;; Auto-scroll compilation output and stop at the first error.
-  ;; Process ANSI color codes so build tool output renders correctly.
-  ;; ansi-color-compilation-filter is autoloaded — no require needed.
-  (setq compilation-scroll-output 'first-error)
-  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
-
-  ;;; --- Scrolling ---
-  ;; Keep 3 lines of context at screen edges. scroll-conservatively 101
-  ;; prevents Emacs from recentering the cursor (scrolls minimally).
-  (setq scroll-margin 3
-        scroll-conservatively 101
-        scroll-preserve-screen-position t
-        auto-window-vscroll nil
-        fast-but-imprecise-scrolling t)
-
-  ;;; --- Performance ---
-  ;; Increase subprocess read buffer (benefits LSP/eglot).
-  ;; Prevent GC-triggered font cache compaction (trades memory for speed).
-  ;; Skip font-lock during active input (major cursor movement speedup).
-  ;; Disable bidirectional text scanning for LTR-only text.
-  (setq read-process-output-max (* 4 1024 1024)
-        inhibit-compacting-font-caches t
-        redisplay-skip-fontification-on-input t
-        bidi-inhibit-bpa t)
-  (setq-default bidi-paragraph-direction 'left-to-right)
-
-  ;;; --- Version Control ---
-  ;; Only check Git, skip SVN/Hg/etc. on every file open.
-  (setq vc-handled-backends '(Git))
-
-  ;;; --- Long Lines ---
-  ;; Detect files with very long lines (minified JS, logs) and disable
-  ;; expensive features that would freeze Emacs.
-  (global-so-long-mode 1)
-
-  ;;; --- Encoding ---
-  ;; UTF-8 as the default for all file I/O, subprocess communication,
-  ;; and terminal encoding.
-  (set-default-coding-systems 'utf-8)
-
-  ;;; --- Fonts ---
-  ;; Set default, fixed-pitch, and variable-pitch fonts. Guarded for
-  ;; terminal mode (no fonts) and daemon mode (no frame at init time).
-  ;; In daemon mode, the hook fires for every new frame including
-  ;; terminal frames (emacsclient -nw) — only set fonts on GUI frames.
-  (defun my--setup-fonts ()
-    (when (find-font (font-spec :family "NewComputerModernMono10"))
-      (set-face-attribute 'default nil :family "NewComputerModernMono10" :height 180)
-      (set-face-attribute 'fixed-pitch nil :family "NewComputerModernMono10"))
-    (when (find-font (font-spec :family "NewComputerModern10"))
-      (set-face-attribute 'variable-pitch nil :family "NewComputerModern10")))
-  (if (daemonp)
-      (add-hook 'after-make-frame-functions
-                (lambda (frame)
-                  (when (display-graphic-p frame)
-                    (with-selected-frame frame (my--setup-fonts)))))
-    (when (display-graphic-p)
-      (my--setup-fonts))))
-
-;;; =========================================================================
-;;;; ---- Built-in Modes ----
-;;; =========================================================================
-
-;; Respect .editorconfig files for per-project indent style, tab width,
-;; line endings, etc. Built-in since Emacs 30.
-(use-package editorconfig
-  :ensure nil
-  :demand t
-  :config
-  (editorconfig-mode 1))
-
-;; Show available keybindings in a popup after pressing a prefix key.
-(use-package which-key
-  :ensure nil
-  :demand t
-  :config
-  (which-key-mode 1)
-  (setq which-key-idle-delay 0.5))
-
-
-;;; =========================================================================
 ;;;; ---- Server ----
 ;;; =========================================================================
 ;; Start the Emacs server so emacsclient can open files instantly
@@ -288,6 +165,7 @@ Display a summary buffer if anything is missing."
 ;;;; ---- Modules ----
 ;;; =========================================================================
 
+(load (expand-file-name "modules/defaults" user-emacs-directory))
 (load (expand-file-name "modules/completion" user-emacs-directory))
 (load (expand-file-name "modules/editing" user-emacs-directory))
 (load (expand-file-name "modules/theme" user-emacs-directory))
