@@ -889,21 +889,6 @@ Display a summary buffer if anything is missing."
   :bind ("M-i" . symbol-overlay-put))
 
 ;;; =========================================================================
-;;;; ---- Shell ----
-;;; =========================================================================
-;; Eshell with consult-history integration (C-r for searchable history).
-
-(use-package eshell
-  :ensure nil
-  :config
-  (setq eshell-scroll-to-bottom-on-input 'this
-        eshell-destroy-buffer-when-process-dies t)
-  ;; Bind C-r to consult-history in eshell for fuzzy history search
-  (defun my--eshell-consult-history ()
-    (keymap-set eshell-mode-map "C-r" #'consult-history))
-  (add-hook 'eshell-mode-hook #'my--eshell-consult-history))
-
-;;; =========================================================================
 ;;;; ---- Spell Checking ----
 ;;; =========================================================================
 ;; Use hunspell as the spell-check backend when available.
@@ -1327,6 +1312,7 @@ All built-in commands are also available directly via their C-M-* bindings."
 (load (expand-file-name "modules/git"    user-emacs-directory))
 (load (expand-file-name "modules/dired"  user-emacs-directory))
 (load (expand-file-name "modules/org"    user-emacs-directory))
+(load (expand-file-name "modules/shell"  user-emacs-directory))
 
 ;;; =========================================================================
 ;;;; ---- Cheatsheet ----
