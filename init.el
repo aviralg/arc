@@ -857,34 +857,6 @@ Display a summary buffer if anything is missing."
           (cl-call-next-method))))))
 
 ;;; =========================================================================
-;;;; ---- File Manager (Dired) ----
-;;; =========================================================================
-;; Built-in directory editor with colorized output via diredfl.
-;; Uses GNU ls (gls) on macOS for --group-directories-first support.
-
-(use-package dired
-  :ensure nil
-  :config
-  ;; Guess target directory from other dired window (for copy/move)
-  (setq dired-dwim-target t
-        dired-auto-revert-buffer t
-        dired-recursive-copies 'always
-        dired-recursive-deletes 'top
-        dired-kill-when-opening-new-dired-buffer t)
-  ;; macOS ships BSD ls which lacks --group-directories-first
-  (let ((gls (executable-find "gls")))
-    (if gls
-        (setq insert-directory-program gls
-              dired-listing-switches "-alh --group-directories-first")
-      (setq dired-listing-switches "-alh"))))
-
-;; Colorize dired output (file sizes, dates, permissions, etc.).
-(use-package diredfl
-  :demand t
-  :config
-  (diredfl-global-mode 1))
-
-;;; =========================================================================
 ;;;; ---- Navigation ----
 ;;; =========================================================================
 ;; Avy for jumping to visible text. Press "." during avy to run
@@ -1421,6 +1393,7 @@ All built-in commands are also available directly via their C-M-* bindings."
 
 (load (expand-file-name "modules/search" user-emacs-directory))
 (load (expand-file-name "modules/git"    user-emacs-directory))
+(load (expand-file-name "modules/dired"  user-emacs-directory))
 
 ;;; =========================================================================
 ;;;; ---- Cheatsheet ----
