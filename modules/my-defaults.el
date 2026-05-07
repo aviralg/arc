@@ -19,10 +19,8 @@
 ;;; --- File Handling ---
 ;; Resolve symlinks to avoid duplicate buffers for the same file.
 ;; Suppress warnings when visiting a file already open under a different name.
-;; Preserve system clipboard before Emacs kills overwrite it.
 (setq find-file-visit-truename t
-      find-file-suppress-same-file-warnings t
-      save-interprogram-paste-before-kill t)
+      find-file-suppress-same-file-warnings t)
 
 ;;; --- Scrolling ---
 ;; Keep 3 lines of context at screen edges. scroll-conservatively 101

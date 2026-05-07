@@ -18,13 +18,15 @@
               tab-width 4
               fill-column 80)
 
-;;; --- Undo ---
+;;; --- Undo & Clipboard ---
 ;; Increase undo limits beyond defaults (160KB/240KB/24MB) so large
 ;; operations (wgrep, refactors) don't lose undo history.
 ;; Uses absolute values so re-evaluating init.el is safe.
+;; Preserve system clipboard before Emacs kills overwrite it.
 (setq undo-limit (* 640 1024)
       undo-strong-limit (* 960 1024)
-      undo-outer-limit (* 96 1024 1024))
+      undo-outer-limit (* 96 1024 1024)
+      save-interprogram-paste-before-kill t)
 
 ;;; --- Whitespace ---
 ;; Show trailing whitespace in code and text buffers so it's visible
