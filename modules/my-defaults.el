@@ -37,10 +37,7 @@
 
 ;;; --- Compilation ---
 ;; Auto-scroll compilation output and stop at the first error.
-;; Process ANSI color codes so build tool output renders correctly.
-;; ansi-color-compilation-filter is autoloaded — no require needed.
 (setq compilation-scroll-output 'first-error)
-(add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
 
 ;;; --- Scrolling ---
 ;; Keep 3 lines of context at screen edges. scroll-conservatively 101
