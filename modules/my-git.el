@@ -8,7 +8,10 @@
   :config
   (setq magit-display-buffer-function
         #'magit-display-buffer-same-window-except-diff-v1
-        magit-status-goto-file-position t))
+        magit-status-goto-file-position t
+        magit-refresh-verbose t)
+  (setq magit-status-headers-hook
+        (remove 'magit-insert-tags-header magit-status-headers-hook)))
 
 ;; Use the current frame for ediff instead of spawning a new one.
 ;; Horizontal split shows files side-by-side.
