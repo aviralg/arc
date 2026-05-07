@@ -60,27 +60,6 @@
 ;; terminal encoding, and line endings (LF, not CRLF).
 (prefer-coding-system 'utf-8-unix)
 
-;;; --- Fonts ---
-;; Set default, fixed-pitch, and variable-pitch fonts. Guarded for
-;; terminal mode (no fonts) and daemon mode (no frame at init time).
-;; In daemon mode, the hook fires for every new frame including
-;; terminal frames (emacsclient -nw) — only set fonts on GUI frames.
-(defun my--setup-fonts ()
-  (when (find-font (font-spec :family "NewComputerModernMono10"))
-    (set-face-attribute 'default nil :family "NewComputerModernMono10" :height 180)
-    (set-face-attribute 'fixed-pitch nil :family "NewComputerModernMono10"))
-  (when (find-font (font-spec :family "NewComputerModern10"))
-    (set-face-attribute 'variable-pitch nil :family "NewComputerModern10")))
-(if (daemonp)
-    (progn
-      (defun my--setup-fonts-once (frame)
-        (when (display-graphic-p frame)
-          (with-selected-frame frame (my--setup-fonts))
-          (remove-hook 'after-make-frame-functions #'my--setup-fonts-once)))
-      (add-hook 'after-make-frame-functions #'my--setup-fonts-once))
-  (when (display-graphic-p)
-    (my--setup-fonts)))
-
 ;;; --- Editorconfig ---
 ;; Respect .editorconfig files for per-project indent style, tab width,
 ;; line endings, etc. Built-in since Emacs 30.
