@@ -158,7 +158,6 @@
 
 (defun my--zen-mode-activate ()
   "Enable olivetti and hide mode line in the current buffer."
-  (setq-local olivetti-body-width 120)
   (olivetti-mode 1)
   (setq-local mode-line-format nil)
   (force-mode-line-update))
