@@ -37,3 +37,6 @@ eln-cache/
 
 # Tree-sitter grammar binaries (platform-specific, reinstallable)
 tree-sitter/
+
+# Local overrides (machine-specific, not committed)
+compile-commands.el

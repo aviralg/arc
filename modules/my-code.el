@@ -141,5 +141,66 @@
             (process-lines "fd" "-t" "f" "-H" "-E" ".git" "-a")
           (cl-call-next-method))))))
 
+;; Compilation buffer color support:
+;;
+;; Problem: most CLI tools detect they are writing to a pipe (not a TTY)
+;; and suppress color output. The compilation buffer is a pipe, so tools
+;; like make, cargo, pytest, swift, and npm emit plain monochrome text.
+;;
+;; Solution (two parts):
+;;
+;; 1. `ansi-color-compilation-filter` on `compilation-filter-hook`
+;;    translates ANSI escape sequences (e.g. \e[31m) into Emacs faces.
+;;    Without this, escape codes appear as garbage characters.
+;;
+;; 2. `compilation-environment` injects env vars into the subprocess so
+;;    tools believe a color-capable terminal is attached:
+;;
+;;    - COLORTERM=truecolor: some tools (bat, delta, lsd) check this to
+;;      enable 24-bit color. Safe to set — ignored by tools that don't
+;;      understand it.
+;;    - FORCE_COLOR=1: the Node.js/chalk/npm/yarn ecosystem checks this.
+;;      Overrides their is-a-TTY detection.
+;;
+;; Pitfalls:
+;;    - TERM=xterm-256color is intentionally omitted. Tools like pre-commit
+;;      interpret it as permission to use cursor-control sequences (\e[2K,
+;;      \e[1A) for progress animations, which appear as garbage in the
+;;      compilation buffer. If you need it for a specific tool, add
+;;      --color=always to that tool's command instead.
+;;    - Some tools still require an explicit flag (e.g. cargo --color=always,
+;;      rspec --color). Add these flags in your compile-multi-config entries.
+;;    - FORCE_COLOR=1 can cause non-Node tools to misbehave if they also
+;;      read this var. This is very rare in practice.
+(use-package compile
+  :ensure nil
+  :hook (compilation-filter . ansi-color-compilation-filter)
+  :config
+  (setq compilation-environment
+        '("COLORTERM=truecolor"
+          "FORCE_COLOR=1")))
+
+;;; ---- Compilation Commands ----
+;; Define named compilation commands per mode. Select via consult.
+;; Per-project commands can be added via .dir-locals.el:
+;;   ((nil . ((compile-multi-config . (("build" . "make"))))))
+
+(defun my--project-name-matches (pattern)
+  "Return a predicate that checks if the current project name matches PATTERN."
+  (lambda () (when-let* ((proj (project-current)))
+               (string-match-p pattern (project-name proj)))))
+
+(use-package compile-multi
+  :ensure t
+  :demand t
+  :bind ([remap project-compile] . compile-multi))
+
+(use-package consult-compile-multi
+  :ensure t
+  :demand t
+  :after (compile-multi consult)
+  :config
+  (consult-compile-multi-mode 1))
+
 (provide 'my-code)
 ;;; modules/my-code.el ends here

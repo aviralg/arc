@@ -206,6 +206,16 @@ doesn't prevent the rest from loading."
 (my--load-module "my-cheatsheet-entries")
 
 ;;; =========================================================================
+;;;; ---- Local Overrides ----
+;;; =========================================================================
+;; Load optional, untracked files for machine-specific or private settings.
+;; These are gitignored and not part of the committed config.
+
+(let ((file (locate-user-emacs-file "compile-commands.el")))
+  (when (file-exists-p file)
+    (load file)))
+
+;;; =========================================================================
 ;;;; ---- Startup Time ----
 ;;; =========================================================================
 ;; Report how long Emacs took to start and how many GC collections
