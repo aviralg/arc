@@ -1,5 +1,8 @@
 ;;; modules/my-git.el --- Version control -*- lexical-binding: t; -*-
 
+;; Only check Git, skip SVN/Hg/etc. on every file open.
+(setq vc-handled-backends '(Git))
+
 ;; Full-featured git interface. Opens in the current window.
 (use-package magit
   :ensure t

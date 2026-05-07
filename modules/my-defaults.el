@@ -46,10 +46,6 @@
       bidi-inhibit-bpa t)
 (setq-default bidi-paragraph-direction 'left-to-right)
 
-;;; --- Version Control ---
-;; Only check Git, skip SVN/Hg/etc. on every file open.
-(setq vc-handled-backends '(Git))
-
 ;;; --- Long Lines ---
 ;; Detect files with very long lines (minified JS, logs) and disable
 ;; expensive features that would freeze Emacs.
