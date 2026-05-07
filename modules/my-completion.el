@@ -1,5 +1,16 @@
 ;;; modules/my-completion.el --- Minibuffer and in-buffer completion -*- lexical-binding: t; -*-
 
+;;; --- Minibuffer Behavior ---
+;; Allow recursive minibuffer sessions (needed for embark inside
+;; minibuffer). Show depth indicator when nested. Prevent cursor
+;; from entering the read-only prompt text — requires BOTH the
+;; cursor-intangible property AND cursor-intangible-mode active.
+(setq enable-recursive-minibuffers t)
+(minibuffer-depth-indicate-mode 1)
+(setq minibuffer-prompt-properties
+      '(read-only t cursor-intangible t face minibuffer-prompt))
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
 ;;; --- Minibuffer Completion ---
 ;; Modern completion stack: vertico (vertical UI), orderless (fuzzy
 ;; matching), marginalia (annotations), embark (contextual actions),

@@ -16,17 +16,6 @@
       load-prefer-newer t
       sentence-end-double-space nil)
 
-;;; --- Minibuffer ---
-;; Allow recursive minibuffer sessions (needed for embark inside
-;; minibuffer). Show depth indicator when nested. Prevent cursor
-;; from entering the read-only prompt text — requires BOTH the
-;; cursor-intangible property AND cursor-intangible-mode active.
-(setq enable-recursive-minibuffers t)
-(minibuffer-depth-indicate-mode 1)
-(setq minibuffer-prompt-properties
-      '(read-only t cursor-intangible t face minibuffer-prompt))
-(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
-
 ;;; --- File Handling ---
 ;; Resolve symlinks to avoid duplicate buffers for the same file.
 ;; Suppress warnings when visiting a file already open under a different name.
