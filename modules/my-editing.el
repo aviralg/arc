@@ -145,5 +145,56 @@
   ;; Auto-reopen files as root when hitting permission errors
   (crux-reopen-as-root-mode 1))
 
+;;; ---- Zen Mode ----
+;; Distraction-free writing: centered text, hidden mode line.
+;; Toggle with C-c z.
+(use-package olivetti
+  :ensure t
+  :config
+  (setq olivetti-body-width 120))
+
+(defvar my--zen-mode-hooks '(text-mode-hook org-mode-hook prog-mode-hook)
+  "Hooks where zen mode enables olivetti and hides the mode line.")
+
+(defun my--zen-mode-activate ()
+  "Enable olivetti and hide mode line in the current buffer."
+  (setq-local olivetti-body-width 120)
+  (olivetti-mode 1)
+  (setq-local mode-line-format nil)
+  (force-mode-line-update))
+
+(defun my--zen-mode-deactivate ()
+  "Disable olivetti and restore mode line in the current buffer."
+  (olivetti-mode -1)
+  (setq-local mode-line-format (default-value 'mode-line-format))
+  (force-mode-line-update))
+
+(defvar my--zen-mode-active nil
+  "Non-nil when zen mode is globally active.")
+
+(defun my/zen-mode ()
+  "Toggle zen mode across all text, org, and prog buffers."
+  (interactive)
+  (if my--zen-mode-active
+      (progn
+        (dolist (hook my--zen-mode-hooks)
+          (remove-hook hook #'my--zen-mode-activate))
+        (dolist (buf (buffer-list))
+          (with-current-buffer buf
+            (when olivetti-mode
+              (my--zen-mode-deactivate))))
+        (setq my--zen-mode-active nil)
+        (message "Zen mode disabled."))
+    (dolist (hook my--zen-mode-hooks)
+      (add-hook hook #'my--zen-mode-activate))
+    (dolist (buf (buffer-list))
+      (with-current-buffer buf
+        (when (derived-mode-p 'text-mode 'org-mode 'prog-mode)
+          (my--zen-mode-activate))))
+    (setq my--zen-mode-active t)
+    (message "Zen mode enabled.")))
+
+(keymap-global-set "C-c z" #'my/zen-mode)
+
 (provide 'my-editing)
 ;;; modules/my-editing.el ends here
