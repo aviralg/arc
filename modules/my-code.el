@@ -176,7 +176,8 @@
   :ensure nil
   :hook (compilation-filter . ansi-color-compilation-filter)
   :config
-  (setq compilation-environment
+  (setq compilation-scroll-output 'first-error
+        compilation-environment
         '("COLORTERM=truecolor"
           "FORCE_COLOR=1")))
 

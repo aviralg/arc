@@ -35,10 +35,6 @@
       find-file-suppress-same-file-warnings t
       save-interprogram-paste-before-kill t)
 
-;;; --- Compilation ---
-;; Auto-scroll compilation output and stop at the first error.
-(setq compilation-scroll-output 'first-error)
-
 ;;; --- Scrolling ---
 ;; Keep 3 lines of context at screen edges. scroll-conservatively 101
 ;; prevents Emacs from recentering the cursor (scrolls minimally).
