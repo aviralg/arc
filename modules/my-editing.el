@@ -89,21 +89,23 @@
 ;; my/highlight-region → color active region (prompts for face)
 ;; my/clear-highlights → remove all overlay highlights in buffer
 
-(defvar my/highlight-faces
-  '(hi-yellow hi-pink hi-green hi-blue hi-salmon
-    hi-aquamarine hi-black-b hi-blue-b hi-red-b hi-green-b hi-black-hb)
-  "Hi-lock faces available for overlay highlighting.")
+(require 'hi-lock)
+
+(defun my/highlight-faces ()
+  "Return all hi-lock highlight faces defined in the current theme."
+  (seq-filter (lambda (f) (string-prefix-p "hi-" (symbol-name f)))
+              (face-list)))
 
 (defun my/highlight-line (face)
   "Highlight the current line with FACE (session-only overlay)."
-  (interactive (list (intern (completing-read "Face: " my/highlight-faces nil t))))
+  (interactive (list (intern (completing-read "Face: " (my/highlight-faces) nil t))))
   (let ((ov (make-overlay (line-beginning-position) (line-end-position))))
     (overlay-put ov 'face     face)
     (overlay-put ov 'category 'my-highlight)))
 
 (defun my/highlight-region (face)
   "Highlight the active region with FACE (session-only overlay)."
-  (interactive (list (intern (completing-read "Face: " my/highlight-faces nil t))))
+  (interactive (list (intern (completing-read "Face: " (my/highlight-faces) nil t))))
   (when (region-active-p)
     (let ((ov (make-overlay (region-beginning) (region-end))))
       (overlay-put ov 'face     face)
