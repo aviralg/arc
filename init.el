@@ -2421,23 +2421,22 @@
  '(geiser-chez-binary "chez")
  '(package-selected-packages
    '(ace-window anzu avy-zap beginend browse-at-remote browse-kill-ring calibredb
-                casual chess compile-multi-embark compiler-explorer
+                casual-suite compile-multi-embark compiler-explorer
                 consult-compile-multi consult-dir consult-eglot-embark corfu
-                csv-mode dape dashboard deadgrep devdocs diff-hl dired-git
-                dired-git-info dired-quick-sort dired-rsync diredfl disproject
-                docker doom-modeline dracula-theme drag-stuff easy-kill eat
-                eglot-fsharp ess exec-path-from-shell expand-region fd-dired
+                csv-mode dape dashboard deadgrep devdocs diff-hl dired-git-info
+                dired-quick-sort dired-rsync diredfl docker doom-modeline
+                dracula-theme drag-stuff easy-kill eglot-fsharp ess
+                exec-path-from-shell expand-region fd-dired
                 flycheck-color-mode-line flycheck-eglot flycheck-rust fontaine
                 forge format-all geiser-chez geiser-racket git-modes goto-chg
-                hl-todo htmlize hungry-delete ialign ibuffer-project iedit
-                magit-lfs major-mode-hydra marginalia minions mistty
-                modus-themes mwim nerd-icons-completion nerd-icons-corfu
-                nerd-icons-dired nerd-icons-ibuffer nov orderless org-modern
-                org-present org-ql outline-indent page-break-lines pdf-tools
-                quickrun rainbow-mode realgud-lldb riscv-mode rustic shell-pop
-                simpleclip string-inflection sudo-edit symbol-overlay
-                tempel-collection titlecase toc-org vertico vundo wgrep
-                writeroom-mode))
+                hl-todo htmlize hungry-delete ialign ibuffer-project iedit lispy
+                magit-lfs major-mode-hydra marginalia minions modus-themes mwim
+                nerd-icons-completion nerd-icons-dired nerd-icons-ibuffer nov
+                orderless org-modern org-present org-ql outline-indent
+                page-break-lines pdf-tools quickrun rainbow-mode realgud-lldb
+                riscv-mode rustic shell-pop simpleclip srfi standard-themes
+                string-inflection sudo-edit symbol-overlay tempel-collection
+                titlecase toc-org vertico vundo wgrep writeroom-mode))
  '(warning-suppress-types '((emacs) (defvaralias) (lexical-binding))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
