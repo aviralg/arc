@@ -4,8 +4,7 @@
 ;; Thin bar cursor. Spaces instead of tabs. 4-space indent. 80-col fill.
 ;; Keep underlines at the font's descent line to prevent line height shifts
 ;; when the cursor moves over underlined text (e.g., matching parens, links).
-(setq x-underline-at-descent-line t
-      ns-use-underline-at-descent-line t)
+(setq x-underline-at-descent-line t)
 ;; Small line-spacing prevents text baseline shifts on macOS when
 ;; face backgrounds are applied (e.g., vertico highlight, show-paren).
 ;; The NS text renderer recalculates line metrics on face changes;
@@ -63,7 +62,6 @@
   :ensure nil
   :demand t
   :config
-  (show-paren-mode 1)
   (setq show-paren-delay 0.05
         show-paren-when-point-inside-paren t))
 

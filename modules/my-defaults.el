@@ -31,23 +31,15 @@
       auto-window-vscroll nil
       fast-but-imprecise-scrolling t)
 (pixel-scroll-precision-mode 1)
-(setq pixel-scroll-precision-use-momentum nil)
 
 ;;; --- Performance ---
 ;; Increase subprocess read buffer (benefits LSP/eglot).
-;; Prevent GC-triggered font cache compaction (trades memory for speed).
 ;; Skip font-lock during active input (major cursor movement speedup).
 ;; Disable bidirectional text scanning for LTR-only text.
 (setq read-process-output-max (* 4 1024 1024)
-      inhibit-compacting-font-caches t
       redisplay-skip-fontification-on-input t
       bidi-inhibit-bpa t)
 (setq-default bidi-paragraph-direction 'left-to-right)
-
-;;; --- Long Lines ---
-;; Detect files with very long lines (minified JS, logs) and disable
-;; expensive features that would freeze Emacs.
-(global-so-long-mode 1)
 
 ;;; --- Encoding ---
 ;; UTF-8 as the default for all file I/O, subprocess communication,

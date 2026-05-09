@@ -192,24 +192,5 @@
   :config
   (setq dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'")))
 
-;; Smart expansion via M-/ — tries dabbrev first, then filenames,
-;; abbreviations, and lisp symbols in order.
-(use-package hippie-exp
-  :ensure nil
-  :demand t
-  :bind ("M-/" . hippie-expand)
-  :config
-  (setq hippie-expand-try-functions-list
-        '(try-expand-dabbrev
-          try-expand-dabbrev-all-buffers
-          try-expand-dabbrev-from-kill
-          try-complete-file-name-partially
-          try-complete-file-name
-          try-expand-all-abbrevs
-          try-expand-list
-          try-expand-line
-          try-complete-lisp-symbol-partially
-          try-complete-lisp-symbol)))
-
 (provide 'my-completion)
 ;;; modules/my-completion.el ends here
